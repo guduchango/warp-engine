@@ -1,0 +1,132 @@
+#!/bin/bash
+
+
+# Check availability of docker
+hash docker 2>/dev/null || { echo >&2 "$SCRIPTNAME requires \"docker\""; exit 1; }
+
+# Check availability of docker-compose
+hash docker-compose 2>/dev/null || { echo >&2 "$SCRIPTNAME requires \"docker-compose\""; exit 1; }
+
+
+# SCRIPTNAME contains the name
+# of the current script (e.g. "server")
+SCRIPTNAME="bin/$(basename $0)"
+
+# PROJECTPATH contains the full
+# directory path of the project itself
+PROJECTPATH=$(pwd)
+
+
+# INCLUDE WARP FRAMEWORK
+. "$PROJECTPATH/.warp/includes.sh"
+
+
+
+init() {
+
+    echo ""
+    warp_banner
+    echo ""
+
+    if [ -f $PROJECTPATH/docker-compose.yml ] || [ -f $PROJECTPATH/.env ]; then
+        
+        INFRA_FILES_ERROR="FALSE"
+        if [ -f $PROJECTPATH/docker-compose.yml ]; then
+            echo "* Comprobando archivo docker-compose.yml $(warp_message_ok [ok])"
+        else
+            INFRA_FILES_ERROR="TRUE"
+            echo "* Comprobando archivo docker-compose.yml $(warp_message_error [error])"
+        fi; 
+        
+        if [ -f $PROJECTPATH/.env ]; then
+            echo "* Comprobando archivo .env $(warp_message_ok [ok])"
+        else
+            INFRA_FILES_ERROR="TRUE"
+            echo "* Comprobando archivo .env $(warp_message_error [error])"
+        fi;
+
+        if [ $INFRA_FILES_ERROR = "TRUE" ]; then
+            warp_message_warn "-- Ambos archivos (docker-compose.yml y .env) deben existir para poder inicializar los contenedores. $(warp_message_error [error])"
+            warp_message_warn "-- Si queres inicializar un proyecto desde cero, elimina los archivos docker-compose.yml y .env. Luego vovle a ejecutar el comando init "
+            exit
+        fi;
+        
+    else
+        warp_message_info "* Comenzando la instalacion inicial\n"
+        . "$PROJECTPATH/.warp/setup/webserver/webserver.sh"
+    fi;
+
+    if [ -d $PROJECTPATH/.warp ]; then
+        echo "* Directorio .warp $(warp_message_ok [ok])"
+
+        echo "* Aplicando permisos a subdirectorios .warp/docker/volumes $(warp_message_ok [ok])"
+    fi;
+    
+
+}
+
+help() {
+    
+    warp_banner
+
+    for filename in $PROJECTPATH/.warp/bin/*_help.sh; do
+        . "$filename"
+    done
+
+}
+
+
+#######################################
+# Print the usage information for the
+# server control script
+# Globals:
+#   SCRIPTNAME
+# Arguments:
+#   None
+# Returns:
+#   None
+#######################################
+usage() {
+  echo "Utility for controlling dockerized Web projects\n"
+  echo "Usage:\n\n  $SCRIPTNAME <action> [options...] <arguments...>"
+  echo ""
+}
+
+function func_test()
+{
+    warp_message_ok "Este es un mensaje de OK!"
+    warp_message_error "Este es un mensaje de ERROR!"
+    warp_message_info "Este es un mensaje de INFO!"
+    warp_message_warn "Este es un mensaje de WARN!"
+
+    # warp_net_get_used_ports
+
+    if ! warp_net_port_in_use 80 ; then
+        echo "Puerto Libre"
+    else
+        echo "Puerto Ocupado"
+    fi;
+
+}
+
+case "$1" in
+    init)
+    init
+    ;;
+
+    mysql)
+    shift 1
+    mysql_main $*
+    ;;
+
+
+    test)
+    func_test
+    ;;
+
+    *)
+    help
+    ;;
+esac
+
+exit 0
