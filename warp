@@ -92,6 +92,12 @@ usage() {
   echo ""
 }
 
+
+function warp_info()
+{
+    mysql_main info   
+}
+
 function func_test()
 {
     warp_message_ok "Este es un mensaje de OK!"
@@ -117,6 +123,10 @@ case "$1" in
     mysql)
     shift 1
     mysql_main $*
+    ;;
+
+    info)
+    warp_info
     ;;
 
 
