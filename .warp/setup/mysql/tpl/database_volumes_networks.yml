@@ -1,0 +1,6 @@
+    volumes:
+      - "./.warp/.docker/volumes/mysql:/var/lib/mysql"
+      - "./dumps:/home/dumps"
+      - "${MYSQL_CONFIG_FILE}:/etc/mysql/conf.d"
+    networks:
+      - back
