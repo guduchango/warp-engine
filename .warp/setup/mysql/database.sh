@@ -6,6 +6,7 @@ warp_message_info "Configurando el Servicio de MySQL"
 respuesta=$( warp_question_ask_default "Queres agregar un servicio MySQL? $(warp_message_info [Y/n]) " "Y" )
 if [ "$respuesta" = "Y" ] || [ "$respuesta" = "y" ]
 then
+    warp_message_info2 "Podes chequear las versiones de MySQL disponibles acá: $(warp_message_info '[ https://hub.docker.com/r/library/mysql/ ]')"
   
     basedefault=0 #False
     mysql_version=$( warp_question_ask_default "Cual es la version de MySQL que vas a usar? $(warp_message_info [5.7]) " "5.7" )
@@ -48,6 +49,9 @@ then
     cat $PROJECTPATH/.warp/setup/mysql/tpl/database.yml >> $PROJECTPATH/docker-compose.yml
     cat $PROJECTPATH/.warp/setup/mysql/tpl/database_enviroment_root.yml >> $PROJECTPATH/docker-compose.yml
 
+    echo "# MySQL Configuration" >> $PROJECTPATH/.env
+    echo "MYSQL_VERSION=$mysql_version" >> $PROJECTPATH/.env
+
     if [ $usedatabase = 1 ]; then
         cat $PROJECTPATH/.warp/setup/mysql/tpl/database_enviroment_default.yml >> $PROJECTPATH/docker-compose.yml
         echo "DATABASE_NAME=$mysql_name_database" >> $PROJECTPATH/.env
@@ -57,7 +61,6 @@ then
 
     cat $PROJECTPATH/.warp/setup/mysql/tpl/database_volumes_networks.yml >> $PROJECTPATH/docker-compose.yml
 
-    echo "MYSQL_VERSION=$mysql_version" >> $PROJECTPATH/.env
     echo "DATABASE_ROOT_PASSWORD=$mysql_root_password" >> $PROJECTPATH/.env
     echo "DATABASE_BINDED_PORT=$mysql_binded_port" >> $PROJECTPATH/.env
     echo "MYSQL_CONFIG_FILE=$mysql_config_file" >> $PROJECTPATH/.env
