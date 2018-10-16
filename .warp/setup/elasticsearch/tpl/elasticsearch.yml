@@ -1,0 +1,9 @@
+  elasticsearch:
+    image: summasolutions/elasticsearch:${ES_VERSION}
+    ports:
+      - "9200"
+      - "9300"
+    volumes:
+      - "./.warp/docker/volumes/elasticsearch:/usr/share/elasticsearch/data"
+    networks:
+      - back
