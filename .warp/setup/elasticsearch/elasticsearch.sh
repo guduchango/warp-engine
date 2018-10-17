@@ -31,5 +31,6 @@ then
     echo ""  >> $PROJECTPATH/.env
     echo "# Elasticsearch" >> $PROJECTPATH/.env
     echo "ES_VERSION=$elasticsearch_version" >> $PROJECTPATH/.env
+    echo ""  >> $PROJECTPATH/.env
 
 fi; 

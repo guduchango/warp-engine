@@ -1,3 +1,4 @@
+
   elasticsearch:
     image: summasolutions/elasticsearch:${ES_VERSION}
     ports:

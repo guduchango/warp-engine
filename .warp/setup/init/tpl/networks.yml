@@ -1,0 +1,7 @@
+
+networks:
+  sharednet:
+    external:
+      name: ${NETWORK_NAME}
+  back:
+    driver: bridge
