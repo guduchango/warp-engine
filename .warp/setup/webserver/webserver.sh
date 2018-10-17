@@ -44,6 +44,9 @@ then
     nginx_virtual_host=$( warp_question_ask_default "Cual es el virtual host? $(warp_message_info [local.sample.com]) " "local.sample.com" )
     nginx_config_file=$( warp_question_ask_default "Archivo de configuracion de Nginx? $(warp_message_info [./.warp/docker/config/nginx/sites-enabled/default.conf]) " "./.warp/docker/config/nginx/sites-enabled/default.conf" )
     
+    echo "" >> $PROJECTPATH/.env
+    echo "# NGINX Configuration" >> $PROJECTPATH/.env
+
     if [ $useproxy = 0 ]; then
         cat $PROJECTPATH/.warp/setup/webserver/tpl/webserver_reverse_proxy.yml >> $PROJECTPATH/docker-compose.yml
     else
@@ -54,6 +57,7 @@ then
 
     echo "VIRTUAL_HOST=$nginx_virtual_host" >> $PROJECTPATH/.env
     echo "NGINX_CONFIG_FILE=$nginx_config_file" >> $PROJECTPATH/.env
+    echo "" >> $PROJECTPATH/.env
 
     mkdir -p ./.warp/docker/volumes/nginx/logs
     chmod -R 777 ./.warp/docker/volumes/nginx
