@@ -54,6 +54,9 @@ init() {
     else
         warp_message_info "* Comenzando la instalacion inicial\n"
         . "$PROJECTPATH/.warp/setup/webserver/webserver.sh"
+        . "$PROJECTPATH/.warp/setup/mysql/database.sh"
+        . "$PROJECTPATH/.warp/setup/elasticsearch/elasticsearch.sh"
+        . "$PROJECTPATH/.warp/setup/redis/redis.sh"
     fi;
 
     if [ -d $PROJECTPATH/.warp ]; then
