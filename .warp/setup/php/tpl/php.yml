@@ -1,0 +1,20 @@
+
+  php:
+    image: summasolutions/php:${PHP_VERSION}
+    volumes:
+      - ./.warp/docker/config/php/php.ini:/usr/local/etc/php/php.ini
+      - ./.warp/docker/config/php/php-fpm.conf:/usr/local/etc/php-fpm.conf
+      - ./.warp/docker/config/php/ext-xdebug.ini:/usr/local/etc/php/conf.d/ext-xdebug.ini
+      - ~/.ssh:/var/www/.ssh-local:ro
+      - ./.warp/docker/volumes/php-fpm/logs:/var/log/php-fpm
+    volumes_from:
+      - appdata
+    env_file: .env
+    environment:
+        XDEBUG_CONFIG: ${XDEBUG_CONFIG}
+        PHP_IDE_CONFIG: ${PHP_IDE_CONFIG}
+    depends_on:
+      - appdata
+    user: www-data
+    networks:
+      - back
