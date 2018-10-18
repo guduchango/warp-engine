@@ -5,6 +5,7 @@ warp_message_info "Configurando Servicio de ElasticSearch"
 respuesta=$( warp_question_ask_default "Queres agregar un servicio de elasticsearch? $(warp_message_info [Y/n]) " "Y" )
 if [ "$respuesta" = "Y" ] || [ "$respuesta" = "y" ]
 then
+    warp_message_info2 "Podes chequear las versiones de elasticsearch disponibles acá: $(warp_message_info '[ https://hub.docker.com/r/summasolutions/elasticsearch/tags/ ]')"
     
     while : ; do
         elasticsearch_version=$( warp_question_ask_default "Cual es la version de elasticsearch del proyecto? $(warp_message_info [5.6.8]) " "5.6.8" )
