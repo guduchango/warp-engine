@@ -17,8 +17,11 @@ SCRIPTNAME="bin/$(basename $0)"
 PROJECTPATH=$(pwd)
 
 
-# INCLUDE WARP FRAMEWORK
-. "$PROJECTPATH/.warp/includes.sh"
+if [ -d $PROJECTPATH/.warp ]; then
+    # INCLUDE WARP FRAMEWORK
+    . "$PROJECTPATH/.warp/includes.sh"
+fi;
+
 
 
 
@@ -73,12 +76,15 @@ init() {
 
 help() {
     
-    warp_banner
+    if [ -d $PROJECTPATH/.warp ]; then
+        warp_banner
 
-    for filename in $PROJECTPATH/.warp/bin/*_help.sh; do
-        . "$filename"
-    done
-
+        for filename in $PROJECTPATH/.warp/bin/*_help.sh; do
+            . "$filename"
+        done
+    else
+        echo "WARP-ENGINE has not been installed yet. Please run ./warp setup"
+    fi;
 }
 
 
@@ -121,6 +127,19 @@ function func_test()
 
 }
 
+function warp_setup()
+{
+    # Create destination folder
+    DESTINATION="."
+    #mkdir -p ${DESTINATION}
+
+    # Find __ARCHIVE__ maker, read archive content and decompress it
+    ARCHIVE=$(awk '/^__ARCHIVE__/ {print NR + 1; exit 0; }' "${0}")
+    tail -n+${ARCHIVE} "${0}" | tar xpJv -C ${DESTINATION}
+
+
+}
+
 case "$1" in
     init)
     init
@@ -140,9 +159,15 @@ case "$1" in
     func_test
     ;;
 
+    setup)
+    warp_setup
+    ;;
+
     *)
     help
     ;;
 esac
 
 exit 0
+
+__ARCHIVE__
