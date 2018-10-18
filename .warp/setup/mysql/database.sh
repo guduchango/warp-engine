@@ -65,6 +65,6 @@ then
     echo "DATABASE_BINDED_PORT=$mysql_binded_port" >> $PROJECTPATH/.env
     echo "MYSQL_CONFIG_FILE=$mysql_config_file" >> $PROJECTPATH/.env
 
-    cp -R ./.warp/setup/mysql/config/conf.d ./.warp/docker/config/mysql
+    cp -R ./.warp/setup/mysql/config/ ./.warp/docker/config/mysql/
 fi; 
 
