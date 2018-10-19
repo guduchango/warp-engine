@@ -8,29 +8,44 @@ if [ "$respuesta" = "Y" ] || [ "$respuesta" = "y" ]
 then
     warp_message_info2 "Podes chequear las versiones de MySQL disponibles acá: $(warp_message_info '[ https://hub.docker.com/r/library/mysql/ ]')"
   
-    basedefault=0 #False
     mysql_version=$( warp_question_ask_default "Cual es la version de MySQL que vas a usar? $(warp_message_info [5.7]) " "5.7" )
     warp_message_info2 "Version de MySQL Seleccionada: $mysql_version"
 
-    resp_database_default=$( warp_question_ask_default "Queres crear una base de datos por defecto? $(warp_message_info [Y/n]) " "Y" )
-    if [ "$resp_database_default" = "Y" ] || [ "$resp_database_default" = "y" ]
-    then
-        usedatabase=1 #True
-    fi;
+    while : ; do
+        mysql_name_database=$( warp_question_ask_default "Cual es el nombre de la base de datos? $(warp_message_info [warp_db]) " "warp_db" )
 
-    if [ $usedatabase = 1 ]; then
-        mysql_name_database=$( warp_question_ask_default "Cual es el nombre de la base de datos? $(warp_message_info [magento2]) " "magento2" )
-        warp_message_info2 "Base de datos por defecto: $mysql_name_database"
-        
-        mysql_user_database=$( warp_question_ask_default "Cual es el usuario de la base de datos? $(warp_message_info [magento]) " "magento" )
-        warp_message_info2 "Usuario de base de datos MySQL: $mysql_user_database"
-
-        mysql_password_database=$( warp_question_ask_default "Cual es el password de la base de datos? $(warp_message_info [Summa2009]) " "Summa2009" )
-        warp_message_info2 "Password base de datos MySQL: $mysql_password_database"
-    fi;
+        if [ ! $mysql_name_database = 'root' ] ; then
+            warp_message_info2 "Base de datos creada: $mysql_name_database"
+            break
+        else 
+            warp_message_warn "El nombre de la base de datos no puede ser $(warp_message_bold root)"
+        fi;
+    done
 
     while : ; do
-        mysql_binded_port=$( warp_question_ask_default "Cual es el puerto de conexion a MySQL? $(warp_message_info [3306]) " "3306" )
+        mysql_user_database=$( warp_question_ask_default "Cual es el usuario de la base de datos? $(warp_message_info [warp]) " "warp" )
+        
+        if [ ! $mysql_user_database = 'root' ] ; then
+            warp_message_info2 "El usuario de la base de datos $mysql_name_database en MySQL es: $mysql_user_database"
+            break
+        else 
+            warp_message_warn "El usuario de la base de datos $mysql_name_database no puede ser $(warp_message_bold root)"
+        fi;
+    done
+
+    while : ; do
+        mysql_password_database=$( warp_question_ask_default "Cual es el password de la base de datos? $(warp_message_info [Summa2009]) " "Summa2009" )
+        
+        if [ ! $mysql_password_database = 'root' ] ; then
+            warp_message_info2 "Password de la base de datos $mysql_name_database es: $mysql_password_database"
+            break
+        else 
+            warp_message_warn "El password de la base de datos $mysql_name_database no puede ser $(warp_message_bold root)"
+        fi;
+    done
+
+    while : ; do
+        mysql_binded_port=$( warp_question_ask_default "Mapeo del puerto 3306 del contenedor al puerto de tu maquina (host)? $(warp_message_info [3306]) " "3306" )
 
         #CHECK si port es numero antes de llamar a warp_net_port_in_use
         if ! warp_net_port_in_use $mysql_binded_port ; then
@@ -51,19 +66,16 @@ then
 
     echo "# MySQL Configuration" >> $PROJECTPATH/.env
     echo "MYSQL_VERSION=$mysql_version" >> $PROJECTPATH/.env
+    echo "MYSQL_CONFIG_FILE=$mysql_config_file" >> $PROJECTPATH/.env
+    echo "DATABASE_BINDED_PORT=$mysql_binded_port" >> $PROJECTPATH/.env
+    echo "DATABASE_ROOT_PASSWORD=$mysql_root_password" >> $PROJECTPATH/.env
 
-    if [ $usedatabase = 1 ]; then
-        cat $PROJECTPATH/.warp/setup/mysql/tpl/database_enviroment_default.yml >> $PROJECTPATH/docker-compose.yml
-        echo "DATABASE_NAME=$mysql_name_database" >> $PROJECTPATH/.env
-        echo "DATABASE_USER=$mysql_user_database" >> $PROJECTPATH/.env
-        echo "DATABASE_PASSWORD=$mysql_password_database" >> $PROJECTPATH/.env
-    fi;
+    cat $PROJECTPATH/.warp/setup/mysql/tpl/database_enviroment_default.yml >> $PROJECTPATH/docker-compose.yml
+    echo "DATABASE_NAME=$mysql_name_database" >> $PROJECTPATH/.env
+    echo "DATABASE_USER=$mysql_user_database" >> $PROJECTPATH/.env
+    echo "DATABASE_PASSWORD=$mysql_password_database" >> $PROJECTPATH/.env
 
     cat $PROJECTPATH/.warp/setup/mysql/tpl/database_volumes_networks.yml >> $PROJECTPATH/docker-compose.yml
-
-    echo "DATABASE_ROOT_PASSWORD=$mysql_root_password" >> $PROJECTPATH/.env
-    echo "DATABASE_BINDED_PORT=$mysql_binded_port" >> $PROJECTPATH/.env
-    echo "MYSQL_CONFIG_FILE=$mysql_config_file" >> $PROJECTPATH/.env
 
     cp -R ./.warp/setup/mysql/config/ ./.warp/docker/config/mysql/
 fi; 
