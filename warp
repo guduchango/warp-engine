@@ -27,6 +27,11 @@ fi;
 
 init() {
 
+    if [ ! -d $PROJECTPATH/.warp ]; then
+        warp_setup
+        exit 0;
+    fi;
+
     echo ""
     warp_banner
     echo ""
@@ -84,7 +89,7 @@ help() {
             . "$filename"
         done
     else
-        echo "WARP-ENGINE has not been installed yet. Please run ./warp setup"
+        echo "WARP-ENGINE has not been installed yet. Please run ./warp init"
     fi;
 }
 
@@ -136,9 +141,17 @@ function warp_setup()
 
     # Find __ARCHIVE__ maker, read archive content and decompress it
     ARCHIVE=$(awk '/^__ARCHIVE__/ {print NR + 1; exit 0; }' "${0}")
-    tail -n+${ARCHIVE} "${0}" | tar xpJv -C ${DESTINATION}
 
-
+    echo "Instalando Warp, aguarde unos momentos"
+    sleep 1
+    tail -n+${ARCHIVE} "${0}" | tar xpJ -C ${DESTINATION}
+    if [ -d $PROJECTPATH/.warp ]; then    
+        echo "Instalacion exitosa!"
+        echo "Para comenzar ejecute ./warp init"
+        echo ""
+    else
+        echo "No se puede instalar Warp"
+    fi;
 }
 
 case "$1" in
