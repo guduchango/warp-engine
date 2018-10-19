@@ -20,13 +20,3 @@ warp_message_ok   " restart            $(warp_message 'restart the server')"
 warp_message_ok   " ps                 $(warp_message 'list containers')"
 warp_message_ok   " logs               $(warp_message 'view logs containers')"
 warp_message ""
-
-warp_message_ok   " mysql              $(warp_message 'utility for connect with databases')"
-warp_message_ok   " redis              $(warp_message 'service of redis')"
-warp_message_ok   " php                $(warp_message 'service of php')"
-warp_message_ok   " composer           $(warp_message 'ejecute composer inside container')"
-warp_message_ok   " elasticsearch      $(warp_message 'container for this help message')"
-
-warp_message ""
-warp_message_warn "Help:"
-warp_message " warp mysql --help"
