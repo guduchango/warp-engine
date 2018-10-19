@@ -1,3 +1,3 @@
 #!/bin/bash
 
-warp_message_warn "Composer script"
+#warp_message_warn "Composer script"
