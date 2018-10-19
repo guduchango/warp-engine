@@ -1,5 +1,6 @@
 #!/bin/bash +x
 
+echo ""
 warp_message_info "Configurando Servicio de PHP"
 
 respuesta_php=$( warp_question_ask_default "Queres agregar un servicio de php? $(warp_message_info [Y/n]) " "Y" )

@@ -1,5 +1,6 @@
 #!/bin/bash +x
 
+echo ""
 warp_message_info "Configurando el Servicio de Redis"
 
 PATH_CONFIG_REDIS='./.warp/docker/config/redis'
@@ -20,7 +21,7 @@ then
 
     while : ; do
         echo ""
-        redis_cache_port=$( warp_question_ask_default "Ingrese el puerto de tu maquina para conectarte al contenedor: $(warp_message_info [6379]) " "6379" )
+        redis_cache_port=$( warp_question_ask_default "Mapeo del puerto 6379 del contenedor al puerto de tu maquina (host)? $(warp_message_info [6379]) " "6379" )
 
         #CHECK si port es numero antes de llamar a warp_net_port_in_use
         if ! warp_net_port_in_use $redis_cache_port ; then
@@ -61,7 +62,7 @@ then
 
     while : ; do
         echo ""
-        redis_session_port=$( warp_question_ask_default "Ingrese el puerto de tu maquina para conectarte al contenedor: $(warp_message_info [6380]) " "6380" )
+        redis_session_port=$( warp_question_ask_default "Mapeo del puerto 6379 del contenedor al puerto de tu maquina (host)? $(warp_message_info [6380]) " "6380" )
 
         #CHECK si port es numero antes de llamar a warp_net_port_in_use
         if ! warp_net_port_in_use $redis_session_port ; then
@@ -102,7 +103,7 @@ then
 
     while : ; do
         echo ""
-        redis_fpc_port=$( warp_question_ask_default "Ingrese el puerto de tu maquina para conectarte al contenedor: $(warp_message_info [6381]) " "6381" )
+        redis_fpc_port=$( warp_question_ask_default "Mapeo del puerto 6379 del contenedor al puerto de tu maquina (host)? $(warp_message_info [6381]) " "6381" )
 
         #CHECK si port es numero antes de llamar a warp_net_port_in_use
         if ! warp_net_port_in_use $redis_fpc_port ; then

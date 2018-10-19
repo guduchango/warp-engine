@@ -1,5 +1,6 @@
 #!/bin/bash +x
 
+echo ""
 warp_message_info "Configurando Servicio de ElasticSearch"
 
 respuesta=$( warp_question_ask_default "Queres agregar un servicio de elasticsearch? $(warp_message_info [Y/n]) " "Y" )
