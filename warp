@@ -16,16 +16,18 @@ SCRIPTNAME="bin/$(basename $0)"
 # directory path of the project itself
 PROJECTPATH=$(pwd)
 
-
-if [ -d $PROJECTPATH/.warp ]; then
+include_warp_framework() {
     # INCLUDE WARP FRAMEWORK
     . "$PROJECTPATH/.warp/includes.sh"
+}
+
+if [ -d $PROJECTPATH/.warp ]; then
+    include_warp_framework
 fi;
 
 
 
-
-init() {
+init_main() {
 
     if [ ! -d $PROJECTPATH/.warp ]; then
         warp_setup
@@ -146,9 +148,11 @@ function warp_setup()
     sleep 1
     tail -n+${ARCHIVE} "${0}" | tar xpJ -C ${DESTINATION}
     if [ -d $PROJECTPATH/.warp ]; then    
-        echo "Instalacion exitosa!"
-        echo "Para comenzar ejecute ./warp init"
-        echo ""
+        echo "Instalacion exitosa!, iniciando Instalacion.."
+        sleep 1
+        # Init Instalation
+        include_warp_framework
+        init_main
     else
         echo "No se puede instalar Warp"
     fi;
@@ -156,7 +160,7 @@ function warp_setup()
 
 case "$1" in
     init)
-    init
+    init_main
     ;;
 
     mysql)
