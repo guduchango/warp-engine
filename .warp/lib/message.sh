@@ -25,37 +25,37 @@ BWHT="\e[47m" # background white
 
 function warp_message()
 {
-    printf "$1\n"
+    printf "$RS$1\n"
 }
 
 function warp_message_error()
 {
-    warp_message "$FRED $1 $RS"
+    warp_message "$FRED$1$RS"
 }
 
 function warp_message_ok()
 {
-    warp_message "$FGRN $1 $RS"
+    warp_message "$FGRN$1$RS"
 }
 
 function warp_message_info()
 {
-    warp_message "$FCYN $1 $RS"
+    warp_message "$FCYN$1$RS"
 }
 
 function warp_message_info2()
 {
-    warp_message "$FGRY $1 $RS"
+    warp_message "$FGRY$1$RS"
 }
 
 function warp_message_warn()
 {
-    warp_message "$FYEL $1 $RS"
+    warp_message "$FYEL$1$RS"
 }
 
 function warp_message_bold()
 {
-    warp_message "$HC $1 $RC"
+    warp_message "$HC$1$RC"
 }
 
 

@@ -16,16 +16,23 @@ SCRIPTNAME="bin/$(basename $0)"
 # directory path of the project itself
 PROJECTPATH=$(pwd)
 
-
-if [ -d $PROJECTPATH/.warp ]; then
+include_warp_framework() {
     # INCLUDE WARP FRAMEWORK
     . "$PROJECTPATH/.warp/includes.sh"
+}
+
+if [ -d $PROJECTPATH/.warp ]; then
+    include_warp_framework
 fi;
 
 
 
+init_main() {
 
-init() {
+    if [ ! -d $PROJECTPATH/.warp ]; then
+        warp_setup
+        exit 0;
+    fi;
 
     echo ""
     warp_banner
@@ -84,7 +91,7 @@ help() {
             . "$filename"
         done
     else
-        echo "WARP-ENGINE has not been installed yet. Please run ./warp setup"
+        echo "WARP-ENGINE has not been installed yet. Please run ./warp init"
     fi;
 }
 
@@ -136,14 +143,24 @@ function warp_setup()
 
     # Find __ARCHIVE__ maker, read archive content and decompress it
     ARCHIVE=$(awk '/^__ARCHIVE__/ {print NR + 1; exit 0; }' "${0}")
-    tail -n+${ARCHIVE} "${0}" | tar xpJv -C ${DESTINATION}
 
-
+    echo "Instalando Warp, aguarde unos momentos"
+    sleep 1
+    tail -n+${ARCHIVE} "${0}" | tar xpJ -C ${DESTINATION}
+    if [ -d $PROJECTPATH/.warp ]; then    
+        echo "Instalacion exitosa!, iniciando Instalacion.."
+        sleep 1
+        # Init Instalation
+        include_warp_framework
+        init_main
+    else
+        echo "No se puede instalar Warp"
+    fi;
 }
 
 case "$1" in
     init)
-    init
+    init_main
     ;;
 
     mysql)
