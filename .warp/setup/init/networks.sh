@@ -6,8 +6,8 @@ warp_message_info "Configurando un servicio de Red interno"
     network_name=$( warp_question_ask_default "Elija un nombre para la Red Interna: $(warp_message_info [SummaNET]) " "SummaNET" )
     warp_message_info2 "Nombre de Red seleccionado: $network_name"
 
-    echo "# Network information" >> $PROJECTPATH/.env
-    echo "NETWORK_NAME=$network_name" >> $PROJECTPATH/.env
-    echo "NETWORK_SUBNET=$network_subnet" >> $PROJECTPATH/.env
+    echo "# Network information" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "NETWORK_NAME=$network_name" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "NETWORK_SUBNET=$network_subnet" >> $ENVIRONMENTVARIABLESFILESAMPLE
 
-cat $PROJECTPATH/.warp/setup/init/tpl/networks.yml >> $PROJECTPATH/docker-compose.yml
+cat $PROJECTPATH/.warp/setup/init/tpl/networks.yml >> $DOCKERCOMPOSEFILE

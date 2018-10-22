@@ -27,16 +27,17 @@ then
     done
     warp_message_info2 "Version de PHP seleccionada: $php_version"
     
-    cat $PROJECTPATH/.warp/setup/php/tpl/php.yml >> $PROJECTPATH/docker-compose.yml
+    cat $PROJECTPATH/.warp/setup/php/tpl/php.yml >> $DOCKERCOMPOSEFILE
 
-    echo ""  >> $PROJECTPATH/.env
-    echo "# Config PHP" >> $PROJECTPATH/.env
-    echo "PHP_VERSION=$php_version" >> $PROJECTPATH/.env
+    echo ""  >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "# Config PHP" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "PHP_VERSION=$php_version" >> $ENVIRONMENTVARIABLESFILESAMPLE
 
-    echo ""  >> $PROJECTPATH/.env
-    echo "# Config xdebug by Console"  >> $PROJECTPATH/.env
-    echo "XDEBUG_CONFIG=remote_host=172.17.0.1" >> $PROJECTPATH/.env
-    echo "PHP_IDE_CONFIG=serverName=docker" >> $PROJECTPATH/.env
+    echo ""  >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "# Config xdebug by Console"  >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "XDEBUG_CONFIG=remote_host=172.17.0.1" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "PHP_IDE_CONFIG=serverName=docker" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo ""  >> $ENVIRONMENTVARIABLESFILESAMPLE
 
     mkdir -p ./.warp/docker/volumes/php-fpm/logs
     # Create logs file

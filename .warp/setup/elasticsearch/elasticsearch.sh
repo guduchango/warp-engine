@@ -28,11 +28,11 @@ then
     done
     warp_message_info2 "Version de elasticsearch seleccionada: $elasticsearch_version, en los puertos internos 9200, 9300 $(warp_message_bold 'elasticsearch:9200, elasticsearch:9300')"
     
-    cat $PROJECTPATH/.warp/setup/elasticsearch/tpl/elasticsearch.yml >> $PROJECTPATH/docker-compose.yml
+    cat $PROJECTPATH/.warp/setup/elasticsearch/tpl/elasticsearch.yml >> $DOCKERCOMPOSEFILE
 
-    echo ""  >> $PROJECTPATH/.env
-    echo "# Elasticsearch" >> $PROJECTPATH/.env
-    echo "ES_VERSION=$elasticsearch_version" >> $PROJECTPATH/.env
-    echo ""  >> $PROJECTPATH/.env
+    echo ""  >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "# Elasticsearch" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "ES_VERSION=$elasticsearch_version" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo ""  >> $ENVIRONMENTVARIABLESFILESAMPLE
 
 fi; 

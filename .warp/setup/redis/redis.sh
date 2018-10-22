@@ -5,7 +5,7 @@ warp_message_info "Configurando el Servicio de Redis"
 
 PATH_CONFIG_REDIS='./.warp/docker/config/redis'
 MSJ_REDIS_VERSION_HUB=1 # True
-echo "#Config Redis" >> $PROJECTPATH/.env
+echo "#Config Redis" >> $ENVIRONMENTVARIABLESFILESAMPLE
 
 respuesta_redis_cache=$( warp_question_ask_default "Queres agregar un servicio para Redis Cache? $(warp_message_info [Y/n]) " "Y" )
 if [ "$respuesta_redis_cache" = "Y" ] || [ "$respuesta_redis_cache" = "y" ]
@@ -34,12 +34,12 @@ then
 
     cache_config_file_cache=$( warp_question_ask_default "Archivo de configuracion de Redis? $(warp_message_info [./.warp/docker/config/redis/redis.conf]) " "./.warp/docker/config/redis/redis.conf" )
     
-    cat $PROJECTPATH/.warp/setup/redis/tpl/redis_cache.yml >> $PROJECTPATH/docker-compose.yml
+    cat $PROJECTPATH/.warp/setup/redis/tpl/redis_cache.yml >> $DOCKERCOMPOSEFILE
 
-    echo "REDIS_CACHE_VERSION=$resp_version_cache" >> $PROJECTPATH/.env
-    echo "REDIS_CACHE_CONF=$cache_config_file_cache" >> $PROJECTPATH/.env
-    echo "REDIS_CACHE_BINDED_PORT=$redis_cache_port" >> $PROJECTPATH/.env
-    echo "" >> $PROJECTPATH/.env
+    echo "REDIS_CACHE_VERSION=$resp_version_cache" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "REDIS_CACHE_CONF=$cache_config_file_cache" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "REDIS_CACHE_BINDED_PORT=$redis_cache_port" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "" >> $ENVIRONMENTVARIABLESFILESAMPLE
 
     # Control will enter here if $PATH_CONFIG_REDIS doesn't exist.
     if [ ! -d "$PATH_CONFIG_REDIS" ]; then
@@ -75,12 +75,12 @@ then
 
     cache_config_file_session=$( warp_question_ask_default "Archivo de configuracion de Redis? $(warp_message_info [./.warp/docker/config/redis/redis.conf]) " "./.warp/docker/config/redis/redis.conf" )
     
-    cat $PROJECTPATH/.warp/setup/redis/tpl/redis_session.yml >> $PROJECTPATH/docker-compose.yml
+    cat $PROJECTPATH/.warp/setup/redis/tpl/redis_session.yml >> $DOCKERCOMPOSEFILE
 
-    echo "REDIS_SESSION_VERSION=$resp_version_session" >> $PROJECTPATH/.env
-    echo "REDIS_SESSION_CONF=$cache_config_file_session" >> $PROJECTPATH/.env
-    echo "REDIS_SESSION_BINDED_PORT=$redis_session_port" >> $PROJECTPATH/.env
-    echo "" >> $PROJECTPATH/.env
+    echo "REDIS_SESSION_VERSION=$resp_version_session" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "REDIS_SESSION_CONF=$cache_config_file_session" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "REDIS_SESSION_BINDED_PORT=$redis_session_port" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "" >> $ENVIRONMENTVARIABLESFILESAMPLE
 
     # Control will enter here if $PATH_CONFIG_REDIS doesn't exist.
     if [ ! -d "$PATH_CONFIG_REDIS" ]; then
@@ -116,12 +116,12 @@ then
 
     cache_config_file_fpc=$( warp_question_ask_default "Archivo de configuracion de Redis? $(warp_message_info [./.warp/docker/config/redis/redis.conf]) " "./.warp/docker/config/redis/redis.conf" )
     
-    cat $PROJECTPATH/.warp/setup/redis/tpl/redis_fpc.yml >> $PROJECTPATH/docker-compose.yml
+    cat $PROJECTPATH/.warp/setup/redis/tpl/redis_fpc.yml >> $DOCKERCOMPOSEFILE
 
-    echo "REDIS_FPC_VERSION=$resp_version_fpc" >> $PROJECTPATH/.env
-    echo "REDIS_FPC_CONF=$cache_config_file_fpc" >> $PROJECTPATH/.env
-    echo "REDIS_FPC_BINDED_PORT=$redis_fpc_port" >> $PROJECTPATH/.env
-    echo "" >> $PROJECTPATH/.env
+    echo "REDIS_FPC_VERSION=$resp_version_fpc" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "REDIS_FPC_CONF=$cache_config_file_fpc" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "REDIS_FPC_BINDED_PORT=$redis_fpc_port" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "" >> $ENVIRONMENTVARIABLESFILESAMPLE
 
     # Control will enter here if $PATH_CONFIG_REDIS doesn't exist.
     if [ ! -d "$PATH_CONFIG_REDIS" ]; then

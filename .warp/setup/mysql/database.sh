@@ -61,21 +61,21 @@ then
     mysql_config_file=$( warp_question_ask_default "Archivo de configuracion de MySQL? $(warp_message_info [./.warp/docker/config/mysql/conf.d]) " "./.warp/docker/config/mysql/conf.d" )
     warp_message_info2 "Archivo de configuracion seleccionado: $mysql_config_file"
 
-    cat $PROJECTPATH/.warp/setup/mysql/tpl/database.yml >> $PROJECTPATH/docker-compose.yml
-    cat $PROJECTPATH/.warp/setup/mysql/tpl/database_enviroment_root.yml >> $PROJECTPATH/docker-compose.yml
+    cat $PROJECTPATH/.warp/setup/mysql/tpl/database.yml >> $DOCKERCOMPOSEFILE
+    cat $PROJECTPATH/.warp/setup/mysql/tpl/database_enviroment_root.yml >> $DOCKERCOMPOSEFILE
 
-    echo "# MySQL Configuration" >> $PROJECTPATH/.env
-    echo "MYSQL_VERSION=$mysql_version" >> $PROJECTPATH/.env
-    echo "MYSQL_CONFIG_FILE=$mysql_config_file" >> $PROJECTPATH/.env
-    echo "DATABASE_BINDED_PORT=$mysql_binded_port" >> $PROJECTPATH/.env
-    echo "DATABASE_ROOT_PASSWORD=$mysql_root_password" >> $PROJECTPATH/.env
+    echo "# MySQL Configuration" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "MYSQL_VERSION=$mysql_version" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "MYSQL_CONFIG_FILE=$mysql_config_file" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "DATABASE_BINDED_PORT=$mysql_binded_port" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "DATABASE_ROOT_PASSWORD=$mysql_root_password" >> $ENVIRONMENTVARIABLESFILESAMPLE
 
-    cat $PROJECTPATH/.warp/setup/mysql/tpl/database_enviroment_default.yml >> $PROJECTPATH/docker-compose.yml
-    echo "DATABASE_NAME=$mysql_name_database" >> $PROJECTPATH/.env
-    echo "DATABASE_USER=$mysql_user_database" >> $PROJECTPATH/.env
-    echo "DATABASE_PASSWORD=$mysql_password_database" >> $PROJECTPATH/.env
+    cat $PROJECTPATH/.warp/setup/mysql/tpl/database_enviroment_default.yml >> $DOCKERCOMPOSEFILE
+    echo "DATABASE_NAME=$mysql_name_database" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "DATABASE_USER=$mysql_user_database" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "DATABASE_PASSWORD=$mysql_password_database" >> $ENVIRONMENTVARIABLESFILESAMPLE
 
-    cat $PROJECTPATH/.warp/setup/mysql/tpl/database_volumes_networks.yml >> $PROJECTPATH/docker-compose.yml
+    cat $PROJECTPATH/.warp/setup/mysql/tpl/database_volumes_networks.yml >> $DOCKERCOMPOSEFILE
 
     cp -R ./.warp/setup/mysql/config/ ./.warp/docker/config/mysql/
 fi; 

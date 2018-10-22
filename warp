@@ -1,22 +1,23 @@
 #!/bin/bash
 
-
-# Check availability of docker
-hash docker 2>/dev/null || { echo >&2 "$SCRIPTNAME requires \"docker\""; exit 1; }
-
-# Check availability of docker-compose
-hash docker-compose 2>/dev/null || { echo >&2 "$SCRIPTNAME requires \"docker-compose\""; exit 1; }
-
+# PROJECTPATH contains the full
+# directory path of the project itself
+PROJECTPATH=$(pwd)
 
 # SCRIPTNAME contains the name
 # of the current script (e.g. "server")
 SCRIPTNAME="bin/$(basename $0)"
 
-# PROJECTPATH contains the full
-# directory path of the project itself
-PROJECTPATH=$(pwd)
+# Check availability of docker
+hash docker 2>/dev/null || { echo >&2 "warp framework requires \"docker\""; exit 1; }
+
+# Check availability of docker-compose
+hash docker-compose 2>/dev/null || { echo >&2 "warp framework requires \"docker-compose\""; exit 1; }
 
 include_warp_framework() {
+    
+    # INCLUDE VARIABLES
+    . "$PROJECTPATH/.warp/variables.sh"
     # INCLUDE WARP FRAMEWORK
     . "$PROJECTPATH/.warp/includes.sh"
 }
@@ -38,17 +39,17 @@ init_main() {
     warp_banner
     echo ""
 
-    if [ -f $PROJECTPATH/docker-compose.yml ] || [ -f $PROJECTPATH/.env ]; then
+    if [ -f $DOCKERCOMPOSEFILE ] || [ -f $ENVIRONMENTVARIABLESFILE ]; then
         
         INFRA_FILES_ERROR="FALSE"
-        if [ -f $PROJECTPATH/docker-compose.yml ]; then
+        if [ -f $DOCKERCOMPOSEFILE ]; then
             echo "* Comprobando archivo docker-compose.yml $(warp_message_ok [ok])"
         else
             INFRA_FILES_ERROR="TRUE"
             echo "* Comprobando archivo docker-compose.yml $(warp_message_error [error])"
         fi; 
         
-        if [ -f $PROJECTPATH/.env ]; then
+        if [ -f $ENVIRONMENTVARIABLESFILE ]; then
             echo "* Comprobando archivo .env $(warp_message_ok [ok])"
         else
             INFRA_FILES_ERROR="TRUE"
@@ -57,23 +58,23 @@ init_main() {
 
         if [ $INFRA_FILES_ERROR = "TRUE" ]; then
             warp_message_warn "-- Ambos archivos (docker-compose.yml y .env) deben existir para poder inicializar los contenedores. $(warp_message_error [error])"
-            warp_message_warn "-- Si queres inicializar un proyecto desde cero, elimina los archivos docker-compose.yml y .env. Luego vovle a ejecutar el comando init "
+            warp_message_warn "-- Si queres inicializar un proyecto desde cero, elimina los archivos docker-compose.yml y .env. Luego volve a ejecutar el comando init "
             exit
         fi;
         
     else
         warp_message_info "* Comenzando la instalacion inicial\n"
-        . "$PROJECTPATH/.warp/setup/init/service.sh"
-        . "$PROJECTPATH/.warp/setup/webserver/webserver.sh"
-        . "$PROJECTPATH/.warp/setup/php/php.sh"
-        . "$PROJECTPATH/.warp/setup/init/volumes.sh"
-        . "$PROJECTPATH/.warp/setup/mysql/database.sh"
-        . "$PROJECTPATH/.warp/setup/elasticsearch/elasticsearch.sh"
-        . "$PROJECTPATH/.warp/setup/redis/redis.sh"
-        . "$PROJECTPATH/.warp/setup/init/networks.sh"
+        . "$WARPFOLDER/setup/init/service.sh"
+        . "$WARPFOLDER/setup/webserver/webserver.sh"
+        . "$WARPFOLDER/setup/php/php.sh"
+        . "$WARPFOLDER/setup/init/volumes.sh"
+        . "$WARPFOLDER/setup/mysql/database.sh"
+        . "$WARPFOLDER/setup/elasticsearch/elasticsearch.sh"
+        . "$WARPFOLDER/setup/redis/redis.sh"
+        . "$WARPFOLDER/setup/init/networks.sh"
     fi;
 
-    if [ -d $PROJECTPATH/.warp ]; then
+    if [ -d $WARPFOLDER ]; then
         echo "* Directorio .warp $(warp_message_ok [ok])"
 
         echo "* Aplicando permisos a subdirectorios .warp/docker/volumes $(warp_message_ok [ok])"
