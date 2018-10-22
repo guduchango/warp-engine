@@ -1,14 +1,14 @@
 #!/bin/bash
 
 # INCLUDE WARP FRAMEWORK
-. "$PROJECTPATH/.warp/lib/version.sh"
-. "$PROJECTPATH/.warp/lib/commit.sh"
-. "$PROJECTPATH/.warp/lib/env.sh"
-. "$PROJECTPATH/.warp/lib/message.sh"
-. "$PROJECTPATH/.warp/lib/net.sh"
-. "$PROJECTPATH/.warp/lib/question.sh"
-. "$PROJECTPATH/.warp/lib/check.sh"
-. "$PROJECTPATH/.warp/lib/banner.sh"
+. "$WARPFOLDER/lib/version.sh"
+. "$WARPFOLDER/lib/commit.sh"
+. "$WARPFOLDER/lib/env.sh"
+. "$WARPFOLDER/lib/message.sh"
+. "$WARPFOLDER/lib/net.sh"
+. "$WARPFOLDER/lib/question.sh"
+. "$WARPFOLDER/lib/check.sh"
+. "$WARPFOLDER/lib/banner.sh"
 
 # INCLUDE COMMANDS
-. "$PROJECTPATH/.warp/bin/mysql.sh"
+. "$WARPFOLDER/bin/mysql.sh"

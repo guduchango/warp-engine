@@ -13,7 +13,7 @@
 ##
 warp_check_env_file()
 {
-    if [ -f $PROJECTPATH/.env ]; then
+    if [ -f $ENVIRONMENTVARIABLESFILE ]; then
         return 0 #TRUE
     else
         return 1 #FALSE
@@ -34,7 +34,7 @@ warp_check_env_file()
 ##
 warp_check_yaml_file()
 {
-    if [ -f $PROJECTPATH/docker-compose.yml ]; then
+    if [ -f $DOCKERCOMPOSEFILE ]; then
         return 0 #TRUE
     else
         return 1 #FALSE

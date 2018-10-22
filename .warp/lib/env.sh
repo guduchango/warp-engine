@@ -16,8 +16,7 @@
 ##
 function warp_env_read_var()
 {
-    #cat $PROJECTPATH/.env
-    _VAR=$(grep "^$1=" $PROJECTPATH/.env | cut -d '=' -f2)
+    _VAR=$(grep "^$1=" $ENVIRONMENTVARIABLESFILE | cut -d '=' -f2)
     echo $_VAR
 }
 
