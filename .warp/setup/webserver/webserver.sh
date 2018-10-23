@@ -34,7 +34,7 @@ then
             https_port=$( warp_question_ask_default "En que puerto queres levantar el Webserver HTTPS? $(warp_message_info [443]) " "443" )
 
             if ! warp_net_port_in_use $https_port ; then
-                warp_message_info2 "El puerto seleccionado es: $https_port, el mapeo de puertos es: $(warp_message_bold '127.0.0.1:'$https_port' ---> container_ip:443')"
+                warp_message_info2 "El puerto seleccionado es: $https_port, el mapeo de puertos es: $(warp_message_bold '127.0.0.1:'$https_port' ---> container_ip:'$https_port)"
                 break
             else
                 warp_message_warn "El puerto $https_port esta ocupado, elige otro\n"

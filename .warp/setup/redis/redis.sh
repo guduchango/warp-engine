@@ -5,7 +5,6 @@ warp_message_info "Configurando el Servicio de Redis"
 
 PATH_CONFIG_REDIS='./.warp/docker/config/redis'
 MSJ_REDIS_VERSION_HUB=1 # True
-echo "#Config Redis" >> $ENVIRONMENTVARIABLESFILESAMPLE
 
 respuesta_redis_cache=$( warp_question_ask_default "Queres agregar un servicio para Redis Cache? $(warp_message_info [Y/n]) " "Y" )
 if [ "$respuesta_redis_cache" = "Y" ] || [ "$respuesta_redis_cache" = "y" ]
@@ -14,6 +13,7 @@ then
     if [ $MSJ_REDIS_VERSION_HUB = 1 ] ; then
         warp_message_info2 "Podes chequear las versiones de Redis disponibles acá: $(warp_message_info '[ https://hub.docker.com/_/redis/ ]')"
         MSJ_REDIS_VERSION_HUB=0 # False
+        echo "#Config Redis" >> $ENVIRONMENTVARIABLESFILESAMPLE
     fi
   
     resp_version_cache=$( warp_question_ask_default "Que version de Redis cache queres utilizar? $(warp_message_info [3.2.10-alpine]) " "3.2.10-alpine" )
@@ -55,6 +55,7 @@ then
     if [ $MSJ_REDIS_VERSION_HUB = 1 ] ; then
         warp_message_info2 "Podes chequear las versiones de Redis disponibles acá: $(warp_message_info '[ https://hub.docker.com/_/redis/ ]')"
         MSJ_REDIS_VERSION_HUB=0 # False
+        echo "#Config Redis" >> $ENVIRONMENTVARIABLESFILESAMPLE
     fi
   
     resp_version_session=$( warp_question_ask_default "Que version de Redis Session queres utilizar? $(warp_message_info [3.2.10-alpine]) " "3.2.10-alpine" )
@@ -96,6 +97,7 @@ then
     if [ $MSJ_REDIS_VERSION_HUB = 1 ] ; then
         warp_message_info2 "Podes chequear las versiones de Redis disponibles acá: $(warp_message_info '[ https://hub.docker.com/_/redis/ ]')"
         MSJ_REDIS_VERSION_HUB=0 # False
+        echo "#Config Redis" >> $ENVIRONMENTVARIABLESFILESAMPLE
     fi
 
     resp_version_fpc=$( warp_question_ask_default "Que version de Redis FPC queres utilizar? $(warp_message_info [3.2.10-alpine]) " "3.2.10-alpine" )

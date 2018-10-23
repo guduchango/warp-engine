@@ -1,10 +1,9 @@
-warp_message ""
-warp_message_warn "Configurando archivo $ENVIRONMENTVARIABLESFILESAMPLE como variable de entorno"
+warp_message_info "Configurando archivo $ENVIRONMENTVARIABLESFILESAMPLE como variable de entorno"
 sleep 1
 cp $ENVIRONMENTVARIABLESFILESAMPLE $ENVIRONMENTVARIABLESFILE
 warp_message_ok "Archivo creado $ENVIRONMENTVARIABLESFILE"
 
-warp_message_warn "Preparando archivos para .gitignore"
+warp_message_info "Preparando archivos para .gitignore"
 sleep 1
 
 warp_message_ok "Datos agregados en $GITIGNOREFILE"
