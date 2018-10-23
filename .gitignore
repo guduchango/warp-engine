@@ -1,6 +1,7 @@
 /.idea
 /.vscode
 /.env
+/.env.sample
 /docker-compose.yml
 .DS_Store
 dist/warp

@@ -68,3 +68,36 @@ function warp_net_port_in_use() {
     fi
 
 }
+
+##
+# Check if a given number ip is used by an container 
+# Use:
+#    if ! warp_net_ip_in_use 172.10.0.10 ; then
+#        echo "Free IP"
+#    else
+#        echo "Bussy IP"
+#    fi;
+#
+# Globals:
+#   None
+# Arguments:
+#   $1 IP number. Ex. 172.10.0.10
+# Returns:
+#   0 when IP is in use
+#   1 when IP is free
+##
+function warp_net_ip_in_use() {
+    CHECK_IP_ADDRESS=$1
+
+    raw=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' `docker ps -qa` | grep $CHECK_IP_ADDRESS)
+
+#    if [[ "$raw" = "" ]]; then
+#        return 1 #IP in free
+#    else
+#        return 0 #IP is bussy
+#    fi
+
+    echo $raw
+
+    return 1
+}
