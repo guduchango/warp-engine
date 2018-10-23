@@ -17,5 +17,4 @@
     depends_on:
       - php
     networks:
-      - sharednet
       - back

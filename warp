@@ -65,13 +65,15 @@ init_main() {
     else
         warp_message_info "* Comenzando la instalacion inicial\n"
         . "$WARPFOLDER/setup/init/service.sh"
+        . "$WARPFOLDER/setup/init/networks.sh"
         . "$WARPFOLDER/setup/webserver/webserver.sh"
         . "$WARPFOLDER/setup/php/php.sh"
         . "$WARPFOLDER/setup/init/volumes.sh"
         . "$WARPFOLDER/setup/mysql/database.sh"
         . "$WARPFOLDER/setup/elasticsearch/elasticsearch.sh"
         . "$WARPFOLDER/setup/redis/redis.sh"
-        . "$WARPFOLDER/setup/init/networks.sh"
+        . "$WARPFOLDER/setup/init/networks-yml.sh"
+        . "$WARPFOLDER/setup/init/info.sh"
     fi;
 
     if [ -d $WARPFOLDER ]; then

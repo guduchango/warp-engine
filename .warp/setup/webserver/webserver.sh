@@ -1,5 +1,6 @@
 #!/bin/bash +x
 
+warp_message_warn ""
 warp_message_info "Configurando el Servidor Web - Nginx"
 
 respuesta=$( warp_question_ask_default "Queres agregar un servidor web (Nginx)? $(warp_message_info [Y/n]) " "Y" )
@@ -42,7 +43,7 @@ then
     else 
         while : ; do
             echo ""
-            http_container_ip=$( warp_question_ask_default "Ingrese numero de IP para asignar al contenedor? $(warp_message_info [172.20.0.10]) " "172.20.0.10" )
+            http_container_ip=$( warp_question_ask_default "Ingrese numero de IP para asignar al contenedor? $(warp_message_info '[rango 172.50.0.1 - 172.50.0.255]') " "172.50.0.10" )
 
             #CHECK IP is bussy
             if ! warp_net_ip_in_use $http_container_ip ; then
