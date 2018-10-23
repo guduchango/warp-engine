@@ -10,11 +10,23 @@ then
     nginx_virtual_host=$( warp_question_ask_default "Cual es el virtual host? $(warp_message_info [local.sample.com]) " "local.sample.com" )
   
     useproxy=1 #False
-    resp_reverse_proxy=$( warp_question_ask_default "Queres configurar una ip estatica para soportar mas de un proyecto en paralelo? $(warp_message_info [Y/n]) " "Y" )
-    if [ "$resp_reverse_proxy" = "Y" ] || [ "$resp_reverse_proxy" = "y" ]
-    then
-        useproxy=0 #True
-    fi;
+
+    case "$(uname -s)" in
+        Darwin)
+        # autodetect docker in Mac
+            warp_message_warn "Docker for Mac no soporta más de un proyecto en paralelo"
+            warp_message_info "Iniciando proyecto simple.."
+            sleep 2
+        ;;
+        Linux)
+            resp_reverse_proxy=$( warp_question_ask_default "Queres configurar una ip estatica para soportar mas de un proyecto en paralelo? $(warp_message_info [y/N]) " "N" )
+            if [ "$resp_reverse_proxy" = "Y" ] || [ "$resp_reverse_proxy" = "y" ]
+            then
+                # autodetect docker in linux
+                useproxy=0 #True
+            fi;
+        ;;
+    esac
 
     if [ $useproxy = 1 ]; then
         while : ; do
