@@ -1,5 +1,5 @@
 warp_message ""
-warp_message_info "Configurando servicios de Red en contenedores"
+warp_message "* Configurando servicios de Red en contenedores $(warp_message_ok [ok])"
 sleep 1
 
     cat $PROJECTPATH/.warp/setup/init/tpl/networks.yml >> $DOCKERCOMPOSEFILE

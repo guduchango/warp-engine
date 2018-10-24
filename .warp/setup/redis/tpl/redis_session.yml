@@ -2,7 +2,7 @@
   redis-session:
     image: redis:${REDIS_SESSION_VERSION}
     ports:
-      - "${REDIS_SESSION_BINDED_PORT}:6379"
+      - "6379"
     volumes:
       - "./.warp/docker/volumes/redis-session:/data"
     #  - ${REDIS_SESSION_CONF}:/usr/local/etc/redis/redis.conf

@@ -75,12 +75,7 @@ init_main() {
         . "$WARPFOLDER/setup/init/info.sh"
     fi;
 
-    if [ -d $WARPFOLDER ]; then
-        echo "* Directorio .warp $(warp_message_ok [ok])"
-
-        echo "* Aplicando permisos a subdirectorios .warp/docker/volumes $(warp_message_ok [ok])"
-    fi;
-    
+    # TODO: CHECK FOLDERS AND PERMISSIONS 
 
 }
 
@@ -89,9 +84,13 @@ help() {
     if [ -d $PROJECTPATH/.warp ]; then
         warp_banner
 
+        . $PROJECTPATH/.warp/bin/main-help.sh
+
         for filename in $PROJECTPATH/.warp/bin/*_help.sh; do
             . "$filename"
         done
+
+        . $PROJECTPATH/.warp/bin/usage-help.sh
     else
         echo "WARP-ENGINE has not been installed yet. Please run ./warp init"
     fi;

@@ -1,3 +1,3 @@
 #!/bin/bash
 
-warp_message_ok   " composer           $(warp_message 'ejecute composer inside container')"
+warp_message_info   " composer           $(warp_message 'execute composer inside container')"

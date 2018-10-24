@@ -60,7 +60,7 @@ function warp_net_port_in_use() {
     #     return 0 #Port is bussy
     # fi
 
-    nc -z 127.0.0.1 $port
+    nc -z 127.0.0.1 $port 2>/dev/null
     if [ $? -eq 0 ]; then
         return 0
     else

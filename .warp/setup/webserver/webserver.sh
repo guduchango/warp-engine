@@ -1,7 +1,17 @@
 #!/bin/bash +x
 
-warp_message_warn ""
+warp_message ""
 warp_message_info "Configurando el Servidor Web - Nginx"
+warp_message ""
+
+    case "$(uname -s)" in
+        Darwin)
+        # autodetect docker in Mac
+            warp_message_warn "Warning! Docker for Mac no soporta más de un proyecto en paralelo"
+            warp_message_info "Iniciando proyecto simple.."
+            warp_message ""
+        ;;
+    esac
 
 respuesta=$( warp_question_ask_default "Queres agregar un servidor web (Nginx)? $(warp_message_info [Y/n]) " "Y" )
 if [ "$respuesta" = "Y" ] || [ "$respuesta" = "y" ]
@@ -12,12 +22,6 @@ then
     useproxy=1 #False
 
     case "$(uname -s)" in
-        Darwin)
-        # autodetect docker in Mac
-            warp_message_warn "Docker for Mac no soporta más de un proyecto en paralelo"
-            warp_message_info "Iniciando proyecto simple.."
-            sleep 2
-        ;;
         Linux)
             resp_reverse_proxy=$( warp_question_ask_default "Queres configurar una ip estatica para soportar mas de un proyecto en paralelo? $(warp_message_info [y/N]) " "N" )
             if [ "$resp_reverse_proxy" = "Y" ] || [ "$resp_reverse_proxy" = "y" ]
@@ -30,7 +34,6 @@ then
 
     if [ $useproxy = 1 ]; then
         while : ; do
-            echo ""
             http_port=$( warp_question_ask_default "Mapeo del puerto 80 del contenedor al puerto de tu maquina (host)? $(warp_message_info [80]) " "80" )
 
             #CHECK si port es numero antes de llamar a warp_net_port_in_use
@@ -43,7 +46,7 @@ then
         done
 
         while : ; do
-            https_port=$( warp_question_ask_default "En que puerto queres levantar el Webserver HTTPS? $(warp_message_info [443]) " "443" )
+            https_port=$( warp_question_ask_default "Mapeo del puerto 443 del contenedor al puerto de tu maquina (host)? $(warp_message_info [443]) " "443" )
 
             if ! warp_net_port_in_use $https_port ; then
                 warp_message_info2 "El puerto seleccionado es: $https_port, el mapeo de puertos es: $(warp_message_bold '127.0.0.1:'$https_port' ---> container_ip:'$https_port)"
@@ -54,7 +57,6 @@ then
         done
     else 
         while : ; do
-            echo ""
             http_container_ip=$( warp_question_ask_default "Ingrese numero de IP para asignar al contenedor? $(warp_message_info '[rango 172.50.0.1 - 172.50.0.255]') " "172.50.0.10" )
 
             #CHECK IP is bussy

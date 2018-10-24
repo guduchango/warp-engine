@@ -1,25 +1,21 @@
-warp_message_info "Configurando archivo $ENVIRONMENTVARIABLESFILESAMPLE como variable de entorno"
-sleep 1
+warp_message "* Configurando archivos de variables de entorno $(warp_message_ok [ok])"
 cp $ENVIRONMENTVARIABLESFILESAMPLE $ENVIRONMENTVARIABLESFILE
-warp_message_ok "Archivo creado $ENVIRONMENTVARIABLESFILE"
 
-warp_message_info "Preparando archivos para .gitignore"
-sleep 1
-
-warp_message_ok "Datos agregados en $GITIGNOREFILE"
-sleep 1
-
+warp_message "* Preparando archivos para .gitignore $(warp_message_ok [ok])"
 # FILES TO ADD GITIGNORE
-echo "/.warp"  >> $GITIGNOREFILE
-echo "/.env"   >> $GITIGNOREFILE
-echo "/dist"   >> $GITIGNOREFILE
-echo "/images" >> $GITIGNOREFILE
-echo "!/.env.sample" >> $GITIGNOREFILE
+echo "# WARN FRAMEWORK"  >> $GITIGNOREFILE
+echo "!/warp"            >> $GITIGNOREFILE
+echo "!/.warp"           >> $GITIGNOREFILE
+echo "/.env"             >> $GITIGNOREFILE
+echo "!/.env.sample"     >> $GITIGNOREFILE
+echo "!/docker-compose-warn.yml" >> $GITIGNOREFILE
+echo "/.warp/docker/volumes"     >> $GITIGNOREFILE
+
+warp_message "* Directorio .warp $(warp_message_ok [ok])"
+warp_message "* Aplicando permisos a subdirectorios .warp/docker/volumes $(warp_message_ok [ok])"
 
 warp_message ""
 
 warp_message_warn "Para iniciar los contenedores: $(warp_message_bold 'warp start')"
-sleep 2
-
-# View default options
-help
+warp_message_warn "Para más información: $(warp_message_bold 'warp help')"
+sleep 1
