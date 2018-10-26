@@ -39,29 +39,33 @@ init_main() {
     warp_banner
     echo ""
 
-    if [ -f $DOCKERCOMPOSEFILE ] || [ -f $ENVIRONMENTVARIABLESFILE ]; then
-        
-        INFRA_FILES_ERROR="FALSE"
-        if [ -f $DOCKERCOMPOSEFILE ]; then
-            echo "* Comprobando archivo docker-compose.yml $(warp_message_ok [ok])"
-        else
-            INFRA_FILES_ERROR="TRUE"
-            echo "* Comprobando archivo docker-compose.yml $(warp_message_error [error])"
-        fi; 
-        
-        if [ -f $ENVIRONMENTVARIABLESFILE ]; then
-            echo "* Comprobando archivo .env $(warp_message_ok [ok])"
-        else
-            INFRA_FILES_ERROR="TRUE"
-            echo "* Comprobando archivo .env $(warp_message_error [error])"
-        fi;
+    if [ -f $DOCKERCOMPOSEFILE ] || [ -f $ENVIRONMENTVARIABLESFILESAMPLE ]; then
 
-        if [ $INFRA_FILES_ERROR = "TRUE" ]; then
-            warp_message_warn "-- Ambos archivos (docker-compose.yml y .env) deben existir para poder inicializar los contenedores. $(warp_message_error [error])"
-            warp_message_warn "-- Si queres inicializar un proyecto desde cero, elimina los archivos docker-compose.yml y .env. Luego volve a ejecutar el comando init "
-            exit
-        fi;
-        
+        if [ ! -f $ENVIRONMENTVARIABLESFILE ]; then
+            # INIT MODE DEVELOPER
+            . "$WARPFOLDER/setup/init/developer.sh"
+        else
+            INFRA_FILES_ERROR="FALSE"
+            if [ -f $DOCKERCOMPOSEFILE ]; then
+                echo "* Comprobando archivo docker-compose.yml $(warp_message_ok [ok])"
+            else
+                INFRA_FILES_ERROR="TRUE"
+                echo "* Comprobando archivo docker-compose.yml $(warp_message_error [error])"
+            fi; 
+            
+            if [ -f $ENVIRONMENTVARIABLESFILE ]; then
+                echo "* Comprobando archivo .env $(warp_message_ok [ok])"
+            else
+                INFRA_FILES_ERROR="TRUE"
+                echo "* Comprobando archivo .env $(warp_message_error [error])"
+            fi;
+
+            if [ $INFRA_FILES_ERROR = "TRUE" ]; then
+                warp_message_warn "-- Ambos archivos (docker-compose.yml y .env) deben existir para poder inicializar los contenedores. $(warp_message_error [error])"
+                # warp_message_warn "-- Si queres inicializar un proyecto desde cero, elimina los archivos docker-compose.yml y .env. Luego volve a ejecutar el comando init "
+                exit
+            fi
+        fi
     else
         warp_message_info "* Comenzando la instalacion inicial\n"
         . "$WARPFOLDER/setup/init/service.sh"
@@ -71,7 +75,7 @@ init_main() {
         . "$WARPFOLDER/setup/mysql/database.sh"
         . "$WARPFOLDER/setup/elasticsearch/elasticsearch.sh"
         . "$WARPFOLDER/setup/redis/redis.sh"
-        . "$WARPFOLDER/setup/init/networks.sh"
+        . "$WARPFOLDER/setup/networks/networks.sh"
         . "$WARPFOLDER/setup/init/info.sh"
     fi;
 
@@ -84,13 +88,15 @@ help() {
     if [ -d $PROJECTPATH/.warp ]; then
         warp_banner
 
-        . $PROJECTPATH/.warp/bin/main-help.sh
+        . $PROJECTPATH/.warp/bin/help.sh
+
+        help_main
 
         for filename in $PROJECTPATH/.warp/bin/*_help.sh; do
             . "$filename"
         done
 
-        . $PROJECTPATH/.warp/bin/usage-help.sh
+        help_usage
     else
         echo "WARP-ENGINE has not been installed yet. Please run ./warp init"
     fi;

@@ -1,5 +1,9 @@
 warp_message "* Configurando archivos de variables de entorno $(warp_message_ok [ok])"
-cp $ENVIRONMENTVARIABLESFILESAMPLE $ENVIRONMENTVARIABLESFILE
+# cp $ENVIRONMENTVARIABLESFILESAMPLE $ENVIRONMENTVARIABLESFILE
+
+    # SET PERMISSIONS FOLDERS
+    mkdir -p $PROJECTPATH/.warp/docker/volumes/nginx/logs
+    chmod -R 777 $PROJECTPATH/.warp/docker/volumes/nginx
 
 warp_message "* Preparando archivos para .gitignore $(warp_message_ok [ok])"
 # FILES TO ADD GITIGNORE
