@@ -40,3 +40,16 @@ warp_check_yaml_file()
         return 1 #FALSE
     fi;
 }
+
+# WARNING MESSAGE IF TO USE MAC 
+# MacOS not soport multi-projects
+warp_check_os_mac() {
+    case "$(uname -s)" in
+        Darwin)
+        # autodetect docker in Mac
+            warp_message_warn "Warning! Docker for Mac no soporta más de un proyecto en paralelo"
+            warp_message_info "Iniciando proyecto simple.."
+            warp_message ""
+        ;;
+    esac    
+}

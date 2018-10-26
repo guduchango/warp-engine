@@ -1,6 +1,6 @@
 #!/bin/bash +x
 
-echo ""
+warp_message ""
 warp_message_info "Configurando el Servicio de MySQL"
 
 respuesta=$( warp_question_ask_default "Queres agregar un servicio MySQL? $(warp_message_info [Y/n]) " "Y" )

@@ -1,3 +1,5 @@
+  back:
+    driver: bridge
     ipam:
       config:
         - subnet: ${NETWORK_SUBNET}

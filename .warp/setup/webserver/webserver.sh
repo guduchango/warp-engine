@@ -4,14 +4,7 @@ warp_message ""
 warp_message_info "Configurando el Servidor Web - Nginx"
 warp_message ""
 
-    case "$(uname -s)" in
-        Darwin)
-        # autodetect docker in Mac
-            warp_message_warn "Warning! Docker for Mac no soporta más de un proyecto en paralelo"
-            warp_message_info "Iniciando proyecto simple.."
-            warp_message ""
-        ;;
-    esac
+    warp_check_os_mac
 
 respuesta=$( warp_question_ask_default "Queres agregar un servidor web (Nginx)? $(warp_message_info [Y/n]) " "Y" )
 if [ "$respuesta" = "Y" ] || [ "$respuesta" = "y" ]
@@ -38,7 +31,7 @@ then
 
             #CHECK si port es numero antes de llamar a warp_net_port_in_use
             if ! warp_net_port_in_use $http_port ; then
-                warp_message_info2 "El puerto seleccionado es: $http_port, el mapeo de puertos es: $(warp_message_bold '127.0.0.1:'$http_port' ---> container_ip:80')"
+                warp_message_info2 "El puerto seleccionado es: $http_port, el mapeo de puertos es: $(warp_message_bold '127.0.0.1:'$http_port' ---> container_ip:'$http_port)"
                 break
             else
                 warp_message_warn "El puerto $http_port esta ocupado, elige otro\n"
@@ -75,13 +68,16 @@ then
     echo "" >> $ENVIRONMENTVARIABLESFILESAMPLE
     echo "# NGINX Configuration" >> $ENVIRONMENTVARIABLESFILESAMPLE
 
+    cat $PROJECTPATH/.warp/setup/webserver/tpl/webserver.yml >> $DOCKERCOMPOSEFILE
+
     if [ $useproxy = 0 ]; then
-        cat $PROJECTPATH/.warp/setup/webserver/tpl/webserver_reverse_proxy.yml >> $DOCKERCOMPOSEFILE
+        echo "HTTP_BINDED_PORT=80" >> $ENVIRONMENTVARIABLESFILESAMPLE
+        echo "HTTPS_BINDED_PORT=443" >> $ENVIRONMENTVARIABLESFILESAMPLE
         echo "HTTP_HOST_IP=$http_container_ip" >> $ENVIRONMENTVARIABLESFILESAMPLE
     else
         echo "HTTP_BINDED_PORT=$http_port" >> $ENVIRONMENTVARIABLESFILESAMPLE
         echo "HTTPS_BINDED_PORT=$https_port" >> $ENVIRONMENTVARIABLESFILESAMPLE
-        cat $PROJECTPATH/.warp/setup/webserver/tpl/webserver.yml >> $DOCKERCOMPOSEFILE
+        echo "HTTP_HOST_IP=0.0.0.0" >> $ENVIRONMENTVARIABLESFILESAMPLE
     fi;
 
     echo "VIRTUAL_HOST=$nginx_virtual_host" >> $ENVIRONMENTVARIABLESFILESAMPLE
