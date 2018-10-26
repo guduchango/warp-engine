@@ -1,3 +1,3 @@
 #!/bin/bash
 
-warp_message_ok   " php                $(warp_message 'service of php')"
+warp_message_info   " php                $(warp_message 'service of php')"

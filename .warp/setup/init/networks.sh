@@ -1,13 +1,21 @@
-warp_message_info "Configurando un servicio de Red interno"
+warp_message ""
+warp_message "* Configurando servicios de Red en contenedores $(warp_message_ok [ok])"
+sleep 1
 
-    echo ""
-    network_subnet=$( warp_question_ask_default "Elija un rango de IP para la Subnet Interna de los contenedores: $(warp_message_info [172.20.0.0/16]) " "172.20.0.0/16" )
-    warp_message_info2 "Subnet Seleccionada: $network_subnet"
-    network_name=$( warp_question_ask_default "Elija un nombre para la Red Interna: $(warp_message_info [SummaNET]) " "SummaNET" )
-    warp_message_info2 "Nombre de Red seleccionado: $network_name"
+    cat $PROJECTPATH/.warp/setup/init/tpl/networks.yml >> $DOCKERCOMPOSEFILE
 
-    echo "# Network information" >> $ENVIRONMENTVARIABLESFILESAMPLE
-    echo "NETWORK_NAME=$network_name" >> $ENVIRONMENTVARIABLESFILESAMPLE
-    echo "NETWORK_SUBNET=$network_subnet" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    # LOAD VARIABLES SAMPLE
+    . $ENVIRONMENTVARIABLESFILESAMPLE
 
-cat $PROJECTPATH/.warp/setup/init/tpl/networks.yml >> $DOCKERCOMPOSEFILE
+    if [ ! -z "$HTTP_HOST_IP" ] ; then
+
+        A="$(echo $HTTP_HOST_IP | cut -f1 -d . )"
+        B="$(echo $HTTP_HOST_IP | cut -f2 -d . )"
+        C="$(echo $HTTP_HOST_IP | cut -f3 -d . )"
+        
+        echo "# Network information" >> $ENVIRONMENTVARIABLESFILESAMPLE
+        echo "NETWORK_SUBNET=$A.$B.$C.0/24" >> $ENVIRONMENTVARIABLESFILESAMPLE
+        echo "NETWORK_GATEWAY=$A.$B.$C.1" >> $ENVIRONMENTVARIABLESFILESAMPLE
+
+        cat $PROJECTPATH/.warp/setup/init/tpl/subnet.yml >> $DOCKERCOMPOSEFILE
+    fi    

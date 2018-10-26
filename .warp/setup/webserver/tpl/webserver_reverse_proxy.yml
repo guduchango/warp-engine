@@ -17,5 +17,5 @@
     depends_on:
       - php
     networks:
-      - sharednet
-      - back
+      back:
+          ipv4_address: ${HTTP_HOST_IP}
