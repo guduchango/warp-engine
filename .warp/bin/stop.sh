@@ -37,3 +37,16 @@ isRunning() {
     echo false
   fi
 }
+
+function stop_main()
+{
+    case "$1" in
+        stop)
+          stop
+        ;;
+
+        *)
+          . "$PROJECTPATH/.warp/bin/stop_help.sh"
+        ;;
+    esac
+}

@@ -45,11 +45,11 @@ function start_main()
 {
     case "$1" in
         start)
-        start
+          start
         ;;
 
         *)
-            . "$PROJECTPATH/.warp/bin/start_help.sh"
+          . "$PROJECTPATH/.warp/bin/start_help.sh"
         ;;
     esac
 }

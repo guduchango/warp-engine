@@ -175,10 +175,21 @@ case "$1" in
     mysql_main $*
     ;;
 
+    start)
+    start_main $*
+    ;;
+
+    stop)
+    stop_main $*
+    ;;
+
     info)
     warp_info
     ;;
 
+    composer)
+    composer_main $*
+    ;;
 
     test)
     func_test
