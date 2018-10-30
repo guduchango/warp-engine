@@ -50,14 +50,18 @@ then
         done
     else 
         while : ; do
-            http_container_ip=$( warp_question_ask_default "Ingrese numero de IP para asignar al contenedor? $(warp_message_info '[rango 172.50.0.1 - 172.50.0.255]') " "172.50.0.10" )
+            http_container_ip=$( warp_question_ask_default "Ingrese numero de IP para asignar al contenedor? $(warp_message_info '[rango 172.50.0.'$MIN_RANGE_IP' - 172.50.0.255]') " "172.50.0.$MIN_RANGE_IP" )
 
-            #CHECK IP is bussy
-            if ! warp_net_ip_in_use $http_container_ip ; then
-                warp_message_info2 "La IP seleccionada es: $http_container_ip, la configuracion para el archivo /etc/hosts es: $(warp_message_bold $http_container_ip' '$nginx_virtual_host)"
-                break
-            else
-                warp_message_warn "La IP $http_container_ip esta ocupada en otro proyecto, elija otra\n"
+            if warp_check_range_ip $http_container_ip ; then
+                RANGE=$(echo $http_container_ip | cut -f1 -f2 -f3 -d .)
+                warp_message_warn "Debe seleccionar una IP entre: $RANGE.$MIN_RANGE_IP y $RANGE.255\n"
+            else 
+                if ! warp_net_ip_in_use $http_container_ip ; then
+                    warp_message_info2 "La IP seleccionada es: $http_container_ip, la configuracion para el archivo /etc/hosts es: $(warp_message_bold $http_container_ip' '$nginx_virtual_host)"
+                    break
+                else
+                    warp_message_warn "La IP $http_container_ip esta ocupada en otro proyecto, elija otra\n"
+                fi;
             fi;
         done
     fi; 
@@ -84,9 +88,9 @@ then
     echo "NGINX_CONFIG_FILE=$nginx_config_file" >> $ENVIRONMENTVARIABLESFILESAMPLE
     echo "" >> $ENVIRONMENTVARIABLESFILESAMPLE
 
-    mkdir -p ./.warp/docker/volumes/nginx/logs
-    chmod -R 777 ./.warp/docker/volumes/nginx
+    mkdir -p $PROJECTPATH/.warp/docker/volumes/nginx/logs
+    chmod -R 777 $PROJECTPATH/.warp/docker/volumes/nginx
 
-    cp -R ./.warp/setup/webserver/config/nginx ./.warp/docker/config/nginx
+    cp -R $PROJECTPATH/.warp/setup/webserver/config/nginx $PROJECTPATH/.warp/docker/config/nginx
 fi; 
 
