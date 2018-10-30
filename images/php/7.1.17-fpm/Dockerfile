@@ -84,7 +84,7 @@ RUN apt-get update && \
 
 # Install Node, NVM, NPM and Grunt
 
-RUN curl -sL https://deb.nodesource.com/setup_6.x | bash - \
+RUN curl -sL https://deb.nodesource.com/setup_11.x | bash - \
     && apt-get install -y nodejs build-essential \
     && curl https://raw.githubusercontent.com/creationix/nvm/v0.16.1/install.sh | sh \
     && npm i -g grunt-cli yarn
@@ -96,7 +96,7 @@ RUN apt-get install -y fontforge ttfautohint
 RUN rm -rf /var/www/html/*
 
 # Create .ssh file
-# RUN mkdir /var/www/.ssh
+RUN mkdir -p /var/www/.ssh
 
 # Set www-data as owner for /var/www
 RUN chown -R www-data:www-data /var/www/
@@ -104,7 +104,7 @@ RUN chmod -R g+w /var/www/
 
 # Create log folders
 RUN rm -rf /var/log/php-fpm # Delete if exist
-RUN mkdir /var/log/php-fpm && \
+RUN mkdir -p /var/log/php-fpm && \
     touch /var/log/php-fpm/access.log && \
     touch /var/log/php-fpm/fpm-error.log && \
     touch /var/log/php-fpm/fpm-php.www.log && \
