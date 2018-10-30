@@ -7,7 +7,10 @@
     # - .env.sample
     # - ! .env
 
-cp $ENVIRONMENTVARIABLESFILESAMPLE $ENVIRONMENTVARIABLESFILE
+[ ! -f $ENVIRONMENTVARIABLESFILE ] && cp $ENVIRONMENTVARIABLESFILESAMPLE $ENVIRONMENTVARIABLESFILE
+
+    # LOAD VARIABLES SAMPLE
+    . $ENVIRONMENTVARIABLESFILESAMPLE
 
 warp_message ""
 warp_message_info "Configurando el Servidor Web - Nginx"
@@ -53,14 +56,18 @@ warp_message ""
         done
     else 
         while : ; do
-            http_container_ip=$( warp_question_ask_default "Ingrese numero de IP para asignar al contenedor? $(warp_message_info '[rango 172.50.0.1 - 172.50.0.255]') " "172.50.0.10" )
+            http_container_ip=$( warp_question_ask_default "Ingrese numero de IP para asignar al contenedor? $(warp_message_info '[rango 172.50.0.'$MIN_RANGE_IP' - 172.50.0.255]') " "172.50.0.$MIN_RANGE_IP" )
 
-            #CHECK IP is bussy
-            if ! warp_net_ip_in_use $http_container_ip ; then
-                warp_message_info2 "La IP seleccionada es: $http_container_ip, la configuracion para el archivo /etc/hosts es: $(warp_message_bold $http_container_ip' '$nginx_virtual_host)"
-                break
-            else
-                warp_message_warn "La IP $http_container_ip esta ocupada en otro proyecto, elija otra\n"
+            if warp_check_range_ip $http_container_ip ; then
+                RANGE=$(echo $http_container_ip | cut -f1 -f2 -f3 -d .)
+                warp_message_warn "Debe seleccionar una IP entre: $RANGE.$MIN_RANGE_IP y $RANGE.255\n"
+            else 
+                if ! warp_net_ip_in_use $http_container_ip ; then
+                    warp_message_info2 "La IP seleccionada es: $http_container_ip, la configuracion para el archivo /etc/hosts es: $(warp_message_bold $http_container_ip' '$VIRTUAL_HOST)"
+                    break
+                else
+                    warp_message_warn "La IP $http_container_ip esta ocupada en otro proyecto, elija otra\n"
+                fi;
             fi;
         done
     fi; 
@@ -81,9 +88,6 @@ warp_message ""
         fi;
     done
 
-    # LOAD VARIABLES SAMPLE
-    . $ENVIRONMENTVARIABLESFILESAMPLE
-    
     HTTP_HOST_OLD="HTTP_HOST_IP=$HTTP_HOST_IP"
     HTTP_BINDED_OLD="HTTP_BINDED_PORT=$HTTP_BINDED_PORT"
     HTTPS_BINDED_OLD="HTTPS_BINDED_PORT=$HTTPS_BINDED_PORT"
@@ -102,9 +106,9 @@ warp_message ""
 
         # Modify Gateway and Subnet
 
-        A="$(echo $HTTP_HOST_NEW | cut -f1 -d . )"
-        B="$(echo $HTTP_HOST_NEW | cut -f2 -d . )"
-        C="$(echo $HTTP_HOST_NEW | cut -f3 -d . )"
+        A="$(echo $http_container_ip | cut -f1 -d . )"
+        B="$(echo $http_container_ip | cut -f2 -d . )"
+        C="$(echo $http_container_ip | cut -f3 -d . )"
         
         NETWORK_SUBNET_NEW="NETWORK_SUBNET=$A.$B.$C.0\/24"
         NETWORK_GATEWAY_NEW="NETWORK_GATEWAY=$A.$B.$C.1"

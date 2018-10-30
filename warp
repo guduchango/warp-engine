@@ -47,22 +47,22 @@ init_main() {
         else
             INFRA_FILES_ERROR="FALSE"
             if [ -f $DOCKERCOMPOSEFILE ]; then
-                echo "* Comprobando archivo docker-compose.yml $(warp_message_ok [ok])"
+                echo "* Comprobando archivo $(basename $DOCKERCOMPOSEFILE) $(warp_message_ok [ok])"
             else
                 INFRA_FILES_ERROR="TRUE"
-                echo "* Comprobando archivo docker-compose.yml $(warp_message_error [error])"
+                echo "* Comprobando archivo $(basename $DOCKERCOMPOSEFILE) $(warp_message_error [error])"
             fi; 
             
             if [ -f $ENVIRONMENTVARIABLESFILE ]; then
-                echo "* Comprobando archivo .env $(warp_message_ok [ok])"
+                echo "* Comprobando archivo $(basename $ENVIRONMENTVARIABLESFILE) $(warp_message_ok [ok])"
             else
                 INFRA_FILES_ERROR="TRUE"
-                echo "* Comprobando archivo .env $(warp_message_error [error])"
+                echo "* Comprobando archivo $(basename $ENVIRONMENTVARIABLESFILE) $(warp_message_error [error])"
             fi;
 
             if [ $INFRA_FILES_ERROR = "TRUE" ]; then
-                warp_message_warn "-- Ambos archivos (docker-compose.yml y .env) deben existir para poder inicializar los contenedores. $(warp_message_error [error])"
-                # warp_message_warn "-- Si queres inicializar un proyecto desde cero, elimina los archivos docker-compose.yml y .env. Luego volve a ejecutar el comando init "
+                warp_message_warn "-- Ambos archivos ($(basename $DOCKERCOMPOSEFILE) y $(basename $ENVIRONMENTVARIABLESFILE)) deben existir para poder inicializar los contenedores. $(warp_message_error [error])"
+                # warp_message_warn "-- Si queres inicializar un proyecto desde cero, elimina los archivos $(basename $DOCKERCOMPOSEFILE) y $(basename $ENVIRONMENTVARIABLESFILE). Luego volve a ejecutar el comando init "
                 exit
             fi
         fi

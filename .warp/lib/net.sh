@@ -88,20 +88,54 @@ function warp_net_port_in_use() {
 ##
 function warp_net_ip_in_use() {
     CHECK_IP_ADDRESS=$1
+	PS=$(docker ps -aq)
 
-    raw=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' `docker ps -qa` | grep $CHECK_IP_ADDRESS)
+#	if [ ! -z $PS ]
+#	then
+#		raw=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' `docker ps -qa` | grep -w $CHECK_IP_ADDRESS)
+#	fi
 
-#    if [[ "$raw" = "" ]]; then
-#        return 1 #IP in free
-#    else
-#        return 0 #IP is bussy
-#    fi
-
-    echo $raw
-
-    return 1
+#	if [ ! -z $raw ]
+#	then
+#		return 0
+#	else 
+		return 1
+#	fi
 }
 
+##
+# Check if a given rango ip is used by an container 
+# Use:
+#    if warp_check_range_ip 172.10.0.10 ; then
+#        echo "wrong range"
+#    else
+#        echo "range Ok"
+#    fi;
+#
+# Globals:
+#   None
+# Arguments:
+#   $1 IP number. Ex. 172.10.0.10
+# Returns:
+#   0 when range is wrong
+#   1 when range is Ok
+##
+function warp_check_range_ip() {
+
+    CHECK_RANGE_IP=$1
+
+	D=$(echo $CHECK_RANGE_IP | cut -f4 -d . )
+
+	if [ $D -lt $MIN_RANGE_IP ] ; then 
+		return 0
+	else
+		return 1
+	fi
+}
+
+##
+# change settings from mono to multi project
+#
 warp_network_multi() {
 
 	cat <<-'EOF' | sed -e 's/^ *//' -e 's/ *$//' | ed -s $DOCKERCOMPOSEFILE
@@ -133,6 +167,9 @@ warp_network_multi() {
 
 }
 
+##
+# change settings from multi to mono project
+#
 warp_network_mono() {
 
 	cat <<-'EOF' | sed -e 's/^ *//' -e 's/ *$//' | ed -s $DOCKERCOMPOSEFILE
@@ -163,3 +200,24 @@ warp_network_mono() {
 	EOF
 
 }
+
+#warp_network_create() {
+
+#	CHECK "Subnet": "172.33.50.0/24" $NETWORK_NAME
+
+#	networkOutput=$(docker network inspect --format "{{.Name}}" $NETWORK_NAME)
+#	if [ "$networkOutput" != "$NETWORK_SUBNET" ]; then
+#		docker network rm $NETWORK_NAME
+#		docker network create --subnet=$NETWORK_SUBNET $NETWORK_NAME
+#	fi
+
+#	docker network create --subnet=$NETWORK_SUBNET $NETWORK_NAME
+
+#	docker network rm $NETWORK_NAME ;
+
+#	docker network create \
+#	--driver=bridge \
+#	--subnet=$NETWORK_SUBNET \
+#	--ip-range=$NETWORK_SUBNET \
+#	--gateway=$NETWORK_GATEWAY \
+#}

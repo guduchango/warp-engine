@@ -32,3 +32,9 @@ WARPFOLDER="$PROJECTPATH/.warp"
 
 # FILE TO GIT IGNORE
 GITIGNOREFILE="$PROJECTPATH/.gitignore"
+
+# NETWORK NAME
+NETWORK_NAME="warp_net"
+
+# Set minimum range IP in Containers
+MIN_RANGE_IP=20
