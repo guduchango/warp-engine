@@ -192,6 +192,11 @@ case "$1" in
     composer_main $*
     ;;
 
+    reset)
+    shift 1
+    reset_main $*
+    ;;
+
     *)
     help
     ;;
