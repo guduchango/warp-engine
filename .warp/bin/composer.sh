@@ -1,45 +1,37 @@
 #!/bin/bash
 
+    # IMPORT HELP
+
+    . "$PROJECTPATH/.warp/bin/composer_help.sh"
+
 function copy_ssh_id() {
-	docker-compose -f $DOCKERCOMPOSEFILE exec php bash -c "mkdir -p /var/www/.ssh/"
-	docker cp $HOME/.ssh/id_rsa "$(docker-compose -f $DOCKERCOMPOSEFILE ps -q php)":/var/www/.ssh/id_rsa
-	docker-compose -f $DOCKERCOMPOSEFILE exec --user=root php bash -c "chown -R www-data:www-data /var/www/.ssh/id_rsa"
+  if [ -f $HOME/.ssh/id_rsa ] ; then
+    docker-compose -f $DOCKERCOMPOSEFILE exec php bash -c "mkdir -p /var/www/.ssh/"
+    docker cp $HOME/.ssh/id_rsa "$(docker-compose -f $DOCKERCOMPOSEFILE ps -q php)":/var/www/.ssh/id_rsa
+    docker-compose -f $DOCKERCOMPOSEFILE exec --user=root php bash -c "chown -R www-data:www-data /var/www/.ssh/id_rsa"
+  fi;
 }
 
 function composer() {
 
-  if [ $(isRunning) = false ]; then
-    echo >&2 "Warp framework Not running";
+  if [ $(warp_check_is_running) = false ]; then
+    warp_message_error "Warp framework no está corriendo";
     exit 1;
   fi
 
-  copy_ssh_id
-
-  if [ "$1" = "-T" ]; then
-    shift 1
-    docker-compose -f $DOCKERCOMPOSEFILE exec -T php bash -c "composer $@"
+  if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
+        
+      composer_help_usage
   else
-    docker-compose -f $DOCKERCOMPOSEFILE exec php bash -c "composer $@"
+    copy_ssh_id
+
+    if [ "$1" = "-T" ]; then
+      shift 1
+      docker-compose -f $DOCKERCOMPOSEFILE exec -T php bash -c "composer $@"
+    else
+      docker-compose -f $DOCKERCOMPOSEFILE exec php bash -c "composer $@"
+    fi;
   fi;
-}
-
-#######################################
-# Check if the docker-components are running
-# Globals:
-#   DOCKERCOMPOSEFILE
-# Arguments:
-#   None
-# Returns:
-#   true|false
-#######################################
-isRunning() {
-  dockerStatusOutput=$(docker-compose -f $DOCKERCOMPOSEFILE ps -q | xargs docker inspect --format='{{ .State.Status }}' | sed 's:^/::g' | grep -i running)
-  outputSize=${#dockerStatusOutput}
-  if [ "$outputSize" -gt 0 ]; then
-    echo true
-  else
-    echo false
-  fi
 }
 
 function composer_main()
@@ -51,7 +43,7 @@ function composer_main()
         ;;
 
         *)
-		      . "$PROJECTPATH/.warp/bin/composer_help.sh"
+		      composer_help_usage
         ;;
     esac
 }

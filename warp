@@ -94,6 +94,7 @@ help() {
 
         for filename in $PROJECTPATH/.warp/bin/*_help.sh; do
             . "$filename"
+            $(basename $filename .sh) # execute default function
         done
 
         help_usage
@@ -189,14 +190,6 @@ case "$1" in
 
     composer)
     composer_main $*
-    ;;
-
-    test)
-    func_test
-    ;;
-
-    setup)
-    warp_setup
     ;;
 
     *)

@@ -1,5 +1,9 @@
 #!/bin/bash
 
+    # IMPORT HELP
+
+    . "$PROJECTPATH/.warp/bin/start_help.sh"
+
 #######################################
 # Start the server and all of its
 # components
@@ -10,46 +14,33 @@
 # Returns:
 #   None
 #######################################
-start() {
+function start() {
 
-  if [ $(isRunning) = true ]; then
-    echo >&2 "The component are already running";
+  if [ $(warp_check_is_running) = true ]; then
+    warp_message_warn "Warp Framework ya fué iniciado";
     exit 1;
   fi
 
-  # start docker containers
-  docker-compose -f $DOCKERCOMPOSEFILE up -d
-}
-
-#######################################
-# Check if the docker-components are running
-# Globals:
-#   DOCKERCOMPOSEFILE
-# Arguments:
-#   None
-# Returns:
-#   true|false
-#######################################
-isRunning() {
-  #dockerStatusOutput=$(docker-compose -f $DOCKERCOMPOSEFILE ps -q)
-  dockerStatusOutput=$(docker-compose -f $DOCKERCOMPOSEFILE ps -q | xargs docker inspect --format='{{ .State.Status }}' | sed 's:^/::g' | grep -i running)
-  outputSize=${#dockerStatusOutput}
-  if [ "$outputSize" -gt 0 ]; then
-    echo true
+  if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
+        
+      start_help_usage
   else
-    echo false
-  fi
+
+    # start docker containers
+    docker-compose -f $DOCKERCOMPOSEFILE up -d
+  fi;
 }
 
 function start_main()
 {
     case "$1" in
         start)
-          start
+          shift 1
+          start $*
         ;;
 
         *)
-          . "$PROJECTPATH/.warp/bin/start_help.sh"
+          start_help_usage
         ;;
     esac
 }

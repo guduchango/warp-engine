@@ -1,7 +1,10 @@
 #!/bin/bash
 
+    # IMPORT HELP
 
-function info()
+    . "$PROJECTPATH/.warp/bin/mysql_help.sh"
+
+function mysql_info()
 {
     if ! warp_check_env_file ; then
         warp_message_error "No se encuentra el archivo .env"
@@ -24,24 +27,85 @@ function info()
 
 }
 
+function mysql_connect() 
+{
+
+    if [ "$1" = "-h" ] || [ "$1" = "--help" ]
+    then
+        mysql_dump_help 
+        exit 1
+    fi;
+
+    DATABASE_ROOT_PASSWORD=$(warp_env_read_var DATABASE_ROOT_PASSWORD)
+
+    docker-compose -f $DOCKERCOMPOSEFILE exec mysql bash -c "mysql -uroot -p$DATABASE_ROOT_PASSWORD"
+}
+
+function mysql_dump() 
+{
+
+    if [ "$1" = "-h" ] || [ "$1" = "--help" ]
+    then
+        mysql_dump_help 
+        exit 1
+    fi;
+
+    DATABASE_ROOT_PASSWORD=$(warp_env_read_var DATABASE_ROOT_PASSWORD)
+
+    db="$@"
+
+    [ -z "$db" ] && warp_message_error "Debe ingresar el nombre de la base de datos" && exit 1
+    
+    docker-compose -f $DOCKERCOMPOSEFILE exec mysql bash -c "mysqldump -uroot -p$DATABASE_ROOT_PASSWORD $db 2> /dev/null"
+}
+
+function mysql_import()
+{
+
+    if [ "$1" = "-h" ] || [ "$1" = "--help" ]
+    then
+        mysql_import_help 
+        exit 1
+    fi;
+
+    db=$1
+
+    [ -z "$db" ] && warp_message_error "Debe ingresar el nombre de la base de datos" && exit 1
+
+    DATABASE_ROOT_PASSWORD=$(warp_env_read_var DATABASE_ROOT_PASSWORD)
+    
+    docker-compose -f $DOCKERCOMPOSEFILE exec -T mysql bash -c "mysql -uroot -p$DATABASE_ROOT_PASSWORD $db 2> /dev/null"
+
+}
 
 function mysql_main()
 {
     case "$1" in
         dump)
-        echo "MYSQL DUMP"
+            shift 1
+            mysql_dump $*
         ;;
 
         info)
-        info
+            mysql_info
+        ;;
+
+        import)
+            shift 1
+            mysql_import $*
         ;;
 
         connect)
-            echo "MYSQL CONN"
+            shift 1
+            mysql_connect $*
         ;;
 
-        *)
-            . "$PROJECTPATH/.warp/bin/mysql_help.sh"
+        -h | --help)
+            mysql_help_usage
+        ;;
+
+        *)            
+            mysql_help_usage
         ;;
     esac
 }

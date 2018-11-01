@@ -1,6 +1,6 @@
 #!/bin/bash
 
-help_main() {
+function help_main() {
 
     warp_message_info "Utility for controlling dockerized projects\n"
 
@@ -24,7 +24,7 @@ help_main() {
     warp_message_info ""
 }
 
-help_usage() {
+function help_usage() {
 
     warp_message ""
     warp_message_info "Help:"

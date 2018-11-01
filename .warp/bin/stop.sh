@@ -1,5 +1,9 @@
 #!/bin/bash
 
+    # IMPORT HELP
+
+    . "$PROJECTPATH/.warp/bin/stop_help.sh"
+
 #######################################
 # Stop the server
 # Globals:
@@ -10,43 +14,30 @@
 #   None
 
 ##-c ####################-c #################
-stop() {
+function stop() {
 
-  if [ $(isRunning) = true ]; then
-    # stop all docker containers
-    docker-compose -f $DOCKERCOMPOSEFILE down
-  fi
-
-}
-
-#######################################
-# Check if the docker-components are running
-# Globals:
-#   DOCKERCOMPOSEFILE
-# Arguments:
-#   None
-# Returns:
-#   true|false
-#######################################
-isRunning() {
-  dockerStatusOutput=$(docker-compose -f $DOCKERCOMPOSEFILE ps -q | xargs docker inspect --format='{{ .State.Status }}' | sed 's:^/::g' | grep -i running)
-  outputSize=${#dockerStatusOutput}
-  if [ "$outputSize" -gt 0 ]; then
-    echo true
+  if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
+        
+      stop_help_usage
   else
-    echo false
-  fi
+    if [ $(warp_check_is_running) = true ]; then
+      # stop all docker containers
+      docker-compose -f $DOCKERCOMPOSEFILE down
+    fi
+  fi;
+
 }
 
 function stop_main()
 {
     case "$1" in
         stop)
-          stop
+          shift 1
+          stop $*
         ;;
 
         *)
-          . "$PROJECTPATH/.warp/bin/stop_help.sh"
+          stop_help_usage
         ;;
     esac
 }
