@@ -12,3 +12,6 @@
 
 # INCLUDE COMMANDS
 . "$WARPFOLDER/bin/mysql.sh"
+. "$WARPFOLDER/bin/start.sh"
+. "$WARPFOLDER/bin/stop.sh"
+. "$WARPFOLDER/bin/composer.sh"

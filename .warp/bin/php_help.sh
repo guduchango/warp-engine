@@ -1,3 +1,6 @@
 #!/bin/bash
 
-warp_message_info   " php                $(warp_message 'service of php')"
+function php_help()
+{
+    warp_message_info   " php                $(warp_message 'service of php')"
+}

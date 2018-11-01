@@ -94,6 +94,7 @@ help() {
 
         for filename in $PROJECTPATH/.warp/bin/*_help.sh; do
             . "$filename"
+            $(basename $filename .sh) # execute default function
         done
 
         help_usage
@@ -175,17 +176,20 @@ case "$1" in
     mysql_main $*
     ;;
 
+    start)
+    start_main $*
+    ;;
+
+    stop)
+    stop_main $*
+    ;;
+
     info)
     warp_info
     ;;
 
-
-    test)
-    func_test
-    ;;
-
-    setup)
-    warp_setup
+    composer)
+    composer_main $*
     ;;
 
     *)
