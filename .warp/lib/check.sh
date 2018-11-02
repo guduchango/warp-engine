@@ -64,11 +64,16 @@ warp_check_os_mac() {
 #   true|false
 #######################################
 warp_check_is_running() {
-  dockerStatusOutput=$(docker-compose -f $DOCKERCOMPOSEFILE ps -q | xargs docker inspect --format='{{ .State.Status }}' | sed 's:^/::g' | grep -i running)
-  outputSize=${#dockerStatusOutput}
-  if [ "$outputSize" -gt 0 ]; then
-    echo true
-  else
-    echo false
-  fi
+    if [ -f $DOCKERCOMPOSEFILE ]
+    then
+        dockerStatusOutput=$(docker-compose -f $DOCKERCOMPOSEFILE ps -q | xargs docker inspect --format='{{ .State.Status }}' | sed 's:^/::g' | grep -i running)
+        outputSize=${#dockerStatusOutput}
+        if [ "$outputSize" -gt 0 ]; then
+            echo true
+        else
+            echo false
+        fi
+    else
+        echo false
+    fi
 }

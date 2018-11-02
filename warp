@@ -201,6 +201,10 @@ case "$1" in
     composer_main $*
     ;;
 
+    magento)
+    magento_main $*
+    ;;
+
     reset)
     shift 1
     reset_main $*

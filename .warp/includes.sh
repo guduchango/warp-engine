@@ -19,3 +19,4 @@
 . "$WARPFOLDER/bin/reset.sh"
 . "$WARPFOLDER/bin/php.sh"
 . "$WARPFOLDER/bin/ps.sh"
+. "$WARPFOLDER/bin/magento.sh"
