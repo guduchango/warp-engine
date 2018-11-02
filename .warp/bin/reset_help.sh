@@ -4,29 +4,22 @@ function reset_help_usage()
 {
     warp_message ""
     warp_message_info "Usage:"
-    warp_message      " warp reset command [options] [arguments]"
+    warp_message      " warp reset [options]"
     warp_message ""
 
     warp_message ""
     warp_message_info "Options:"
     warp_message_info   " -h, --help         $(warp_message 'display this help message')"
-    warp_message_info   " --hard             $(warp_message 'display this help message')"
+    warp_message_info   " --hard             $(warp_message 'remove all configurations')"
     warp_message ""
-
-    warp_message_info "Available commands:"
-
-    warp_message_info   " project            $(warp_message 'display info available')"
 
     warp_message ""
     warp_message_info "Help:"
-    warp_message " warp reset project --help"
+    warp_message " remove configurations for mysql and nginx, so you can reconfigure them"
+    warp_message " if usage flag --hard delete all the settings and you must reconfigure the project"
+    warp_message " warp reset --help"
 
     warp_message ""
-}
-
-function reset_project_help()
-{
-    warp_message " Reset Projects --hard"
 }
 
 function reset_help()

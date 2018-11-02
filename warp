@@ -210,7 +210,6 @@ case "$1" in
     ;;
 
     reset)
-    shift 1
     reset_main $*
     ;;
 
