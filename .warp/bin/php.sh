@@ -13,7 +13,12 @@ function php_connect_ssh()
         exit 1
     fi;
 
-    if [ "$1" = "root" ]
+    if [ $(warp_check_is_running) = false ]; then
+        warp_message_warn "Warp Framework no esta iniciado";
+        exit 1;
+    fi
+
+    if [ "$1" = "--root" ]
     then
         docker-compose -f $DOCKERCOMPOSEFILE exec -uroot php bash
     else
