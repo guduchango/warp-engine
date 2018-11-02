@@ -189,6 +189,10 @@ case "$1" in
     stop_main $*
     ;;
 
+    ps)
+    ps_main $*
+    ;;
+
     info)
     warp_info
     ;;

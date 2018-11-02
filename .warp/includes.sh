@@ -18,3 +18,4 @@
 . "$WARPFOLDER/bin/composer.sh"
 . "$WARPFOLDER/bin/reset.sh"
 . "$WARPFOLDER/bin/php.sh"
+. "$WARPFOLDER/bin/ps.sh"
