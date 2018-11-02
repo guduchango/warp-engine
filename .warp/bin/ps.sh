@@ -13,7 +13,12 @@ function ps_command()
         exit 1
     fi;
 
-        docker-compose -f $DOCKERCOMPOSEFILE ps
+    if [ $(warp_check_is_running) = false ]; then
+        warp_message_warn "Warp Framework no esta iniciado";
+        exit 1;
+    fi
+
+    docker-compose -f $DOCKERCOMPOSEFILE ps
 }
 
 function ps_main()
