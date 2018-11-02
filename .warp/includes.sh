@@ -17,3 +17,4 @@
 . "$WARPFOLDER/bin/stop.sh"
 . "$WARPFOLDER/bin/composer.sh"
 . "$WARPFOLDER/bin/reset.sh"
+. "$WARPFOLDER/bin/php.sh"

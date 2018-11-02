@@ -176,6 +176,11 @@ case "$1" in
     mysql_main $*
     ;;
 
+    php)
+    shift 1
+    php_main $*
+    ;;
+
     start)
     start_main $*
     ;;
