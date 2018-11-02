@@ -41,6 +41,18 @@ function mysql_connect()
     docker-compose -f $DOCKERCOMPOSEFILE exec mysql bash -c "mysql -uroot -p$DATABASE_ROOT_PASSWORD"
 }
 
+function mysql_connect_ssh() 
+{
+
+    if [ "$1" = "-h" ] || [ "$1" = "--help" ]
+    then
+        mysql_ssh_help 
+        exit 1
+    fi;
+
+    docker-compose -f $DOCKERCOMPOSEFILE exec mysql bash
+}
+
 function mysql_dump() 
 {
 
@@ -98,6 +110,11 @@ function mysql_main()
         connect)
             shift 1
             mysql_connect $*
+        ;;
+
+        ssh)
+            shift 1
+            mysql_connect_ssh $*
         ;;
 
         -h | --help)
