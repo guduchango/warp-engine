@@ -21,3 +21,4 @@
 . "$WARPFOLDER/bin/ps.sh"
 . "$WARPFOLDER/bin/magento.sh"
 . "$WARPFOLDER/bin/logs.sh"
+. "$WARPFOLDER/bin/elasticsearch.sh"

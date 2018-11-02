@@ -209,6 +209,11 @@ case "$1" in
     logs_main $*
     ;;
 
+    elasticsearch)
+    shift 1
+    elasticsearch_main $*
+    ;;
+
     reset)
     reset_main $*
     ;;
