@@ -20,3 +20,4 @@
 . "$WARPFOLDER/bin/php.sh"
 . "$WARPFOLDER/bin/ps.sh"
 . "$WARPFOLDER/bin/magento.sh"
+. "$WARPFOLDER/bin/logs.sh"

@@ -205,6 +205,10 @@ case "$1" in
     magento_main $*
     ;;
 
+    logs)
+    logs_main $*
+    ;;
+
     reset)
     shift 1
     reset_main $*
