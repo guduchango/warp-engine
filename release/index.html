@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>WARP Engine Download Page</title>
+
+    <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon" />
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
+
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet">
+
+    <style>
+    /* Space out content a bit */
+body {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* Everything but the jumbotron gets side spacing for mobile first views */
+.header,
+.marketing,
+.footer {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+/* Custom page header */
+.header {
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e5e5e5;
+}
+/* Make the masthead heading the same height as the navigation */
+.header h3 {
+  margin-top: 0;
+  margin-bottom: 0;
+  line-height: 40px;
+}
+
+/* Custom page footer */
+.footer {
+  padding-top: 19px;
+  color: #777;
+  border-top: 1px solid #e5e5e5;
+}
+
+.footer a {
+    color:rgb(122, 188, 49);
+}
+
+.footer a:hover {
+    color:rgb(66, 102, 25);
+    text-decoration: underline;
+}
+
+.download-icon {
+    font-size: 14pt;
+    color:rgb(122, 188, 49);
+}
+
+a.download-icon:hover {
+    font-size: 14pt;
+    color:rgb(66, 102, 25);
+}
+
+
+.download-version {
+    float: left;
+}
+
+table.table thead tr th.download-icon {
+    font-size: 20pt;
+}
+
+/* Customize container */
+@media (min-width: 768px) {
+  .container {
+    max-width: 730px;
+  }
+}
+.container-narrow > hr {
+  margin: 30px 0;
+}
+
+/* Main marketing message and sign up button */
+.jumbotron {
+  text-align: center;
+  border-bottom: 0px;
+}
+/*.jumbotron .btn {
+  padding: 14px 24px;
+  font-size: 21px;
+}*/
+
+/* Supporting marketing content */
+.marketing {
+  margin: 40px 0;
+}
+.marketing p + h4 {
+  margin-top: 28px;
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+  /* Remove the padding we set earlier */
+  .header,
+  .marketing,
+  .footer {
+    padding-right: 0;
+    padding-left: 0;
+  }
+  /* Space out the masthead */
+  .header {
+    margin-bottom: 30px;
+  }
+  /* Remove the bottom border on the jumbotron for visual effect */
+  .jumbotron {
+    border-bottom: 0;
+    background-color: #ffffff;
+  }
+}
+    </style>
+  </head>
+  <body>
+    
+    <div class="container">
+        <div class="header clearfix">
+          <img src="https://s3.amazonaws.com/summa-core-team/images/summa_logo_horizontal_rgb.jpg" width="120">
+        </div>
+  
+        <div class="jumbotron">
+          <h1>WARP Engine</h1>
+          <p class="lead">Download latest version of warp-engine a service helper to speeding up! your development infraestructure</p>
+          <p>
+              <a class="btn btn-success" href="./warp" role="button"><i class="fas fa-cloud-download-alt"></i>&nbsp;Download</a>
+          </p>
+          <h4>Command line install</h4>
+        <pre>curl -L -o warp http://ct.summasolutions.net/warp-engine/warp && chmod 755 warp</pre>
+        <h4>Command line update</h4>
+        <pre>curl -L -o warp http://ct.summasolutions.net/warp-engine/warp && chmod 755 warp && ./warp update</pre>
+  
+        </div>
+        <!--
+        <h2>Older versions</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Version</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+<tr>
+    <th scope="row">2018.10.05</th>
+    <td><a class="download-icon" href="./versions/warp_2018.10.05.bin" ><i class="fas fa-cloud-download-alt"></i></a></td>
+</tr>
+
+            </tbody>
+        </table>
+        -->
+        <footer class="footer">
+          <p>&copy; 2018 <a href="https://www.summasolutions.net" title="Summa Solutions SRL">Summa Solutions SRL.</a></p>
+        </footer>
+  
+      </div> <!-- /container -->
+
+
+
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+  </body>
+</html>
