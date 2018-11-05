@@ -21,5 +21,5 @@ function restart_help_usage()
 
 function restart_help()
 {
-    warp_message ""
+    warp_message_info   " restart            $(warp_message 'restart the server')"
 }

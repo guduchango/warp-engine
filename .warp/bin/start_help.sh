@@ -21,5 +21,5 @@ function start_help_usage()
 
 function start_help()
 {
-    warp_message ""
+    warp_message_info   " start              $(warp_message 'start the server and all of its components')"
 }

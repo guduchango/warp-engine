@@ -25,6 +25,7 @@ function start() {
   if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
         
       start_help_usage
+      exit 1;
   else
 
     # start docker containers

@@ -19,6 +19,7 @@ function stop() {
   if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
         
       stop_help_usage
+      exit 1;
   else
     if [ $(warp_check_is_running) = true ]; then
       # stop all docker containers

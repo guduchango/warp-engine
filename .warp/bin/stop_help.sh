@@ -20,5 +20,5 @@ function stop_help_usage()
 
 function stop_help()
 {
-    warp_message ""
+    warp_message_info   " stop               $(warp_message 'stop the server and all of its components')"
 }
