@@ -49,20 +49,21 @@ setup_help_usage()
         init_help_usage
         exit 1
     else
-        echo "Cuando se ejecuta por primera vez detecta si ya fue instalado, y sino comienza la instalacion del framework"
-        echo "Luego de la instalacion inicial aparece un menú guiado con opciones para crear servicios"
-        echo "Se pueden configurar los siguientes servicios:"
-        echo "1) Servidor Web con Nginx"
-        echo "2) Servicio de PHP"
-        echo "3) Base de datos con MySQL"
-        echo "4) Servicio de elasticsearch"
-        echo "5) Servicio de Redis para cache, session, fpc"
-        echo ""
-        echo "Si el programa detecta que hay una configuracion previa, muestra un menu más corto de opciones, para configurar:"
-        echo "1) Trabajar con uno o varios proyectos en paralelo"
-        echo "2) Configurar puertos de MySQL"
-        echo ""
-        echo "para comenzar ejecute ./warp init"
+
+        echo "  if you run for the first time, the installation of the framework begins"
+        echo "  After the initial installation, a guided menu with options to create services"
+        echo "  The following services can be configured:"
+        echo "  1) Web Server with Nginx"
+        echo "  2) PHP Service"
+        echo "  3) Database with MySQL"
+        echo "  4) Service of elasticsearch"
+        echo "  5) Redis service for cache, session, fpc"
+        echo "  "
+        echo "  If the program detects a previous configuration, it shows a shorter menu of options, to configure:"
+        echo "  1) Work with one or more projects in parallel"
+        echo "  2) Configure MySQL ports"
+        echo "  "
+        echo "  Please run ./warp init"
 
         exit 1
     fi
@@ -119,6 +120,13 @@ usage() {
 
 function warp_info()
 {
+
+    if ! warp_check_env_file ; then
+        warp_message_error "No se encuentra el archivo $(basename $ENVIRONMENTVARIABLESFILE)"
+        exit
+    fi; 
+
+    mysql_main info   
     mysql_main info   
 }
 
