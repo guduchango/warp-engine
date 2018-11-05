@@ -40,7 +40,13 @@ if [ ! -f $WARP_BINARY_FILE ] ; then
 fi
 
 warp_message ""
+if [ ! -z $WARP_DETECT_MODE_TL ] ; then
+    NGINX_CONFIG_FILE=$(warp_env_read_var NGINX_CONFIG_FILE)
+    warp_message_warn "Para terminar de configurar el servidor Web debe configurar el archivo de configuracion de nginx"
+    warp_message_warn "abra el siguiente archivo con cualquier editor: $(warp_message_bold $NGINX_CONFIG_FILE)"
+    warp_message ""
+fi
 
 warp_message_warn "Para iniciar los contenedores: $(warp_message_bold './warp start')"
-warp_message_warn "Para más información: $(warp_message_bold './warp help')"
+warp_message_warn "Para ver información detallada de cada servicio configurado: $(warp_message_bold './warp info')"
 sleep 1

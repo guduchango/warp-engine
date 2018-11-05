@@ -6,7 +6,16 @@ warp_message ""
 
     warp_check_os_mac
 
-respuesta=$( warp_question_ask_default "Queres agregar un servidor web (Nginx)? $(warp_message_info [Y/n]) " "Y" )
+while : ; do
+    respuesta=$( warp_question_ask_default "Queres agregar un servidor web (Nginx)? $(warp_message_info [Y/n]) " "Y" )
+
+    if [ "$respuesta" = "Y" ] || [ "$respuesta" = "y" ] || [ "$respuesta" = "N" ] || [ "$respuesta" = "n" ] ; then
+        break
+    else
+        warp_message_warn "Respuesta Incorrecta, debe seleccionar entre dos opciones: $(warp_message_info [Y/n]) "
+    fi
+done
+
 if [ "$respuesta" = "Y" ] || [ "$respuesta" = "y" ]
 then
 
@@ -67,7 +76,7 @@ then
     fi; 
 
     
-    nginx_config_file=$( warp_question_ask_default "Archivo de configuracion de Nginx? $(warp_message_info [./.warp/docker/config/nginx/sites-enabled/default.conf]) " "./.warp/docker/config/nginx/sites-enabled/default.conf" )
+    nginx_config_file=$( warp_question_ask_default "Cual es el nombre del archivo de configuracion de Nginx? $(warp_message_info '['$nginx_virtual_host'.conf]') " "$nginx_virtual_host.conf" )
     
     echo "" >> $ENVIRONMENTVARIABLESFILESAMPLE
     echo "# NGINX Configuration" >> $ENVIRONMENTVARIABLESFILESAMPLE
@@ -85,12 +94,13 @@ then
     fi;
 
     echo "VIRTUAL_HOST=$nginx_virtual_host" >> $ENVIRONMENTVARIABLESFILESAMPLE
-    echo "NGINX_CONFIG_FILE=$nginx_config_file" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "NGINX_CONFIG_FILE=./.warp/docker/config/nginx/sites-enabled/$nginx_config_file" >> $ENVIRONMENTVARIABLESFILESAMPLE
     echo "" >> $ENVIRONMENTVARIABLESFILESAMPLE
 
     mkdir -p $PROJECTPATH/.warp/docker/volumes/nginx/logs
     chmod -R 777 $PROJECTPATH/.warp/docker/volumes/nginx
 
     cp -R $PROJECTPATH/.warp/setup/webserver/config/nginx $PROJECTPATH/.warp/docker/config/nginx
+    cp $PROJECTPATH/.warp/docker/config/nginx/sites-enabled/default.conf $PROJECTPATH/.warp/docker/config/nginx/sites-enabled/$nginx_config_file
 fi; 
 
