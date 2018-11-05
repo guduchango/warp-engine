@@ -1,6 +1,6 @@
 #!/bin/bash
 
-function start_help_usage()
+function restart_help_usage()
 {
     warp_message ""
     warp_message_info "Usage:"
@@ -19,7 +19,7 @@ function start_help_usage()
 
 }
 
-function start_help()
+function restart_help()
 {
     warp_message ""
 }
