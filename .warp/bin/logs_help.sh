@@ -14,13 +14,14 @@ function logs_help_usage()
 
     warp_message ""
     warp_message_info "Help:"
-    warp_message " allows to see logs in each service, for example php, redis, elasticsearch, web, mysql  "
-    warp_message " if not specify any service shows all logs"
+    warp_message " allows to see containers logs in each service, for example php, redis, elasticsearch, web, mysql  "
+    warp_message " if not specify any service shows all containers logs"
     warp_message ""
 
     warp_message_info "Example:"
-    warp_message " warp logs service_name"
     warp_message " warp logs"
+    warp_message " warp logs php"
+    warp_message " warp logs mysql"
     warp_message " warp logs redis"
     warp_message ""    
 }

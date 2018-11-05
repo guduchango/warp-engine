@@ -22,3 +22,4 @@
 . "$WARPFOLDER/bin/magento.sh"
 . "$WARPFOLDER/bin/logs.sh"
 . "$WARPFOLDER/bin/elasticsearch.sh"
+. "$WARPFOLDER/bin/restart.sh"

@@ -36,6 +36,13 @@ function mysql_connect()
         exit 1
     fi;
 
+    if [ $(warp_check_is_running) = false ]; then
+        warp_message_error "Los contenedores no estan corriendo"
+        warp_message_error "este comando necesita previamente que ejecutes warp start"
+
+        exit 1;
+    fi
+
     DATABASE_ROOT_PASSWORD=$(warp_env_read_var DATABASE_ROOT_PASSWORD)
 
     docker-compose -f $DOCKERCOMPOSEFILE exec mysql bash -c "mysql -uroot -p$DATABASE_ROOT_PASSWORD"
@@ -50,6 +57,13 @@ function mysql_connect_ssh()
         exit 1
     fi;
 
+    if [ $(warp_check_is_running) = false ]; then
+        warp_message_error "Los contenedores no estan corriendo"
+        warp_message_error "este comando necesita previamente que ejecutes warp start"
+
+        exit 1;
+    fi
+
     docker-compose -f $DOCKERCOMPOSEFILE exec mysql bash
 }
 
@@ -61,6 +75,13 @@ function mysql_dump()
         mysql_dump_help 
         exit 1
     fi;
+
+    if [ $(warp_check_is_running) = false ]; then
+        warp_message_error "Los contenedores no estan corriendo"
+        warp_message_error "este comando necesita previamente que ejecutes warp start"
+
+        exit 1;
+    fi
 
     DATABASE_ROOT_PASSWORD=$(warp_env_read_var DATABASE_ROOT_PASSWORD)
 
@@ -79,6 +100,13 @@ function mysql_import()
         mysql_import_help 
         exit 1
     fi;
+
+    if [ $(warp_check_is_running) = false ]; then
+        warp_message_error "Los contenedores no estan corriendo"
+        warp_message_error "este comando necesita previamente que ejecutes warp start"
+
+        exit 1;
+    fi
 
     db=$1
 
@@ -126,4 +154,3 @@ function mysql_main()
         ;;
     esac
 }
-

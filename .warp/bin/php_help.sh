@@ -10,7 +10,6 @@ function php_help_usage()
     warp_message ""
     warp_message_info "Options:"
     warp_message_info   " -h, --help         $(warp_message 'display this help message')"
-    warp_message_info   " --root             $(warp_message 'inside container php as root')"
     warp_message ""
 
     warp_message_info "Available commands:"
@@ -27,6 +26,7 @@ function php_help_usage()
     warp_message_info "Example:"
     warp_message " warp php ssh"
     warp_message " warp php ssh --root"
+    warp_message " warp php ssh --help"
 
     warp_message ""
 
