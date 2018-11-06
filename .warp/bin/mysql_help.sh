@@ -19,6 +19,7 @@ function mysql_help_usage()
     warp_message_info   " dump               $(warp_message 'allows to make a database dump')"
     warp_message_info   " connect            $(warp_message 'connect to mysql command line (shell)')"
     warp_message_info   " import             $(warp_message 'allows to restore a database')"
+    warp_message_info   " ssh                $(warp_message 'connect to mysql by ssh')"
 
     warp_message ""
     warp_message_info "Help:"
@@ -83,6 +84,24 @@ function mysql_connect_help()
     warp_message_info "Example:"
     warp_message " warp mysql connect"
     warp_message " mysql >> show databases;"
+    warp_message ""
+}
+
+function mysql_ssh_help()
+{
+
+    warp_message ""
+    warp_message_info "Usage:"
+    warp_message      " warp mysql ssh"
+    warp_message ""
+
+    warp_message ""
+    warp_message_info "Help:"
+    warp_message " Connect to mysql by ssh "
+    warp_message ""
+
+    warp_message_info "Example:"
+    warp_message " warp mysql ssh"
     warp_message ""
 }
 

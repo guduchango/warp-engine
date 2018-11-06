@@ -15,7 +15,9 @@ function copy_ssh_id() {
 function composer() {
 
   if [ $(warp_check_is_running) = false ]; then
-    warp_message_error "Warp framework no está corriendo";
+    warp_message_error "Los contenedores no estan corriendo"
+    warp_message_error "este comando necesita previamente que ejecutes warp start"
+
     exit 1;
   fi
 

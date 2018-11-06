@@ -6,7 +6,16 @@ warp_message ""
 
     warp_check_os_mac
 
-respuesta=$( warp_question_ask_default "Queres agregar un servidor web (Nginx)? $(warp_message_info [Y/n]) " "Y" )
+while : ; do
+    respuesta=$( warp_question_ask_default "Queres agregar un servidor web (Nginx)? $(warp_message_info [Y/n]) " "Y" )
+
+    if [ "$respuesta" = "Y" ] || [ "$respuesta" = "y" ] || [ "$respuesta" = "N" ] || [ "$respuesta" = "n" ] ; then
+        break
+    else
+        warp_message_warn "Respuesta Incorrecta, debe seleccionar entre dos opciones: $(warp_message_info [Y/n]) "
+    fi
+done
+
 if [ "$respuesta" = "Y" ] || [ "$respuesta" = "y" ]
 then
 
@@ -31,7 +40,7 @@ then
 
             #CHECK si port es numero antes de llamar a warp_net_port_in_use
             if ! warp_net_port_in_use $http_port ; then
-                warp_message_info2 "El puerto seleccionado es: $http_port, el mapeo de puertos es: $(warp_message_bold '127.0.0.1:'$http_port' ---> container_ip:'$http_port)"
+                warp_message_info2 "El puerto seleccionado es: $http_port, la configuracion para el archivo /etc/hosts es: $(warp_message_bold '127.0.0.1 '$nginx_virtual_host)"
                 break
             else
                 warp_message_warn "El puerto $http_port esta ocupado, elige otro\n"
@@ -42,7 +51,7 @@ then
             https_port=$( warp_question_ask_default "Mapeo del puerto 443 del contenedor al puerto de tu maquina (host)? $(warp_message_info [443]) " "443" )
 
             if ! warp_net_port_in_use $https_port ; then
-                warp_message_info2 "El puerto seleccionado es: $https_port, el mapeo de puertos es: $(warp_message_bold '127.0.0.1:'$https_port' ---> container_ip:'$https_port)"
+                warp_message_info2 "El puerto seleccionado es: $https_port, la configuracion para el archivo /etc/hosts es: $(warp_message_bold '127.0.0.1 '$nginx_virtual_host)"
                 break
             else
                 warp_message_warn "El puerto $https_port esta ocupado, elige otro\n"
@@ -67,7 +76,7 @@ then
     fi; 
 
     
-    nginx_config_file=$( warp_question_ask_default "Archivo de configuracion de Nginx? $(warp_message_info [./.warp/docker/config/nginx/sites-enabled/default.conf]) " "./.warp/docker/config/nginx/sites-enabled/default.conf" )
+    nginx_config_file=$( warp_question_ask_default "Cual es el nombre del archivo de configuracion de Nginx? $(warp_message_info '['$nginx_virtual_host'.conf]') " "$nginx_virtual_host.conf" )
     
     echo "" >> $ENVIRONMENTVARIABLESFILESAMPLE
     echo "# NGINX Configuration" >> $ENVIRONMENTVARIABLESFILESAMPLE
@@ -85,12 +94,13 @@ then
     fi;
 
     echo "VIRTUAL_HOST=$nginx_virtual_host" >> $ENVIRONMENTVARIABLESFILESAMPLE
-    echo "NGINX_CONFIG_FILE=$nginx_config_file" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "NGINX_CONFIG_FILE=./.warp/docker/config/nginx/sites-enabled/$nginx_config_file" >> $ENVIRONMENTVARIABLESFILESAMPLE
     echo "" >> $ENVIRONMENTVARIABLESFILESAMPLE
 
     mkdir -p $PROJECTPATH/.warp/docker/volumes/nginx/logs
     chmod -R 777 $PROJECTPATH/.warp/docker/volumes/nginx
 
     cp -R $PROJECTPATH/.warp/setup/webserver/config/nginx $PROJECTPATH/.warp/docker/config/nginx
+    cp $PROJECTPATH/.warp/docker/config/nginx/sites-enabled/default.conf $PROJECTPATH/.warp/docker/config/nginx/sites-enabled/$nginx_config_file
 fi; 
 

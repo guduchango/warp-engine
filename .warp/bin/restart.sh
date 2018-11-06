@@ -2,7 +2,7 @@
 
     # IMPORT HELP
 
-    . "$PROJECTPATH/.warp/bin/stop_help.sh"
+    . "$PROJECTPATH/.warp/bin/restart_help.sh"
 
 #######################################
 # Stop the server
@@ -14,31 +14,28 @@
 #   None
 
 ##-c ####################-c #################
-function stop() {
+function restart_command() {
 
   if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
         
-      stop_help_usage
-      exit 1;
+      restart_help_usage
   else
-    if [ $(warp_check_is_running) = true ]; then
-      # stop all docker containers
-      docker-compose -f $DOCKERCOMPOSEFILE down
-    fi
+    stop_main stop
+    start_main start
   fi;
 
 }
 
-function stop_main()
+function restart_main()
 {
     case "$1" in
-        stop)
+        restart)
           shift 1
-          stop $*
+          restart_command $*
         ;;
 
         *)
-          stop_help_usage
+          restart_help_usage
         ;;
     esac
 }

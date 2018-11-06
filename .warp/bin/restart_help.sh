@@ -1,10 +1,10 @@
 #!/bin/bash
 
-function start_help_usage()
+function restart_help_usage()
 {
     warp_message ""
     warp_message_info "Usage:"
-    warp_message      " warp start [options]"
+    warp_message      " warp restart [options]"
     warp_message ""
 
     warp_message ""
@@ -14,12 +14,12 @@ function start_help_usage()
 
     warp_message ""
     warp_message_info "Help:"
-    warp_message " this command is used to start the services"
+    warp_message " this command is used to restart the services"
     warp_message ""
 
 }
 
-function start_help()
+function restart_help()
 {
-    warp_message_info   " start              $(warp_message 'start the server and all of its components')"
+    warp_message_info   " restart            $(warp_message 'restart the server')"
 }

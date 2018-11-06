@@ -17,13 +17,15 @@
 function start() {
 
   if [ $(warp_check_is_running) = true ]; then
-    warp_message_warn "Warp Framework ya fué iniciado";
+    warp_message_warn "Los contenedores ya estan corriendo..";
+    warp_message_warn "Para detenerlos ejecute: warp stop";
     exit 1;
   fi
 
   if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
         
       start_help_usage
+      exit 1;
   else
 
     # start docker containers

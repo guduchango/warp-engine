@@ -28,59 +28,45 @@ fi;
 
 
 
-init_main() {
+setup_main() {
 
-    if [ ! -d $PROJECTPATH/.warp ]; then
-        warp_setup
-        exit 0;
-    fi;
-
-    echo ""
-    warp_banner
-    echo ""
-
-    if [ -f $DOCKERCOMPOSEFILE ] || [ -f $ENVIRONMENTVARIABLESFILESAMPLE ]; then
-
-        if [ ! -f $ENVIRONMENTVARIABLESFILE ]; then
-            # INIT MODE DEVELOPER
-            . "$WARPFOLDER/setup/init/developer.sh"
-        else
-            INFRA_FILES_ERROR="FALSE"
-            if [ -f $DOCKERCOMPOSEFILE ]; then
-                echo "* Comprobando archivo $(basename $DOCKERCOMPOSEFILE) $(warp_message_ok [ok])"
-            else
-                INFRA_FILES_ERROR="TRUE"
-                echo "* Comprobando archivo $(basename $DOCKERCOMPOSEFILE) $(warp_message_error [error])"
-            fi; 
-            
-            if [ -f $ENVIRONMENTVARIABLESFILE ]; then
-                echo "* Comprobando archivo $(basename $ENVIRONMENTVARIABLESFILE) $(warp_message_ok [ok])"
-            else
-                INFRA_FILES_ERROR="TRUE"
-                echo "* Comprobando archivo $(basename $ENVIRONMENTVARIABLESFILE) $(warp_message_error [error])"
-            fi;
-
-            if [ $INFRA_FILES_ERROR = "TRUE" ]; then
-                warp_message_warn "-- Ambos archivos ($(basename $DOCKERCOMPOSEFILE) y $(basename $ENVIRONMENTVARIABLESFILE)) deben existir para poder inicializar los contenedores. $(warp_message_error [error])"
-                # warp_message_warn "-- Si queres inicializar un proyecto desde cero, elimina los archivos $(basename $DOCKERCOMPOSEFILE) y $(basename $ENVIRONMENTVARIABLESFILE). Luego volve a ejecutar el comando init "
-                exit
-            fi
-        fi
+    if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
+        setup_help_usage
+        exit 1
     else
-        warp_message_info "* Comenzando la instalacion inicial\n"
-        . "$WARPFOLDER/setup/init/service.sh"
-        . "$WARPFOLDER/setup/webserver/webserver.sh"
-        . "$WARPFOLDER/setup/php/php.sh"
-        . "$WARPFOLDER/setup/init/volumes.sh"
-        . "$WARPFOLDER/setup/mysql/database.sh"
-        . "$WARPFOLDER/setup/elasticsearch/elasticsearch.sh"
-        . "$WARPFOLDER/setup/redis/redis.sh"
-        . "$WARPFOLDER/setup/networks/networks.sh"
-        . "$WARPFOLDER/setup/init/info.sh"
-    fi;
+        if [ ! -d $PROJECTPATH/.warp ]; then
+            warp_setup install
+            exit 0;
+        fi;
 
-    # TODO: CHECK FOLDERS AND PERMISSIONS 
+        init_main init
+    fi
+}
 
+setup_help_usage()
+{
+    if [ -d $PROJECTPATH/.warp ]; then
+        init_help_usage
+        exit 1
+    else
+
+        echo "  if you run for the first time, the installation of the framework begins"
+        echo "  After the initial installation, a guided menu with options to create services"
+        echo "  The following services can be configured:"
+        echo "  1) Web Server with Nginx"
+        echo "  2) PHP Service"
+        echo "  3) Database with MySQL"
+        echo "  4) Service of elasticsearch"
+        echo "  5) Redis service for cache, session, fpc"
+        echo "  "
+        echo "  If the program detects a previous configuration, it shows a shorter menu of options, to configure:"
+        echo "  1) Work with one or more projects in parallel"
+        echo "  2) Configure MySQL ports"
+        echo "  "
+        echo "  Please run ./warp init"
+
+        exit 1
+    fi
 }
 
 help() {
@@ -100,9 +86,20 @@ help() {
         help_usage
     else
         echo "WARP-ENGINE has not been installed yet. Please run ./warp init"
+        echo "Please run ./warp init or ./warp init --help"
     fi;
 }
 
+warp_update()
+{
+    if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
+        . "$PROJECTPATH/.warp/bin/update_help.sh"
+        update_help_usage
+        exit 1;
+    fi
+
+    warp_setup update
+}
 
 #######################################
 # Print the usage information for the
@@ -123,24 +120,14 @@ usage() {
 
 function warp_info()
 {
+
+    if ! warp_check_env_file ; then
+        warp_message_error "No se encuentra el archivo $(basename $ENVIRONMENTVARIABLESFILE)"
+        exit
+    fi; 
+
     mysql_main info   
-}
-
-function func_test()
-{
-    warp_message_ok "Este es un mensaje de OK!"
-    warp_message_error "Este es un mensaje de ERROR!"
-    warp_message_info "Este es un mensaje de INFO!"
-    warp_message_warn "Este es un mensaje de WARN!"
-
-    # warp_net_get_used_ports
-
-    if ! warp_net_port_in_use 80 ; then
-        echo "Puerto Libre"
-    else
-        echo "Puerto Ocupado"
-    fi;
-
+    mysql_main info   
 }
 
 function warp_setup()
@@ -149,26 +136,52 @@ function warp_setup()
     DESTINATION="."
     #mkdir -p ${DESTINATION}
 
+    OPTION=$1
+
     # Find __ARCHIVE__ maker, read archive content and decompress it
     ARCHIVE=$(awk '/^__ARCHIVE__/ {print NR + 1; exit 0; }' "${0}")
 
-    echo "Instalando Warp, aguarde unos momentos"
-    sleep 1
     tail -n+${ARCHIVE} "${0}" | tar xpJ -C ${DESTINATION}
-    if [ -d $PROJECTPATH/.warp ]; then    
-        echo "Instalacion exitosa!, iniciando Instalacion.."
-        sleep 1
-        # Init Instalation
-        include_warp_framework
-        init_main
-    else
-        echo "No se puede instalar Warp"
-    fi;
+
+    if [ $OPTION = install ]
+    then
+        if [ -d $PROJECTPATH/.warp ]; then    
+            echo "Instalando Warp, aguarde unos momentos"
+            sleep 1
+            echo "Instalacion exitosa!, iniciando Instalacion.."
+            sleep 1
+            # Init Instalation
+            include_warp_framework
+            init_main init
+        fi
+    elif [ $OPTION = update ]
+    then
+        while : ; do
+            respuesta=$( warp_question_ask_default "Esta seguro de actualizar Warp Framework? $(warp_message_info [Y/n]) " "Y" )
+            if [ "$respuesta" = "Y" ] || [ "$respuesta" = "y" ] || [ "$respuesta" = "N" ] || [ "$respuesta" = "n" ] ; then
+                break
+            else
+                warp_message_warn "Respuesta Incorrecta, debe seleccionar entre dos opciones: $(warp_message_info [Y/n]) "
+            fi
+        done
+
+        if [ "$respuesta" = "Y" ] || [ "$respuesta" = "y" ]
+        then
+            echo "Actualizando Warp, aguarde unos momentos"
+            sleep 1
+            echo "Actualización exitosa!"
+            sleep 1
+            # Init Instalation
+            include_warp_framework
+            warp_banner
+        fi
+    fi
 }
 
 case "$1" in
     init)
-    init_main
+    shift 1
+    setup_main  $*
     ;;
 
     mysql)
@@ -176,12 +189,25 @@ case "$1" in
     mysql_main $*
     ;;
 
+    php)
+    shift 1
+    php_main $*
+    ;;
+
     start)
     start_main $*
     ;;
 
+    restart)
+    restart_main $*
+    ;;
+
     stop)
     stop_main $*
+    ;;
+
+    ps)
+    ps_main $*
     ;;
 
     info)
@@ -190,6 +216,33 @@ case "$1" in
 
     composer)
     composer_main $*
+    ;;
+
+    magento)
+    magento_main $*
+    ;;
+
+    logs)
+    logs_main $*
+    ;;
+
+    elasticsearch)
+    shift 1
+    elasticsearch_main $*
+    ;;
+
+    redis)
+    shift 1
+    redis_main $*
+    ;;
+
+    reset)
+    reset_main $*
+    ;;
+
+    update)
+    shift 1
+    warp_update $*
     ;;
 
     *)
