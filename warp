@@ -127,7 +127,10 @@ function warp_info()
     fi; 
 
     mysql_main info   
-    mysql_main info   
+    webserver_main info   
+    php_main info   
+    elasticsearch_main info   
+    redis_main info   
 }
 
 function warp_setup()

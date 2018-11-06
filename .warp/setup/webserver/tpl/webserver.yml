@@ -1,5 +1,6 @@
   web:
     image: nginx:latest
+    env_file: .env
     ports:
     ## BEGIN webserver_ports ##
 
