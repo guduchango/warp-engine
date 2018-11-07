@@ -3,7 +3,16 @@
 echo ""
 warp_message_info "Configurando Servicio de PHP"
 
-respuesta_php=$( warp_question_ask_default "Queres agregar un servicio de php? $(warp_message_info [Y/n]) " "Y" )
+while : ; do
+    respuesta_php=$( warp_question_ask_default "Queres agregar un servicio de php? $(warp_message_info [Y/n]) " "Y" )
+
+    if [ "$respuesta_php" = "Y" ] || [ "$respuesta_php" = "y" ] || [ "$respuesta_php" = "N" ] || [ "$respuesta_php" = "n" ] ; then
+        break
+    else
+        warp_message_warn "Respuesta Incorrecta, debe seleccionar entre dos opciones: $(warp_message_info [Y/n]) "
+    fi
+done
+
 if [ "$respuesta_php" = "Y" ] || [ "$respuesta_php" = "y" ]
 then
     

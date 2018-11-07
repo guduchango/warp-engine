@@ -7,16 +7,16 @@ warp_message ""
     warp_check_os_mac
 
 while : ; do
-    respuesta=$( warp_question_ask_default "Queres agregar un servidor web (Nginx)? $(warp_message_info [Y/n]) " "Y" )
+    respuesta_web=$( warp_question_ask_default "Queres agregar un servidor web (Nginx)? $(warp_message_info [Y/n]) " "Y" )
 
-    if [ "$respuesta" = "Y" ] || [ "$respuesta" = "y" ] || [ "$respuesta" = "N" ] || [ "$respuesta" = "n" ] ; then
+    if [ "$respuesta_web" = "Y" ] || [ "$respuesta_web" = "y" ] || [ "$respuesta_web" = "N" ] || [ "$respuesta_web" = "n" ] ; then
         break
     else
         warp_message_warn "Respuesta Incorrecta, debe seleccionar entre dos opciones: $(warp_message_info [Y/n]) "
     fi
 done
 
-if [ "$respuesta" = "Y" ] || [ "$respuesta" = "y" ]
+if [ "$respuesta_web" = "Y" ] || [ "$respuesta_web" = "y" ]
 then
 
     nginx_virtual_host=$( warp_question_ask_default "Cual es el virtual host? $(warp_message_info [local.sample.com]) " "local.sample.com" )

@@ -6,7 +6,16 @@ warp_message_info "Configurando el Servicio de Redis"
 PATH_CONFIG_REDIS='./.warp/docker/config/redis'
 MSJ_REDIS_VERSION_HUB=1 # True
 
-respuesta_redis_cache=$( warp_question_ask_default "Queres agregar un servicio para Redis Cache? $(warp_message_info [Y/n]) " "Y" )
+while : ; do
+    respuesta_redis_cache=$( warp_question_ask_default "Queres agregar un servicio para Redis Cache? $(warp_message_info [Y/n]) " "Y" )
+
+    if [ "$respuesta_redis_cache" = "Y" ] || [ "$respuesta_redis_cache" = "y" ] || [ "$respuesta_redis_cache" = "N" ] || [ "$respuesta_redis_cache" = "n" ] ; then
+        break
+    else
+        warp_message_warn "Respuesta Incorrecta, debe seleccionar entre dos opciones: $(warp_message_info [Y/n]) "
+    fi
+done
+
 if [ "$respuesta_redis_cache" = "Y" ] || [ "$respuesta_redis_cache" = "y" ]
 then
 
@@ -35,7 +44,16 @@ then
     warp_message ""
 fi; 
 
-respuesta_redis_session=$( warp_question_ask_default "Queres agregar un servicio para Redis Session? $(warp_message_info [Y/n]) " "Y" )
+while : ; do
+    respuesta_redis_session=$( warp_question_ask_default "Queres agregar un servicio para Redis Session? $(warp_message_info [Y/n]) " "Y" )
+
+    if [ "$respuesta_redis_session" = "Y" ] || [ "$respuesta_redis_session" = "y" ] || [ "$respuesta_redis_session" = "N" ] || [ "$respuesta_redis_session" = "n" ] ; then
+        break
+    else
+        warp_message_warn "Respuesta Incorrecta, debe seleccionar entre dos opciones: $(warp_message_info [Y/n]) "
+    fi
+done
+
 if [ "$respuesta_redis_session" = "Y" ] || [ "$respuesta_redis_session" = "y" ]
 then
 
@@ -64,7 +82,16 @@ then
     warp_message ""
 fi; 
 
-respuesta_redis_fpc=$( warp_question_ask_default "Queres agregar un servicio para Redis FPC? $(warp_message_info [Y/n]) " "Y" )
+while : ; do
+    respuesta_redis_fpc=$( warp_question_ask_default "Queres agregar un servicio para Redis FPC? $(warp_message_info [Y/n]) " "Y" )
+
+    if [ "$respuesta_redis_fpc" = "Y" ] || [ "$respuesta_redis_fpc" = "y" ] || [ "$respuesta_redis_fpc" = "N" ] || [ "$respuesta_redis_fpc" = "n" ] ; then
+        break
+    else
+        warp_message_warn "Respuesta Incorrecta, debe seleccionar entre dos opciones: $(warp_message_info [Y/n]) "
+    fi
+done
+
 if [ "$respuesta_redis_fpc" = "Y" ] || [ "$respuesta_redis_fpc" = "y" ]
 then
 
