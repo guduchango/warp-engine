@@ -3,8 +3,17 @@
 warp_message ""
 warp_message_info "Configurando el Servicio de MySQL"
 
-respuesta=$( warp_question_ask_default "Queres agregar un servicio MySQL? $(warp_message_info [Y/n]) " "Y" )
-if [ "$respuesta" = "Y" ] || [ "$respuesta" = "y" ]
+while : ; do
+    respuesta_mysql=$( warp_question_ask_default "Queres agregar un servicio MySQL? $(warp_message_info [Y/n]) " "Y" )
+
+    if [ "$respuesta_mysql" = "Y" ] || [ "$respuesta_mysql" = "y" ] || [ "$respuesta_mysql" = "N" ] || [ "$respuesta_mysql" = "n" ] ; then
+        break
+    else
+        warp_message_warn "Respuesta Incorrecta, debe seleccionar entre dos opciones: $(warp_message_info [Y/n]) "
+    fi
+done
+
+if [ "$respuesta_mysql" = "Y" ] || [ "$respuesta_mysql" = "y" ]
 then
     warp_message_info2 "Podes chequear las versiones de MySQL disponibles acá: $(warp_message_info '[ https://hub.docker.com/r/library/mysql/ ]')"
   

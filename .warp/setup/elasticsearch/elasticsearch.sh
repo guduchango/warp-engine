@@ -3,8 +3,16 @@
 echo ""
 warp_message_info "Configurando Servicio de ElasticSearch"
 
-respuesta=$( warp_question_ask_default "Queres agregar un servicio de elasticsearch? $(warp_message_info [Y/n]) " "Y" )
-if [ "$respuesta" = "Y" ] || [ "$respuesta" = "y" ]
+while : ; do
+    respuesta_es=$( warp_question_ask_default "Queres agregar un servicio de elasticsearch? $(warp_message_info [Y/n]) " "Y" )
+    if [ "$respuesta_es" = "Y" ] || [ "$respuesta_es" = "y" ] || [ "$respuesta_es" = "N" ] || [ "$respuesta_es" = "n" ] ; then
+        break
+    else
+        warp_message_warn "Respuesta Incorrecta, debe seleccionar entre dos opciones: $(warp_message_info [Y/n]) "
+    fi
+done
+
+if [ "$respuesta_es" = "Y" ] || [ "$respuesta_es" = "y" ]
 then
     warp_message_info2 "Podes chequear las versiones de elasticsearch disponibles acá: $(warp_message_info '[ https://hub.docker.com/r/summasolutions/elasticsearch/tags/ ]')"
     
