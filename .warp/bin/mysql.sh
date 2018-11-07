@@ -12,15 +12,24 @@ function mysql_info()
     DATABASE_PASSWORD=$(warp_env_read_var DATABASE_PASSWORD)
     DATABASE_ROOT_PASSWORD=$(warp_env_read_var DATABASE_ROOT_PASSWORD)
     DATABASE_BINDED_PORT=$(warp_env_read_var DATABASE_BINDED_PORT)
+    MYSQL_CONFIG_FILE=$(warp_env_read_var MYSQL_CONFIG_FILE)
+    MYSQL_VERSION=$(warp_env_read_var MYSQL_VERSION)
 
     if [ ! -z "$DATABASE_NAME" ]
     then
+        warp_message ""
         warp_message_info "* MySQL Info"
-        warp_message "NAME DB:    $(warp_message_info $DATABASE_NAME)"
-        warp_message "USER DB:    $(warp_message_info $DATABASE_USER)"
-        warp_message "PASS DB:    $(warp_message_info $DATABASE_PASSWORD)"
-        warp_message "PASS ROOT:  $(warp_message_info $DATABASE_ROOT_PASSWORD)"
-        warp_message "PORT:       $(warp_message_info $DATABASE_BINDED_PORT)"
+        warp_message "NAME DB:                    $(warp_message_info $DATABASE_NAME)"
+        warp_message "USER DB:                    $(warp_message_info $DATABASE_USER)"
+        warp_message "PASS DB:                    $(warp_message_info $DATABASE_PASSWORD)"
+        warp_message "PASS ROOT:                  $(warp_message_info $DATABASE_ROOT_PASSWORD)"
+        warp_message "BINDED PORT:                $(warp_message_info $DATABASE_BINDED_PORT)"
+        warp_message "MYSQL_VERSION:              $(warp_message_info $MYSQL_VERSION)"
+        warp_message "FILE my.cnf:                $(warp_message_info $PROJECTPATH/.warp/docker/config/mysql/my.cnf)"
+        warp_message "MYSQL CONFIG FILE:          $(warp_message_info $MYSQL_CONFIG_FILE)"
+        warp_message "DUMPS LOCAL:                $(warp_message_info $PROJECTPATH/.warp/docker/dumps)" 
+        warp_message "INSIDE CONTAINER:           $(warp_message_info /dumps)"
+        warp_message ""
     fi
 }
 

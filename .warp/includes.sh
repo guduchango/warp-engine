@@ -25,3 +25,4 @@
 . "$WARPFOLDER/bin/restart.sh"
 . "$WARPFOLDER/bin/init.sh"
 . "$WARPFOLDER/bin/redis.sh"
+. "$WARPFOLDER/bin/webserver.sh"

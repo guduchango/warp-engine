@@ -4,6 +4,24 @@
 
     . "$PROJECTPATH/.warp/bin/php_help.sh"
 
+function php_info()
+{
+
+    PHP_VERSION=$(warp_env_read_var PHP_VERSION)
+
+    if [ ! -z "$PHP_VERSION" ]
+    then
+        warp_message ""
+        warp_message_info "* PHP Info"
+        warp_message "PHP_VERSION:                $(warp_message_info $PHP_VERSION)"
+        warp_message "XDEBUG FILE:                $(warp_message_info $PROJECTPATH/.warp/docker/config/php/ext-xdebug.ini)"
+        warp_message "XDEBUG CONFIG:              $(warp_message_info 'http://discourse.summasolutions.net/t/configuring-xdebug/545')"
+        warp_message "LOGS PHP:                   $(warp_message_info $PROJECTPATH/.warp/docker/volumes/php-fpm/logs)"
+
+        warp_message ""
+    fi
+}
+
 function php_connect_ssh() 
 {
 
@@ -34,6 +52,10 @@ function php_main()
         ssh)
             shift 1
             php_connect_ssh $*
+        ;;
+
+        info)
+            php_info
         ;;
 
         -h | --help)

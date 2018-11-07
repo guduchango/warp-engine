@@ -1,6 +1,7 @@
 
   redis-fpc:
     image: redis:${REDIS_FPC_VERSION}
+    env_file: .env
     ports:
       - "6379"
     volumes:
