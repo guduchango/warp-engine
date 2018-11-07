@@ -85,7 +85,7 @@ help() {
 
         help_usage
     else
-        echo "WARP-ENGINE has not been installed yet. Please run ./warp init"
+        echo "WARP-ENGINE has not been installed yet."
         echo "Please run ./warp init or ./warp init --help"
     fi;
 }
