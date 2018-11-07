@@ -225,6 +225,14 @@ case "$1" in
     magento_main $*
     ;;
 
+    npm)
+    npm_main $*
+    ;;
+
+    grunt)
+    grunt_main $*
+    ;;
+
     logs)
     logs_main $*
     ;;

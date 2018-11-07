@@ -26,3 +26,5 @@
 . "$WARPFOLDER/bin/init.sh"
 . "$WARPFOLDER/bin/redis.sh"
 . "$WARPFOLDER/bin/webserver.sh"
+. "$WARPFOLDER/bin/npm.sh"
+. "$WARPFOLDER/bin/grunt.sh"
