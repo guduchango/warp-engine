@@ -1,12 +1,9 @@
 #!/bin/bash
 
-function warp_binary_create()
-{
-    # CREATE BINARY FILE
+WARP_BINARY_FILE=$1
 
-    sudo touch $WARP_BINARY_FILE
-    sudo chmod 775 $WARP_BINARY_FILE
-    sudo echo "#!/bin/bash +x" >> $WARP_BINARY_FILE
-    sudo echo "" >> $WARP_BINARY_FILE
-    sudo echo "sh ./warp \"\$@\"" >> $WARP_BINARY_FILE
-}
+touch $WARP_BINARY_FILE
+chmod 775 $WARP_BINARY_FILE
+echo "#!/bin/bash +x" >> $WARP_BINARY_FILE
+echo "" >> $WARP_BINARY_FILE
+echo "bash ./warp \"\$@\"" >> $WARP_BINARY_FILE

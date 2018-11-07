@@ -42,7 +42,7 @@ warp_message "* Aplicando permisos a subdirectorios .warp/docker/volumes $(warp_
 
 if [ ! -f $WARP_BINARY_FILE ] ; then
     warp_message "* Creando archivo binario warp $(warp_message_ok [ok])"
-    warp_binary_create
+    sudo sh $PROJECTPATH/.warp/lib/binary.sh $WARP_BINARY_FILE
 fi
 
 warp_message ""

@@ -24,8 +24,11 @@ function composer() {
   if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
         
       composer_help_usage
+  elif [ "$1" = "--credential" ] ; then
+      warp_message "copying credentials"
+      copy_ssh_id
+      warp_message "Done!"
   else
-    copy_ssh_id
 
     if [ "$1" = "-T" ]; then
       shift 1

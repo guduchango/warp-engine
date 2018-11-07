@@ -30,6 +30,14 @@ function start() {
 
     # start docker containers
     docker-compose -f $DOCKERCOMPOSEFILE up -d
+
+    if [ $(warp_check_php_is_running) = true ]
+    then
+      # COPY ID_RSA ./ssh
+      copy_ssh_id
+    else
+      warp_message_warn "Please Run ./warp composer --credential to copy the credentials"
+    fi
   fi;
 }
 
