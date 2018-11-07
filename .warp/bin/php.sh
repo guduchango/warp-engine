@@ -15,7 +15,7 @@ function php_info()
         warp_message_info "* PHP Info"
         warp_message "PHP_VERSION:                $(warp_message_info $PHP_VERSION)"
         warp_message "XDEBUG FILE:                $(warp_message_info $PROJECTPATH/.warp/docker/config/php/ext-xdebug.ini)"
-        warp_message "XDEBUG CONFIG:              $(warp_message_info 'http://discourse.summasolutions.net/t/configuring-xdebug/545')"
+        warp_message "XDEBUG CONFIG:              $(warp_message_info 'Check FAQs here: http://ct.summasolutions.net/warp-engine/')"
         warp_message "LOGS PHP:                   $(warp_message_info $PROJECTPATH/.warp/docker/volumes/php-fpm/logs)"
 
         warp_message ""
