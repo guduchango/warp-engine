@@ -14,6 +14,11 @@ function copy_ssh_id() {
 
 function composer() {
 
+  if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then      
+      composer_help_usage
+      exit 0;
+  fi
+
   if [ $(warp_check_is_running) = false ]; then
     warp_message_error "Los contenedores no estan corriendo"
     warp_message_error "este comando necesita previamente que ejecutes warp start"
@@ -21,10 +26,8 @@ function composer() {
     exit 1;
   fi
 
-  if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
-        
-      composer_help_usage
-  elif [ "$1" = "--credential" ] ; then
+  
+  if [ "$1" = "--credential" ] ; then
       warp_message "copying credentials"
       copy_ssh_id
       warp_message "Done!"
