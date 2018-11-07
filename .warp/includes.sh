@@ -2,7 +2,7 @@
 
 # INCLUDE WARP FRAMEWORK
 [ -f "$WARPFOLDER/lib/version.sh" ] && . "$WARPFOLDER/lib/version.sh"
-[ -f "$WARPFOLDER/lib/commit.sh"] && . "$WARPFOLDER/lib/commit.sh"
+[ -f "$WARPFOLDER/lib/commit.sh" ] && . "$WARPFOLDER/lib/commit.sh"
 . "$WARPFOLDER/lib/env.sh"
 . "$WARPFOLDER/lib/message.sh"
 . "$WARPFOLDER/lib/net.sh"
