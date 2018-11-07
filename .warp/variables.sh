@@ -25,7 +25,7 @@ ENVIRONMENTVARIABLESFILE="$PROJECTPATH/.env"
 
 # DOCKERCOMPOSEFILE contains the path
 # to the docker-compose.yml file
-DOCKERCOMPOSEFILE="$PROJECTPATH/docker-compose-warn.yml"
+DOCKERCOMPOSEFILE="$PROJECTPATH/docker-compose-warp.yml"
 
 # PROJECTPATH FRAMEWORK
 WARPFOLDER="$PROJECTPATH/.warp"

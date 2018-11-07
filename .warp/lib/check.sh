@@ -77,3 +77,24 @@ warp_check_is_running() {
         echo false
     fi
 }
+
+warp_check_php_is_running() {
+    if [ -f $DOCKERCOMPOSEFILE ]
+    then
+        COUNT=0
+        while : ; do
+            dockerStatusOutput=$(docker-compose -f $DOCKERCOMPOSEFILE ps -q php | xargs docker inspect --format='{{ .State.Status }}' | sed 's:^/::g' | grep -i running)
+            outputSize=${#dockerStatusOutput}
+            if [ "$outputSize" -gt 0 ]; then
+                echo true
+                break
+            else
+                sleep 1
+                let COUNT=$COUNT+1
+                [ $COUNT = 5 ] && echo false && break
+            fi
+        done        
+    else
+        echo false
+    fi
+}
