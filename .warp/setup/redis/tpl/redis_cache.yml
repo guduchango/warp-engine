@@ -4,8 +4,8 @@
     env_file: .env
     ports:
       - "6379"
-    volumes:
-      - "./.warp/docker/volumes/redis-cache:/data"
+    #volumes:
+    #  - "./.warp/docker/volumes/redis-cache:/data"
     #  - ${REDIS_CACHE_CONF}:/usr/local/etc/redis/redis.conf
     #command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
     networks:
