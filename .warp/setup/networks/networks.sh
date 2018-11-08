@@ -2,7 +2,8 @@ warp_message ""
 warp_message "* Configurando servicios de Red en contenedores $(warp_message_ok [ok])"
 sleep 1
 
-    cat $PROJECTPATH/.warp/setup/networks/tpl/networks.yml >> $DOCKERCOMPOSEFILE
+    cat $PROJECTPATH/.warp/setup/networks/tpl/networks.yml >> $DOCKERCOMPOSEFILESAMPLE
+    [ ! -f $DOCKERCOMPOSEFILE ] && cp $DOCKERCOMPOSEFILESAMPLE $DOCKERCOMPOSEFILE
 
     # LOAD VARIABLES SAMPLE
     . $ENVIRONMENTVARIABLESFILESAMPLE

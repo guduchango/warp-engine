@@ -33,10 +33,17 @@ function reset_warninig_confirm_hard()
             warp_message "* borrando $(basename $ENVIRONMENTVARIABLESFILE) $(warp_message_ok [ok])"
             warp_message "* borrando $(basename $ENVIRONMENTVARIABLESFILESAMPLE) $(warp_message_ok [ok])"
             warp_message "* borrando $(basename $DOCKERCOMPOSEFILE) $(warp_message_ok [ok])"
+            warp_message "* borrando $(basename $DOCKERCOMPOSEFILESAMPLE) $(warp_message_ok [ok])"
             
             rm $ENVIRONMENTVARIABLESFILE 2> /dev/null
             rm $ENVIRONMENTVARIABLESFILESAMPLE 2> /dev/null
             rm $DOCKERCOMPOSEFILE 2> /dev/null
+            rm $DOCKERCOMPOSEFILESAMPLE 2> /dev/null
+
+	        rm -rf $PROJECTPATH/.warp/docker/config 2> /dev/null
+            mkdir -p $PROJECTPATH/.warp/docker/config 2> /dev/null
+            touch $PROJECTPATH/.warp/docker/config/.empty 2> /dev/null
+
             warp_message ""
 
             warp_message_warn "Archivos eliminados, para volver a comenzar ejecute: $(warp_message_bold './warp init')"
@@ -54,7 +61,10 @@ function reset_warninig_confirm()
     if [ "$reset_msj_delete" = "Y" ] || [ "$reset_msj_delete" = "y" ]
     then
         warp_message "* borrando $(basename $ENVIRONMENTVARIABLESFILE) $(warp_message_ok [ok])"
+        warp_message "* borrando $(basename $DOCKERCOMPOSEFILE) $(warp_message_ok [ok])"
+
         rm $ENVIRONMENTVARIABLESFILE 2> /dev/null
+        rm $DOCKERCOMPOSEFILE 2> /dev/null
         warp_message ""
 
         warp_message_warn "Archivos eliminados, para volver a comenzar ejecute: $(warp_message_bold './warp init')"
