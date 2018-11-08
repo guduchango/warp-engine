@@ -66,7 +66,8 @@ warp_check_os_mac() {
 warp_check_is_running() {
     if [ -f $DOCKERCOMPOSEFILE ]
     then
-        dockerStatusOutput=$(docker-compose -f $DOCKERCOMPOSEFILE ps -q | xargs docker inspect --format='{{ .State.Status }}' | sed 's:^/::g' | grep -i running)
+        #dockerStatusOutput=$(docker-compose -f $DOCKERCOMPOSEFILE ps -q | xargs docker inspect --format='{{ .State.Status }}' | sed 's:^/::g' | grep -i running)
+        dockerStatusOutput=$(docker-compose -f $DOCKERCOMPOSEFILE ps -q)
         outputSize=${#dockerStatusOutput}
         if [ "$outputSize" -gt 0 ]; then
             echo true
@@ -83,7 +84,8 @@ warp_check_php_is_running() {
     then
         COUNT=0
         while : ; do
-            dockerStatusOutput=$(docker-compose -f $DOCKERCOMPOSEFILE ps -q php | xargs docker inspect --format='{{ .State.Status }}' | sed 's:^/::g' | grep -i running)
+            #dockerStatusOutput=$(docker-compose -f $DOCKERCOMPOSEFILE ps -q php | xargs docker inspect --format='{{ .State.Status }}' | sed 's:^/::g' | grep -i running)
+            dockerStatusOutput=$(docker-compose -f $DOCKERCOMPOSEFILE ps -q php)
             outputSize=${#dockerStatusOutput}
             if [ "$outputSize" -gt 0 ]; then
                 echo true
