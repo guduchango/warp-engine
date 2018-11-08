@@ -38,12 +38,14 @@ warp_message "* Aplicando permisos a subdirectorios .warp/docker/volumes $(warp_
     # SET PERMISSIONS FOLDERS
     mkdir -p $PROJECTPATH/.warp/docker/volumes/nginx/logs
     sudo chmod -R 775 $PROJECTPATH/.warp/docker/volumes/nginx
+    sudo chgrp -R 33 $PROJECTPATH/.warp/docker/volumes/nginx
 
     mkdir -p   $PROJECTPATH/.warp/docker/volumes/php-fpm/logs
     [ ! -f $PROJECTPATH/.warp/docker/volumes/php-fpm/logs/access.log ] && sudo touch $PROJECTPATH/.warp/docker/volumes/php-fpm/logs/access.log 
     [ ! -f $PROJECTPATH/.warp/docker/volumes/php-fpm/logs/fpm-error.log ] && sudo touch $PROJECTPATH/.warp/docker/volumes/php-fpm/logs/fpm-error.log 
     [ ! -f $PROJECTPATH/.warp/docker/volumes/php-fpm/logs/fpm-php.www.log ] && sudo touch $PROJECTPATH/.warp/docker/volumes/php-fpm/logs/fpm-php.www.log 
     sudo chmod -R 775 $PROJECTPATH/.warp/docker/volumes/php-fpm
+    sudo chgrp -R 33 $PROJECTPATH/.warp/docker/volumes/php-fpm
 
 if [ ! -f $WARP_BINARY_FILE ] ; then
     warp_message "* Creando archivo binario warp $(warp_message_ok [ok])"
