@@ -11,10 +11,11 @@ function elasticsearch_info()
     if [ ! -z "$ES_VERSION" ]
     then
         warp_message ""
-        warp_message_info "* Elasticsearch Info"
-        warp_message "ES_VERSION:                 $(warp_message_info $ES_VERSION)"
-        warp_message "ES_INTERNAL_PORT:           $(warp_message_info 'elasticsearch:9200, elasticsearch:9300')"
-        warp_message "ES_DATA:                    $(warp_message_info $PROJECTPATH/.warp/docker/volumes/elasticsearch)"
+        warp_message_info "* Elasticsearch"
+        warp_message "Version:                    $(warp_message_info $ES_VERSION)"
+        warp_message "Host:                       $(warp_message_info 'elasticsearch')"
+        warp_message "Ports (container):          $(warp_message_info '9200, 9300')"
+        warp_message "Data:                       $(warp_message_info $PROJECTPATH/.warp/docker/volumes/elasticsearch)"
 
         warp_message ""
     fi

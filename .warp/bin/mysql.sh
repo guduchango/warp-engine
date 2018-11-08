@@ -18,17 +18,17 @@ function mysql_info()
     if [ ! -z "$DATABASE_NAME" ]
     then
         warp_message ""
-        warp_message_info "* MySQL Info"
-        warp_message "NAME DB:                    $(warp_message_info $DATABASE_NAME)"
-        warp_message "USER DB:                    $(warp_message_info $DATABASE_USER)"
-        warp_message "PASS DB:                    $(warp_message_info $DATABASE_PASSWORD)"
-        warp_message "PASS ROOT:                  $(warp_message_info $DATABASE_ROOT_PASSWORD)"
-        warp_message "BINDED PORT:                $(warp_message_info $DATABASE_BINDED_PORT)"
-        warp_message "MYSQL_VERSION:              $(warp_message_info $MYSQL_VERSION)"
-        warp_message "FILE my.cnf:                $(warp_message_info $PROJECTPATH/.warp/docker/config/mysql/my.cnf)"
-        warp_message "MYSQL CONFIG FILE:          $(warp_message_info $MYSQL_CONFIG_FILE)"
-        warp_message "DUMPS LOCAL:                $(warp_message_info $PROJECTPATH/.warp/docker/dumps)" 
-        warp_message "INSIDE CONTAINER:           $(warp_message_info /dumps)"
+        warp_message_info "* MySQL"
+        warp_message "Database Name:              $(warp_message_info $DATABASE_NAME)"
+        warp_message "Username:                   $(warp_message_info $DATABASE_USER)"
+        warp_message "Password:                   $(warp_message_info $DATABASE_PASSWORD)"
+        warp_message "Root password:              $(warp_message_info $DATABASE_ROOT_PASSWORD)"
+        warp_message "Binded port (host):         $(warp_message_info $DATABASE_BINDED_PORT)"
+        warp_message "MySQL version:              $(warp_message_info $MYSQL_VERSION)"
+        warp_message "my.cnf location:            $(warp_message_info $PROJECTPATH/.warp/docker/config/mysql/my.cnf)"
+        warp_message "Other config files:         $(warp_message_info $MYSQL_CONFIG_FILE)"
+        warp_message "Dumps folder (host):        $(warp_message_info $PROJECTPATH/.warp/docker/dumps)" 
+        warp_message "Dumps folder (container):   $(warp_message_info /dumps)"
         warp_message ""
     fi
 }
