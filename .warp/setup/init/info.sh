@@ -23,7 +23,6 @@ if [ ! -z $WARP_DETECT_MODE_TL ] ; then
         echo "/.warp/docker/volumes"                    >> $GITIGNOREFILE
         echo "/.warp/docker/dumps"                      >> $GITIGNOREFILE
         echo "/.warp/docker/config/php/ext-xdebug.ini"  >> $GITIGNOREFILE
-        echo "!/app/etc/env.php.sample"  >> $GITIGNOREFILE
         
     fi
 fi
