@@ -1,3 +1,3 @@
-cat $PROJECTPATH/.warp/setup/init/tpl/appdata.yml >> $DOCKERCOMPOSEFILE
+cat $PROJECTPATH/.warp/setup/init/tpl/appdata.yml >> $DOCKERCOMPOSEFILESAMPLE
 
-cp -R ./.warp/setup/init/config/appdata ./.warp/docker/config/appdata
+cp -R $PROJECTPATH/.warp/setup/init/config/appdata $PROJECTPATH/.warp/docker/config/appdata

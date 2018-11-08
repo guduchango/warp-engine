@@ -24,6 +24,10 @@ ENVIRONMENTVARIABLESFILESAMPLE="$PROJECTPATH/.env.sample"
 ENVIRONMENTVARIABLESFILE="$PROJECTPATH/.env"
 
 # DOCKERCOMPOSEFILE contains the path
+# to the docker-compose.yml sample file
+DOCKERCOMPOSEFILESAMPLE="$PROJECTPATH/docker-compose-warp.yml.sample"
+
+# DOCKERCOMPOSEFILE contains the path
 # to the docker-compose.yml file
 DOCKERCOMPOSEFILE="$PROJECTPATH/docker-compose-warp.yml"
 

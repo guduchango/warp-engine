@@ -1,5 +1,6 @@
 warp_message "* Configurando archivos de variables de entorno $(warp_message_ok [ok])"
  [ ! -f $ENVIRONMENTVARIABLESFILE ] && cp $ENVIRONMENTVARIABLESFILESAMPLE $ENVIRONMENTVARIABLESFILE
+ [ ! -f $DOCKERCOMPOSEFILE ] && cp $DOCKERCOMPOSEFILESAMPLE $DOCKERCOMPOSEFILE
 
 if [ ! -z $WARP_DETECT_MODE_TL ] ; then
 
@@ -16,8 +17,9 @@ if [ ! -z $WARP_DETECT_MODE_TL ] ; then
         echo "!/warp"            >> $GITIGNOREFILE
         echo "!/$(basename $WARPFOLDER)"                      >> $GITIGNOREFILE
         echo "/$(basename $ENVIRONMENTVARIABLESFILE)"         >> $GITIGNOREFILE
+        echo "/$(basename $DOCKERCOMPOSEFILE)"                >> $GITIGNOREFILE
         echo "!/$(basename $ENVIRONMENTVARIABLESFILESAMPLE)"  >> $GITIGNOREFILE
-        echo "!/$(basename $DOCKERCOMPOSEFILE)"  >> $GITIGNOREFILE
+        echo "!/$(basename $DOCKERCOMPOSEFILESAMPLE)"  >> $GITIGNOREFILE
         echo "/.warp/docker/volumes"             >> $GITIGNOREFILE
     fi
 fi

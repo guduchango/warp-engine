@@ -36,7 +36,7 @@ then
     done
     warp_message_info2 "Version de PHP seleccionada: $php_version"
     
-    cat $PROJECTPATH/.warp/setup/php/tpl/php.yml >> $DOCKERCOMPOSEFILE
+    cat $PROJECTPATH/.warp/setup/php/tpl/php.yml >> $DOCKERCOMPOSEFILESAMPLE
 
     echo ""  >> $ENVIRONMENTVARIABLESFILESAMPLE
     echo "# Config PHP" >> $ENVIRONMENTVARIABLESFILESAMPLE
@@ -48,12 +48,12 @@ then
     echo "PHP_IDE_CONFIG=serverName=docker" >> $ENVIRONMENTVARIABLESFILESAMPLE
     echo ""  >> $ENVIRONMENTVARIABLESFILESAMPLE
 
-    mkdir -p ./.warp/docker/volumes/php-fpm/logs
+    mkdir -p $PROJECTPATH/.warp/docker/volumes/php-fpm/logs
     # Create logs file
-    touch ./.warp/docker/volumes/php-fpm/logs/access.log
-    touch ./.warp/docker/volumes/php-fpm/logs/fpm-error.log
-    touch ./.warp/docker/volumes/php-fpm/logs/fpm-php.www.log
-    chmod -R 777 ./.warp/docker/volumes/php-fpm
+    touch $PROJECTPATH/.warp/docker/volumes/php-fpm/logs/access.log
+    touch $PROJECTPATH/.warp/docker/volumes/php-fpm/logs/fpm-error.log
+    touch $PROJECTPATH/.warp/docker/volumes/php-fpm/logs/fpm-php.www.log
+    chmod -R 775 $PROJECTPATH/.warp/docker/volumes/php-fpm
  
-    cp -R ./.warp/setup/php/config/php ./.warp/docker/config/php
+    cp -R $PROJECTPATH/.warp/setup/php/config/php $PROJECTPATH/.warp/docker/config/php
 fi; 
