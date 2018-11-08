@@ -20,6 +20,9 @@ then
         elasticsearch_version=$( warp_question_ask_default "Cual es la version de elasticsearch del proyecto? $(warp_message_info [5.6.8]) " "5.6.8" )
     
         case $elasticsearch_version in
+        '6.4.2')
+            break
+        ;;
         '5.6.8')
             break
         ;;
@@ -30,7 +33,7 @@ then
             break
         ;;
         *)
-            warp_message_info2 "Seleccionaste: $elasticsearch_version, las versiones disponibles son 5.6.8, 2.4.4, 2.4.6"
+            warp_message_info2 "Seleccionaste: $elasticsearch_version, las versiones disponibles son 6.4.2, 5.6.8, 2.4.4, 2.4.6"
         ;;
         esac        
     done
