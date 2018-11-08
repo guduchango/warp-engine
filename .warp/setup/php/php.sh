@@ -48,12 +48,12 @@ then
     echo "PHP_IDE_CONFIG=serverName=docker" >> $ENVIRONMENTVARIABLESFILESAMPLE
     echo ""  >> $ENVIRONMENTVARIABLESFILESAMPLE
 
-    mkdir -p $PROJECTPATH/.warp/docker/volumes/php-fpm/logs
+    mkdir -p $PROJECTPATH/.warp/docker/volumes/php-fpm/logs 2> /dev/null
     # Create logs file
-    touch $PROJECTPATH/.warp/docker/volumes/php-fpm/logs/access.log
-    touch $PROJECTPATH/.warp/docker/volumes/php-fpm/logs/fpm-error.log
-    touch $PROJECTPATH/.warp/docker/volumes/php-fpm/logs/fpm-php.www.log
-    chmod -R 775 $PROJECTPATH/.warp/docker/volumes/php-fpm
+    [ ! -f $PROJECTPATH/.warp/docker/volumes/php-fpm/logs/access.log ] && touch $PROJECTPATH/.warp/docker/volumes/php-fpm/logs/access.log  2> /dev/null
+    [ ! -f $PROJECTPATH/.warp/docker/volumes/php-fpm/logs/fpm-error.log ] && touch $PROJECTPATH/.warp/docker/volumes/php-fpm/logs/fpm-error.log 2> /dev/null
+    [ ! -f $PROJECTPATH/.warp/docker/volumes/php-fpm/logs/fpm-php.www.log ] && touch $PROJECTPATH/.warp/docker/volumes/php-fpm/logs/fpm-php.www.log 2> /dev/null
+    # chmod -R 775 $PROJECTPATH/.warp/docker/volumes/php-fpm 2> /dev/null
  
     cp -R $PROJECTPATH/.warp/setup/php/config/php $PROJECTPATH/.warp/docker/config/php
 fi; 
