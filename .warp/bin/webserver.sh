@@ -13,19 +13,23 @@ function webserver_info()
     if [ ! -z "$NGINX_CONFIG_FILE" ]
     then
         warp_message ""
-        warp_message_info "* Webserver Info"
-        warp_message "VIRTUAL HOST:               $(warp_message_info $VIRTUAL_HOST)"
+        warp_message_info "* Webserver"
+        warp_message "Virtual host:               $(warp_message_info $VIRTUAL_HOST)"
     
+
+        ETC_HOSTS_IP='127.0.0.1'
         if [ "$HTTP_HOST_IP" = "0.0.0.0" ] ; then
-            warp_message "SERVER IP:                  $(warp_message_info '127.0.0.1')"
-            warp_message "/etc/hosts:                 $(warp_message_info '127.0.0.1  '$VIRTUAL_HOST)"
-            warp_message "HTTP_BINDED_PORT:           $(warp_message_info $HTTP_BINDED_PORT)"
-            warp_message "HTTPS_BINDED_PORT:          $(warp_message_info $HTTPS_BINDED_PORT)"
+            warp_message "Server IP:                  $(warp_message_info '127.0.0.1')"
+            warp_message "HTTP binded port (host):    $(warp_message_info $HTTP_BINDED_PORT)"
+            warp_message "HTTPS binded port (host):   $(warp_message_info $HTTPS_BINDED_PORT)"
         else
-            warp_message "SERVER IP:                  $(warp_message_info $HTTP_HOST_IP)"
+            warp_message "Server IP:                  $(warp_message_info $HTTP_HOST_IP)"
+            ETC_HOSTS_IP=$HTTP_HOST_IP
         fi;
-        warp_message "LOGS NGINX:                 $(warp_message_info $PROJECTPATH/.warp/docker/volumes/nginx/logs)" 
-        warp_message "NGINX_CONFIG_FILE:          $(warp_message_info $NGINX_CONFIG_FILE)" 
+        warp_message "Logs:                       $(warp_message_info $PROJECTPATH/.warp/docker/volumes/nginx/logs)" 
+        warp_message "Configuration file:         $(warp_message_info $NGINX_CONFIG_FILE)" 
+        warp_message ""
+        warp_message_warn " - Configure your hosts file (/etc/hosts) with: $(warp_message_bold $ETC_HOSTS_IP'  '$VIRTUAL_HOST)"
         warp_message ""
     fi
 }
