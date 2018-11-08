@@ -13,6 +13,12 @@ function reset_project()
         exit 1
     fi
 
+    if [ $(warp_check_is_running) = true ]; then
+        warp_message_warn "the containers is running";
+        warp_message_warn "Please run first warp stop";
+        exit 1;
+    fi
+
     if [ "$1" = "--hard" ] ; then
         # reset files TL
         reset_warninig_confirm_hard
