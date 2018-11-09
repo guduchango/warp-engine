@@ -28,7 +28,7 @@ function magento_command()
         shift 1
         docker-compose -f $DOCKERCOMPOSEFILE exec -T php bash -c "bin/magento $*"
     else
-        shift 1
+
         docker-compose -f $DOCKERCOMPOSEFILE exec php bash -c "bin/magento $*"
     fi
 }
