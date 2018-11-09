@@ -4,17 +4,16 @@
 
 while true;
 do
-#  chgrp -R 33 /var/www
-#  chmod -R g+rs /var/www
+	for D in /var/www/html/*; do
+	    if [ -d "${D}" ]; then
+	        chgrp -R 33 "${D}"
 
-#  chmod -R ug+rws /var/www/html/pub/errors
-#  chmod -R ug+rws /var/www/html/pub/static
-#  chmod -R ug+rws /var/www/html/pub/media
-#  chmod -R ug+rws /var/www/html/app/etc
-#  chmod -R ug+rws /var/www/html/vendor
-#  chmod -R ug+rws /var/www/html/var
+	        find "${D}" -type d -exec chmod ug+rwx {} \; # Make folders traversable and read/write
+			find "${D}" -type f -exec chmod ug+rw {} \;  # Make files read/write 
+		elif [ -f "${D}" ]; then
+			chmod ug+rw "${D}"
+	    fi
+	done
 
-#  chmod ug+x /var/www/html/bin/*
-
-  sleep 30
+  sleep 1800 # 30 minutes
 done
