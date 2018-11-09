@@ -40,15 +40,26 @@ function reset_warninig_confirm_hard()
             warp_message "* borrando $(basename $ENVIRONMENTVARIABLESFILESAMPLE) $(warp_message_ok [ok])"
             warp_message "* borrando $(basename $DOCKERCOMPOSEFILE) $(warp_message_ok [ok])"
             warp_message "* borrando $(basename $DOCKERCOMPOSEFILESAMPLE) $(warp_message_ok [ok])"
+            warp_message "* borrando $(basename $DOCKERCOMPOSEFILEMAC) $(warp_message_ok [ok])"
+            warp_message "* borrando $(basename $DOCKERSYNCMAC) $(warp_message_ok [ok])"
             
             rm $ENVIRONMENTVARIABLESFILE 2> /dev/null
             rm $ENVIRONMENTVARIABLESFILESAMPLE 2> /dev/null
             rm $DOCKERCOMPOSEFILE 2> /dev/null
             rm $DOCKERCOMPOSEFILESAMPLE 2> /dev/null
+            rm $DOCKERCOMPOSEFILEMAC 2> /dev/null
+            rm $DOCKERSYNCMAC 2> /dev/null
 
 	        rm -rf $PROJECTPATH/.warp/docker/config 2> /dev/null
             mkdir -p $PROJECTPATH/.warp/docker/config 2> /dev/null
             touch $PROJECTPATH/.warp/docker/config/.empty 2> /dev/null
+
+            case "$(uname -s)" in
+            Darwin)
+                # clean data sync
+                docker-sync clean
+            ;;
+            esac
 
             warp_message ""
 

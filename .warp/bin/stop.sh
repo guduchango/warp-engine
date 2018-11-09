@@ -22,8 +22,20 @@ function stop() {
       exit 1;
   else
     if [ $(warp_check_is_running) = true ]; then
-      # stop all docker containers
-      docker-compose -f $DOCKERCOMPOSEFILE down
+
+      case "$(uname -s)" in
+        Darwin)
+          docker stop $(basename $(pwd))-volume-sync
+          docker-sync stop
+
+          # stop docker containers in macOS
+          docker-compose -f $DOCKERCOMPOSEFILE down
+        ;;
+        Linux)
+          # stop docker containers in linux
+          docker-compose -f $DOCKERCOMPOSEFILE down
+        ;;
+      esac
     fi
   fi;
 

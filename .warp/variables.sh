@@ -31,6 +31,14 @@ DOCKERCOMPOSEFILESAMPLE="$PROJECTPATH/docker-compose-warp.yml.sample"
 # to the docker-compose.yml file
 DOCKERCOMPOSEFILE="$PROJECTPATH/docker-compose-warp.yml"
 
+# DOCKERCOMPOSEFILE contains the path
+# to the docker-compose.yml file
+DOCKERCOMPOSEFILEMAC="$PROJECTPATH/docker-compose-warp-mac.yml"
+
+# DOCKERCOMPOSEFILE contains the path
+# to the docker-sync.yml file
+DOCKERSYNCMAC="$PROJECTPATH/docker-sync.yml"
+
 # PROJECTPATH FRAMEWORK
 WARPFOLDER="$PROJECTPATH/.warp"
 
