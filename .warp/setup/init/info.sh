@@ -18,8 +18,11 @@ if [ ! -z $WARP_DETECT_MODE_TL ] ; then
         echo "!/$(basename $WARPFOLDER)"                      >> $GITIGNOREFILE
         echo "/$(basename $ENVIRONMENTVARIABLESFILE)"         >> $GITIGNOREFILE
         echo "/$(basename $DOCKERCOMPOSEFILE)"                >> $GITIGNOREFILE
+        echo "!/$(basename $DOCKERCOMPOSEFILEMAC)"            >> $GITIGNOREFILE
+        echo "!/$(basename $DOCKERSYNCMAC)"                   >> $GITIGNOREFILE
         echo "!/$(basename $ENVIRONMENTVARIABLESFILESAMPLE)"  >> $GITIGNOREFILE
         echo "!/$(basename $DOCKERCOMPOSEFILESAMPLE)"   >> $GITIGNOREFILE
+        echo "/.docker-sync"                            >> $GITIGNOREFILE        
         echo "/.warp/docker/volumes"                    >> $GITIGNOREFILE
         echo "/.warp/docker/dumps"                      >> $GITIGNOREFILE
         echo "/.warp/docker/config/php/ext-xdebug.ini"  >> $GITIGNOREFILE

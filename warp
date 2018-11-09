@@ -14,6 +14,14 @@ hash docker 2>/dev/null || { echo >&2 "warp framework requires \"docker\""; exit
 # Check availability of docker-compose
 hash docker-compose 2>/dev/null || { echo >&2 "warp framework requires \"docker-compose\""; exit 1; }
 
+case "$(uname -s)" in
+    Darwin)
+    # autodetect docker in Mac
+    # Check availability of docker-sync
+    hash docker-sync 2>/dev/null || { echo >&2 "warp framework requires \"docker-sync\""; exit 1; }
+    ;;
+esac    
+
 include_warp_framework() {
     
     # INCLUDE VARIABLES

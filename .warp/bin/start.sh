@@ -28,8 +28,18 @@ function start() {
       exit 1;
   else
 
-    # start docker containers
-    docker-compose -f $DOCKERCOMPOSEFILE up -d
+    case "$(uname -s)" in
+      Darwin)
+        # start data sync
+        docker-sync start
+        # start docker containers in macOS
+        docker-compose -f $DOCKERCOMPOSEFILE -f $DOCKERCOMPOSEFILEMAC up -d
+      ;;
+      Linux)
+        # start docker containers in linux
+        docker-compose -f $DOCKERCOMPOSEFILE up -d
+      ;;
+    esac
 
     if [ $(warp_check_php_is_running) = true ]
     then
