@@ -15,13 +15,13 @@ done
 
 if [ "$respuesta_mysql" = "Y" ] || [ "$respuesta_mysql" = "y" ]
 then
-    warp_message_info2 "You can check the versions of MySQL available here: $(warp_message_info '[ https://hub.docker.com/r/library/mysql/ ]')"
+    warp_message_info2 "You can check the available versions of MySQL here: $(warp_message_info '[ https://hub.docker.com/r/library/mysql/ ]')"
   
-    mysql_version=$( warp_question_ask_default "What is the version of MySQL? $(warp_message_info [5.7]) " "5.7" )
+    mysql_version=$( warp_question_ask_default "What is the MySQL version? $(warp_message_info [5.7]) " "5.7" )
     warp_message_info2 "Selected MySQL Version: $mysql_version"
 
     while : ; do
-        mysql_name_database=$( warp_question_ask_default "What is the database name? $(warp_message_info [warp_db]) " "warp_db" )
+        mysql_name_database=$( warp_question_ask_default "Set the database name: $(warp_message_info [warp_db]) " "warp_db" )
 
         if [ ! $mysql_name_database = 'root' ] ; then
             warp_message_info2 "Database created: $mysql_name_database"
@@ -32,42 +32,42 @@ then
     done
 
     while : ; do
-        mysql_user_database=$( warp_question_ask_default "What is the user from database? $(warp_message_info [warp]) " "warp" )
+        mysql_user_database=$( warp_question_ask_default "Add the database user: $(warp_message_info [warp]) " "warp" )
         
         if [ ! $mysql_user_database = 'root' ] ; then
-            warp_message_info2 "The database user $mysql_name_database from MySQL is: $mysql_user_database"
+            warp_message_info2 "The database user is: $mysql_user_database"
             break
         else 
-            warp_message_warn "The database user $mysql_name_database can not be $(warp_message_bold root)"
+            warp_message_warn "The database user can not be $(warp_message_bold root)"
         fi;
     done
 
     while : ; do
-        mysql_password_database=$( warp_question_ask_default "What is the password from database? $(warp_message_info [Warp2020]) " "Warp2020" )
+        mysql_password_database=$( warp_question_ask_default "Choose the database password: $(warp_message_info [Warp2020]) " "Warp2020" )
         
         if [ ! $mysql_password_database = 'root' ] ; then
-            warp_message_info2 "The password from database $mysql_name_database is: $mysql_password_database"
+            warp_message_info2 "The database password is: $mysql_password_database"
             break
         else 
-            warp_message_warn "The password from database $mysql_name_database can not be $(warp_message_bold root)"
+            warp_message_warn "The password can not be $(warp_message_bold root)"
         fi;
     done
 
     while : ; do
-        mysql_binded_port=$( warp_question_ask_default "Mapping port 3306 from the container to the port of your machine (host): $(warp_message_info [3306]) " "3306" )
+        mysql_binded_port=$( warp_question_ask_default "Mapping container port 3306 to your machine port (host): $(warp_message_info [3306]) " "3306" )
 
         #CHECK si port es numero antes de llamar a warp_net_port_in_use
         if ! warp_net_port_in_use $mysql_binded_port ; then
-            warp_message_info2 "the selected port is: $mysql_binded_port, the port mapping is: $(warp_message_bold '127.0.0.1:'$mysql_binded_port' ---> localhost:'$mysql_binded_port)"
+            warp_message_info2 "the selected port is: $mysql_binded_port, the port mapping is: $(warp_message_bold '127.0.0.1:'$mysql_binded_port' ---> container_host:3306')"
             break
         else
             warp_message_warn "The port $mysql_binded_port is busy, choose another one\n"
         fi;
     done
 
-    mysql_root_password=$( warp_question_ask_default "What is the MySQL root User password? $(warp_message_info [root]) " "root" )
+    mysql_root_password=$( warp_question_ask_default "Set the MySQL main password (root user)? $(warp_message_info [root]) " "root" )
     warp_message_info2 "Root user password: $mysql_root_password"
-    mysql_config_file=$( warp_question_ask_default "Choose MySQL configuration file: $(warp_message_info [./.warp/docker/config/mysql/conf.d]) " "./.warp/docker/config/mysql/conf.d" )
+    mysql_config_file=$( warp_question_ask_default "Add the MySQL configuration file: $(warp_message_info [./.warp/docker/config/mysql/conf.d]) " "./.warp/docker/config/mysql/conf.d" )
     warp_message_info2 "Selected configuration file: $mysql_config_file"
 
     cat $PROJECTPATH/.warp/setup/mysql/tpl/database.yml >> $DOCKERCOMPOSEFILESAMPLE

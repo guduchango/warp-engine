@@ -19,7 +19,7 @@ done
 if [ "$respuesta_web" = "Y" ] || [ "$respuesta_web" = "y" ]
 then
 
-    nginx_virtual_host=$( warp_question_ask_default "What is the virtual host name? $(warp_message_info [local.sample.com]) " "local.sample.com" )
+    nginx_virtual_host=$( warp_question_ask_default "Add the virtual host name: $(warp_message_info [local.sample.com]) " "local.sample.com" )
   
     useproxy=1 #False
 
@@ -36,7 +36,7 @@ then
 
     if [ $useproxy = 1 ]; then
         while : ; do
-            http_port=$( warp_question_ask_default "Mapping port 80 from the container to the port of your machine (host): $(warp_message_info [80]) " "80" )
+            http_port=$( warp_question_ask_default "Mapping container port 80 to your machine port (host): $(warp_message_info [80]) " "80" )
 
             #CHECK si port es numero antes de llamar a warp_net_port_in_use
             if ! warp_net_port_in_use $http_port ; then
@@ -48,7 +48,7 @@ then
         done
 
         while : ; do
-            https_port=$( warp_question_ask_default "Mapping port 443 from the container to the port of your machine (host): $(warp_message_info [443]) " "443" )
+            https_port=$( warp_question_ask_default "Mapping container port 443 to your machine port (host): $(warp_message_info [443]) " "443" )
 
             if ! warp_net_port_in_use $https_port ; then
                 warp_message_info2 "The selected port is: $https_port, the configuration for the file /etc/hosts is: $(warp_message_bold '127.0.0.1 '$nginx_virtual_host)"
@@ -59,7 +59,7 @@ then
         done
     else 
         while : ; do
-            http_container_ip=$( warp_question_ask_default "Enter the IP number to assign it to the container $(warp_message_info '[range 172.50.0.'$MIN_RANGE_IP' - 172.50.0.255]') " "172.50.0.$MIN_RANGE_IP" )
+            http_container_ip=$( warp_question_ask_default "Attach an IP number to the container $(warp_message_info '[range 172.50.0.'$MIN_RANGE_IP' - 172.50.0.255]') " "172.50.0.$MIN_RANGE_IP" )
 
             if warp_check_range_ip $http_container_ip ; then
                 RANGE=$(echo $http_container_ip | cut -f1 -f2 -f3 -d .)
@@ -69,14 +69,14 @@ then
                     warp_message_info2 "The selected IP is: $http_container_ip, the configuration for the file /etc/hosts is: $(warp_message_bold $http_container_ip' '$nginx_virtual_host)"
                     break
                 else
-                    warp_message_warn "the IP $http_container_ip is being used in another project, choose another\n"
+                    warp_message_warn "The IP $http_container_ip is being used in another project, choose another one\n"
                 fi;
             fi;
         done
     fi; 
 
     
-    nginx_config_file=$( warp_question_ask_default "What is the name of the Nginx configuration file? $(warp_message_info '['$nginx_virtual_host'.conf]') " "$nginx_virtual_host.conf" )
+    nginx_config_file=$( warp_question_ask_default "Set the name of Nginx configuration file? $(warp_message_info '['$nginx_virtual_host'.conf]') " "$nginx_virtual_host.conf" )
     
     echo "" >> $ENVIRONMENTVARIABLESFILESAMPLE
     echo "# NGINX Configuration" >> $ENVIRONMENTVARIABLESFILESAMPLE
