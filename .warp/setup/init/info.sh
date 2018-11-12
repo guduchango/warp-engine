@@ -1,4 +1,4 @@
-warp_message "* Configurando archivos de variables de entorno $(warp_message_ok [ok])"
+warp_message "* Configuring environment variable files $(warp_message_ok [ok])"
  [ ! -f $ENVIRONMENTVARIABLESFILE ] && cp $ENVIRONMENTVARIABLESFILESAMPLE $ENVIRONMENTVARIABLESFILE
  [ ! -f $DOCKERCOMPOSEFILE ] && cp $DOCKERCOMPOSEFILESAMPLE $DOCKERCOMPOSEFILE
 
@@ -11,7 +11,7 @@ if [ ! -z $WARP_DETECT_MODE_TL ] ; then
     # Exit status 1 means string was not found
     if [ $? = 1 ] || [ ! -f $GITIGNOREFILE ]
     then
-        warp_message "* Preparando archivos para .gitignore $(warp_message_ok [ok])"
+        warp_message "* Preparing files for .gitignore $(warp_message_ok [ok])"
         # FILES TO ADD GITIGNORE
         echo "# WARP FRAMEWORK"  >> $GITIGNOREFILE
         echo "!/warp"            >> $GITIGNOREFILE
@@ -31,12 +31,12 @@ if [ ! -z $WARP_DETECT_MODE_TL ] ; then
 fi
 
 if [ -d $PROJECTPATH/.warp ]; then
-    warp_message "* Directorio .warp $(warp_message_ok [ok])"
+    warp_message "* Directory .warp $(warp_message_ok [ok])"
 else
-    warp_message "* Directorio .warp $(warp_message_error [error])"
+    warp_message "* Directory .warp $(warp_message_error [error])"
 fi
 
-warp_message "* Aplicando permisos a subdirectorios .warp/docker/volumes $(warp_message_ok [ok])"
+warp_message "* Applying permissions to subdirectories .warp/docker/volumes $(warp_message_ok [ok])"
 
     # SET PERMISSIONS FOLDERS
     mkdir -p $PROJECTPATH/.warp/docker/volumes/nginx/logs
@@ -51,18 +51,17 @@ warp_message "* Aplicando permisos a subdirectorios .warp/docker/volumes $(warp_
     sudo chgrp -R 33 $PROJECTPATH/.warp/docker/volumes/php-fpm
 
 if [ ! -f $WARP_BINARY_FILE ] ; then
-    warp_message "* Creando archivo binario warp $(warp_message_ok [ok])"
+    warp_message "* Creating binary warp file $(warp_message_ok [ok])"
     sudo sh $PROJECTPATH/.warp/lib/binary.sh $WARP_BINARY_FILE
 fi
 
 warp_message ""
 if [ ! -z $WARP_DETECT_MODE_TL ] ; then
     NGINX_CONFIG_FILE=$(warp_env_read_var NGINX_CONFIG_FILE)
-    warp_message_warn "Para terminar de configurar el servidor Web debe configurar el archivo de configuracion de nginx"
-    warp_message_warn "abra el siguiente archivo con cualquier editor: $(warp_message_bold $NGINX_CONFIG_FILE)"
+    warp_message_warn "To complete the Nginx configuration, please edit this file: $(warp_message_bold $NGINX_CONFIG_FILE)"
     warp_message ""
 fi
 
-warp_message_warn "Para iniciar los contenedores: $(warp_message_bold './warp start')"
-warp_message_warn "Para ver información detallada de cada servicio configurado: $(warp_message_bold './warp info')"
+warp_message_warn "To start the containers: $(warp_message_bold './warp start')"
+warp_message_warn "To see detailed information for each service configured: $(warp_message_bold './warp info')"
 sleep 1

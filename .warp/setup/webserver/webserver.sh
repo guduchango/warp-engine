@@ -1,31 +1,31 @@
 #!/bin/bash +x
 
 warp_message ""
-warp_message_info "Configurando el Servidor Web - Nginx"
+warp_message_info "Configuring Web Server - Nginx"
 warp_message ""
 
     warp_check_os_mac
 
 while : ; do
-    respuesta_web=$( warp_question_ask_default "Queres agregar un servidor web (Nginx)? $(warp_message_info [Y/n]) " "Y" )
+    respuesta_web=$( warp_question_ask_default "Do You want to add a web server (Nginx)? $(warp_message_info [Y/n]) " "Y" )
 
     if [ "$respuesta_web" = "Y" ] || [ "$respuesta_web" = "y" ] || [ "$respuesta_web" = "N" ] || [ "$respuesta_web" = "n" ] ; then
         break
     else
-        warp_message_warn "Respuesta Incorrecta, debe seleccionar entre dos opciones: $(warp_message_info [Y/n]) "
+        warp_message_warn "wrong answer, you must select between two options: $(warp_message_info [Y/n]) "
     fi
 done
 
 if [ "$respuesta_web" = "Y" ] || [ "$respuesta_web" = "y" ]
 then
 
-    nginx_virtual_host=$( warp_question_ask_default "Cual es el virtual host? $(warp_message_info [local.sample.com]) " "local.sample.com" )
+    nginx_virtual_host=$( warp_question_ask_default "What is the virtual host name? $(warp_message_info [local.sample.com]) " "local.sample.com" )
   
     useproxy=1 #False
 
     case "$(uname -s)" in
         Linux)
-            resp_reverse_proxy=$( warp_question_ask_default "Queres configurar una ip estatica para soportar mas de un proyecto en paralelo? $(warp_message_info [y/N]) " "N" )
+            resp_reverse_proxy=$( warp_question_ask_default "Do You want to configure a static ip to support more than one project in parallel? $(warp_message_info [y/N]) " "N" )
             if [ "$resp_reverse_proxy" = "Y" ] || [ "$resp_reverse_proxy" = "y" ]
             then
                 # autodetect docker in linux
@@ -36,47 +36,47 @@ then
 
     if [ $useproxy = 1 ]; then
         while : ; do
-            http_port=$( warp_question_ask_default "Mapeo del puerto 80 del contenedor al puerto de tu maquina (host)? $(warp_message_info [80]) " "80" )
+            http_port=$( warp_question_ask_default "Mapping port 80 from the container to the port of your machine (host): $(warp_message_info [80]) " "80" )
 
             #CHECK si port es numero antes de llamar a warp_net_port_in_use
             if ! warp_net_port_in_use $http_port ; then
-                warp_message_info2 "El puerto seleccionado es: $http_port, la configuracion para el archivo /etc/hosts es: $(warp_message_bold '127.0.0.1 '$nginx_virtual_host)"
+                warp_message_info2 "The selected port is: $http_port, the configuration for the file /etc/hosts is: $(warp_message_bold '127.0.0.1 '$nginx_virtual_host)"
                 break
             else
-                warp_message_warn "El puerto $http_port esta ocupado, elige otro\n"
+                warp_message_warn "the port $http_port is busy, choose another one\n"
             fi;
         done
 
         while : ; do
-            https_port=$( warp_question_ask_default "Mapeo del puerto 443 del contenedor al puerto de tu maquina (host)? $(warp_message_info [443]) " "443" )
+            https_port=$( warp_question_ask_default "Mapping port 443 from the container to the port of your machine (host): $(warp_message_info [443]) " "443" )
 
             if ! warp_net_port_in_use $https_port ; then
-                warp_message_info2 "El puerto seleccionado es: $https_port, la configuracion para el archivo /etc/hosts es: $(warp_message_bold '127.0.0.1 '$nginx_virtual_host)"
+                warp_message_info2 "The selected port is: $https_port, the configuration for the file /etc/hosts is: $(warp_message_bold '127.0.0.1 '$nginx_virtual_host)"
                 break
             else
-                warp_message_warn "El puerto $https_port esta ocupado, elige otro\n"
+                warp_message_warn "the port $https_port is busy, choose another one\n"
             fi;
         done
     else 
         while : ; do
-            http_container_ip=$( warp_question_ask_default "Ingrese numero de IP para asignar al contenedor? $(warp_message_info '[rango 172.50.0.'$MIN_RANGE_IP' - 172.50.0.255]') " "172.50.0.$MIN_RANGE_IP" )
+            http_container_ip=$( warp_question_ask_default "Enter the IP number to assign it to the container $(warp_message_info '[range 172.50.0.'$MIN_RANGE_IP' - 172.50.0.255]') " "172.50.0.$MIN_RANGE_IP" )
 
             if warp_check_range_ip $http_container_ip ; then
                 RANGE=$(echo $http_container_ip | cut -f1 -f2 -f3 -d .)
-                warp_message_warn "Debe seleccionar una IP entre: $RANGE.$MIN_RANGE_IP y $RANGE.255\n"
+                warp_message_warn "You should select an IP range between: $RANGE.$MIN_RANGE_IP and $RANGE.255\n"
             else 
                 if ! warp_net_ip_in_use $http_container_ip ; then
-                    warp_message_info2 "La IP seleccionada es: $http_container_ip, la configuracion para el archivo /etc/hosts es: $(warp_message_bold $http_container_ip' '$nginx_virtual_host)"
+                    warp_message_info2 "The selected IP is: $http_container_ip, the configuration for the file /etc/hosts is: $(warp_message_bold $http_container_ip' '$nginx_virtual_host)"
                     break
                 else
-                    warp_message_warn "La IP $http_container_ip esta ocupada en otro proyecto, elija otra\n"
+                    warp_message_warn "the IP $http_container_ip is being used in another project, choose another\n"
                 fi;
             fi;
         done
     fi; 
 
     
-    nginx_config_file=$( warp_question_ask_default "Cual es el nombre del archivo de configuracion de Nginx? $(warp_message_info '['$nginx_virtual_host'.conf]') " "$nginx_virtual_host.conf" )
+    nginx_config_file=$( warp_question_ask_default "What is the name of the Nginx configuration file? $(warp_message_info '['$nginx_virtual_host'.conf]') " "$nginx_virtual_host.conf" )
     
     echo "" >> $ENVIRONMENTVARIABLESFILESAMPLE
     echo "# NGINX Configuration" >> $ENVIRONMENTVARIABLESFILESAMPLE

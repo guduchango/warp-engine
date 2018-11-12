@@ -130,7 +130,7 @@ function warp_info()
 {
 
     if ! warp_check_env_file ; then
-        warp_message_error "No se encuentra el archivo $(basename $ENVIRONMENTVARIABLESFILE)"
+        warp_message_error "file not found $(basename $ENVIRONMENTVARIABLESFILE)"
         exit
     fi; 
 
@@ -157,9 +157,9 @@ function warp_setup()
     if [ $OPTION = install ]
     then
         if [ -d $PROJECTPATH/.warp ]; then    
-            echo "Instalando Warp, aguarde unos momentos"
+            echo "Installing Warp, wait a few moments"
             sleep 1
-            echo "Instalacion exitosa!, iniciando Instalacion.."
+            echo "Successful installation!, starting configurations.."
             sleep 1
             # Init Instalation
             include_warp_framework
@@ -168,19 +168,19 @@ function warp_setup()
     elif [ $OPTION = update ]
     then
         while : ; do
-            respuesta=$( warp_question_ask_default "Esta seguro de actualizar Warp Framework? $(warp_message_info [Y/n]) " "Y" )
+            respuesta=$( warp_question_ask_default "Are you sure to update Warp Framework? $(warp_message_info [Y/n]) " "Y" )
             if [ "$respuesta" = "Y" ] || [ "$respuesta" = "y" ] || [ "$respuesta" = "N" ] || [ "$respuesta" = "n" ] ; then
                 break
             else
-                warp_message_warn "Respuesta Incorrecta, debe seleccionar entre dos opciones: $(warp_message_info [Y/n]) "
+                warp_message_warn "Incorrect answer, you must select between two options: $(warp_message_info [Y/n]) "
             fi
         done
 
         if [ "$respuesta" = "Y" ] || [ "$respuesta" = "y" ]
         then
-            echo "Actualizando Warp, aguarde unos momentos"
+            echo "Updating Warp, wait a few moments"
             sleep 1
-            echo "Actualización exitosa!"
+            echo "Successful update!"
             sleep 1
             # Init Instalation
             include_warp_framework
