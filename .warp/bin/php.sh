@@ -41,9 +41,9 @@ function php_connect_ssh()
 
     if [ "$1" = "--root" ]
     then
-        docker-compose -f $DOCKERCOMPOSEFILE exec -uroot php bash
+        docker-compose -f $DOCKERCOMPOSEFILE exec -uroot php bash -c "export COLUMNS=`tput cols`; export LINES=`tput lines`; exec bash"
     else
-        docker-compose -f $DOCKERCOMPOSEFILE exec php bash
+        docker-compose -f $DOCKERCOMPOSEFILE exec php bash -c "export COLUMNS=`tput cols`; export LINES=`tput lines`; exec bash"
     fi;    
 }
 
