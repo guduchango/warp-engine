@@ -70,7 +70,7 @@ function mysql_connect_ssh()
         exit 1;
     fi
 
-    docker-compose -f $DOCKERCOMPOSEFILE exec mysql bash
+    docker-compose -f $DOCKERCOMPOSEFILE exec mysql bash -c "export COLUMNS=`tput cols`; export LINES=`tput lines`; exec bash"
 }
 
 function mysql_dump() 
