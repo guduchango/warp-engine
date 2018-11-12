@@ -43,6 +43,13 @@ function reset_warninig_confirm_hard()
             warp_message "* deleting $(basename $DOCKERCOMPOSEFILEMAC) $(warp_message_ok [ok])"
             warp_message "* deleting $(basename $DOCKERSYNCMAC) $(warp_message_ok [ok])"
             
+            case "$(uname -s)" in
+            Darwin)
+                # clean data sync
+                docker-sync clean
+            ;;
+            esac
+
             rm $ENVIRONMENTVARIABLESFILE 2> /dev/null
             rm $ENVIRONMENTVARIABLESFILESAMPLE 2> /dev/null
             rm $DOCKERCOMPOSEFILE 2> /dev/null
@@ -53,13 +60,6 @@ function reset_warninig_confirm_hard()
 	        rm -rf $PROJECTPATH/.warp/docker/config 2> /dev/null
             mkdir -p $PROJECTPATH/.warp/docker/config 2> /dev/null
             touch $PROJECTPATH/.warp/docker/config/.empty 2> /dev/null
-
-            case "$(uname -s)" in
-            Darwin)
-                # clean data sync
-                docker-sync clean
-            ;;
-            esac
 
             warp_message ""
 
