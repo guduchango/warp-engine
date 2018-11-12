@@ -34,7 +34,7 @@ warp_message ""
 
     if [ $useproxy = 1 ]; then
         while : ; do
-            http_port=$( warp_question_ask_default "Mapping port 80 from the container to the port of your machine (host): $(warp_message_info [80]) " "80" )
+            http_port=$( warp_question_ask_default "Mapping container port 80 to your machine port (host): $(warp_message_info [80]) " "80" )
 
             #CHECK si port es numero antes de llamar a warp_net_port_in_use
             if ! warp_net_port_in_use $http_port ; then
@@ -46,7 +46,7 @@ warp_message ""
         done
 
         while : ; do
-            https_port=$( warp_question_ask_default "Mapping port 443 from the container to the port of your machine (host): $(warp_message_info [443]) " "443" )
+            https_port=$( warp_question_ask_default "Mapping container port 443 to your machine port (host): $(warp_message_info [443]) " "443" )
 
             if ! warp_net_port_in_use $https_port ; then
                 warp_message_info2 "The selected port is: $https_port, the configuration for the file /etc/hosts is: $(warp_message_bold '127.0.0.1 '$VIRTUAL_HOST)"
@@ -78,11 +78,11 @@ warp_message ""
     warp_message ""
 
     while : ; do
-        mysql_binded_port=$( warp_question_ask_default "Mapping port 3306 from the container to the port of your machine (host): $(warp_message_info [3306]) " "3306" )
+        mysql_binded_port=$( warp_question_ask_default "Mapping container port 3306 to your machine port (host): $(warp_message_info [3306]) " "3306" )
 
         #CHECK si port es numero antes de llamar a warp_net_port_in_use
         if ! warp_net_port_in_use $mysql_binded_port ; then
-            warp_message_info2 "the selected port is: $mysql_binded_port, the port mapping is: $(warp_message_bold '127.0.0.1:'$mysql_binded_port' ---> localhost:'$mysql_binded_port)"
+            warp_message_info2 "the selected port is: $mysql_binded_port, the port mapping is: $(warp_message_bold '127.0.0.1:'$mysql_binded_port' ---> container_host:3306')"
             break
         else
             warp_message_warn "The port $mysql_binded_port is busy, choose another one\n"

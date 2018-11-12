@@ -7,7 +7,7 @@ warp_message ""
     warp_check_os_mac
 
 while : ; do
-    respuesta_web=$( warp_question_ask_default "Do You want to add a web server (Nginx)? $(warp_message_info [Y/n]) " "Y" )
+    respuesta_web=$( warp_question_ask_default "Do you want to add a web server (Nginx)? $(warp_message_info [Y/n]) " "Y" )
 
     if [ "$respuesta_web" = "Y" ] || [ "$respuesta_web" = "y" ] || [ "$respuesta_web" = "N" ] || [ "$respuesta_web" = "n" ] ; then
         break
