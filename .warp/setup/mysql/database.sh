@@ -17,7 +17,7 @@ if [ "$respuesta_mysql" = "Y" ] || [ "$respuesta_mysql" = "y" ]
 then
     warp_message_info2 "You can check the available versions of MySQL here: $(warp_message_info '[ https://hub.docker.com/r/library/mysql/ ]')"
   
-    mysql_version=$( warp_question_ask_default "What is the MySQL version? $(warp_message_info [5.7]) " "5.7" )
+    mysql_version=$( warp_question_ask_default "Choose the MySQL version: $(warp_message_info [5.7]) " "5.7" )
     warp_message_info2 "Selected MySQL Version: $mysql_version"
 
     while : ; do
