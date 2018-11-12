@@ -30,10 +30,10 @@ function reset_project()
 
 function reset_warninig_confirm_hard()
 {
-    reset_msj_delete_all=$( warp_question_ask_default "do you want to delete all project settings? $(warp_message_info [y/N]) " "N" )
+    reset_msj_delete_all=$( warp_question_ask_default "Do you want to delete all project settings? $(warp_message_info [y/N]) " "N" )
     if [ "$reset_msj_delete_all" = "Y" ] || [ "$reset_msj_delete_all" = "y" ]
     then
-        confirm_msj_delete_all=$( warp_question_ask_default "$(warp_message_warn 'If you go ahead you must reconfigure the entire project, you want to continue?') $(warp_message_info [y/N]) " "N" )
+        confirm_msj_delete_all=$( warp_question_ask_default "$(warp_message_warn 'If you go ahead you must reconfigure the entire project, do you want to continue?') $(warp_message_info [y/N]) " "N" )
         if [ "$confirm_msj_delete_all" = "Y" ] || [ "$confirm_msj_delete_all" = "y" ]
         then
             warp_message "* deleting $(basename $ENVIRONMENTVARIABLESFILE) $(warp_message_ok [ok])"
