@@ -47,8 +47,8 @@ warp_check_os_mac() {
     case "$(uname -s)" in
         Darwin)
         # autodetect docker in Mac
-            warp_message_warn "Warning! Docker for Mac no soporta más de un proyecto en paralelo"
-            warp_message_info "Iniciando proyecto simple.."
+            warp_message_warn "Warning! Docker for Mac does not support more than one project in parallel"
+            warp_message_info "starting simple project.."
             warp_message ""
         ;;
     esac    

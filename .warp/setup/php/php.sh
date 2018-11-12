@@ -1,15 +1,15 @@
 #!/bin/bash +x
 
 echo ""
-warp_message_info "Configurando Servicio de PHP"
+warp_message_info "Configuring PHP Service"
 
 while : ; do
-    respuesta_php=$( warp_question_ask_default "Queres agregar un servicio de php? $(warp_message_info [Y/n]) " "Y" )
+    respuesta_php=$( warp_question_ask_default "Do you want to add a php service? $(warp_message_info [Y/n]) " "Y" )
 
     if [ "$respuesta_php" = "Y" ] || [ "$respuesta_php" = "y" ] || [ "$respuesta_php" = "N" ] || [ "$respuesta_php" = "n" ] ; then
         break
     else
-        warp_message_warn "Respuesta Incorrecta, debe seleccionar entre dos opciones: $(warp_message_info [Y/n]) "
+        warp_message_warn "wrong answer, you must select between two options: $(warp_message_info [Y/n]) "
     fi
 done
 
@@ -17,7 +17,7 @@ if [ "$respuesta_php" = "Y" ] || [ "$respuesta_php" = "y" ]
 then
     
     while : ; do
-        php_version=$( warp_question_ask_default "Cual es la version de php del proyecto? $(warp_message_info [7.0-fpm]) " "7.0-fpm" )
+        php_version=$( warp_question_ask_default "What is the php version of the project? $(warp_message_info [7.0-fpm]) " "7.0-fpm" )
     
         case $php_version in
         '7.0-fpm')
@@ -30,11 +30,11 @@ then
             break
         ;;
         *)
-            warp_message_info2 "Seleccionaste: $php_version, las versiones disponibles son 7.0-fpm, 7.1-fpm, 7.1.17-fpm"
+            warp_message_info2 "Selected: $php_version, the available versions are 7.0-fpm, 7.1-fpm, 7.1.17-fpm"
         ;;
         esac        
     done
-    warp_message_info2 "Version de PHP seleccionada: $php_version"
+    warp_message_info2 "PHP version selected: $php_version"
     
     cat $PROJECTPATH/.warp/setup/php/tpl/php.yml >> $DOCKERCOMPOSEFILESAMPLE
 

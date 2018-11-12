@@ -43,8 +43,8 @@ function mysql_connect()
     fi;
 
     if [ $(warp_check_is_running) = false ]; then
-        warp_message_error "Los contenedores no estan corriendo"
-        warp_message_error "este comando necesita previamente que ejecutes warp start"
+        warp_message_error "The containers are not running"
+        warp_message_error "please, first run warp start"
 
         exit 1;
     fi
@@ -64,8 +64,8 @@ function mysql_connect_ssh()
     fi;
 
     if [ $(warp_check_is_running) = false ]; then
-        warp_message_error "Los contenedores no estan corriendo"
-        warp_message_error "este comando necesita previamente que ejecutes warp start"
+        warp_message_error "The containers are not running"
+        warp_message_error "please, first run warp start"
 
         exit 1;
     fi
@@ -83,8 +83,8 @@ function mysql_dump()
     fi;
 
     if [ $(warp_check_is_running) = false ]; then
-        warp_message_error "Los contenedores no estan corriendo"
-        warp_message_error "este comando necesita previamente que ejecutes warp start"
+        warp_message_error "The containers are not running"
+        warp_message_error "please, first run warp start"
 
         exit 1;
     fi
@@ -93,7 +93,7 @@ function mysql_dump()
 
     db="$@"
 
-    [ -z "$db" ] && warp_message_error "Debe ingresar el nombre de la base de datos" && exit 1
+    [ -z "$db" ] && warp_message_error "Database name is required" && exit 1
     
     docker-compose -f $DOCKERCOMPOSEFILE exec mysql bash -c "mysqldump -uroot -p$DATABASE_ROOT_PASSWORD $db 2> /dev/null"
 }
@@ -108,15 +108,15 @@ function mysql_import()
     fi;
 
     if [ $(warp_check_is_running) = false ]; then
-        warp_message_error "Los contenedores no estan corriendo"
-        warp_message_error "este comando necesita previamente que ejecutes warp start"
+        warp_message_error "The containers are not running"
+        warp_message_error "please, first run warp start"
 
         exit 1;
     fi
 
     db=$1
 
-    [ -z "$db" ] && warp_message_error "Debe ingresar el nombre de la base de datos" && exit 1
+    [ -z "$db" ] && warp_message_error "Database name is required" && exit 1
 
     DATABASE_ROOT_PASSWORD=$(warp_env_read_var DATABASE_ROOT_PASSWORD)
     

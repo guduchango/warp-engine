@@ -63,8 +63,8 @@ function redis_cli()
     fi;
 
     if [ $(warp_check_is_running) = false ]; then
-        warp_message_error "Los contenedores no estan corriendo"
-        warp_message_error "este comando necesita previamente que ejecutes warp start"
+        warp_message_error "The containers are not running"
+        warp_message_error "please, first run warp start"
 
         exit 1;
     fi
@@ -83,9 +83,9 @@ function redis_cli()
             ;;
 
         *)            
-            warp_message_error "Debe ingresar una opcion valida"
+            warp_message_error "Please, choose a valid option:"
             warp_message_error "fpc, session, cache"
-            warp_message_error "para más ayuda ingrese en warp redis cli --help"
+            warp_message_error "for more information please run: warp redis cli --help"
         ;;
     esac
 
@@ -101,8 +101,8 @@ function redis_monitor()
     fi;
 
     if [ $(warp_check_is_running) = false ]; then
-        warp_message_error "Los contenedores no estan corriendo"
-        warp_message_error "este comando necesita previamente que ejecutes warp start"
+        warp_message_error "The containers are not running"
+        warp_message_error "please, first run warp start"
 
         exit 1;
     fi
@@ -121,9 +121,9 @@ function redis_monitor()
             ;;
 
         *)            
-            warp_message_error "Debe ingresar una opcion valida"
+            warp_message_error "Please, choose a valid option:"
             warp_message_error "fpc, session, cache"
-            warp_message_error "para más ayuda ingrese en warp redis monitor --help"
+            warp_message_error "for more information please run: warp redis monitor --help"
         ;;
     esac
 
