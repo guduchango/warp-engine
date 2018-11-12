@@ -17,7 +17,7 @@ if [ "$respuesta_php" = "Y" ] || [ "$respuesta_php" = "y" ]
 then
     
     while : ; do
-        php_version=$( warp_question_ask_default "What is the php version of the project? $(warp_message_info [7.0-fpm]) " "7.0-fpm" )
+        php_version=$( warp_question_ask_default "Set the PHP version of your project: $(warp_message_info [7.0-fpm]) " "7.0-fpm" )
     
         case $php_version in
         '7.0-fpm')

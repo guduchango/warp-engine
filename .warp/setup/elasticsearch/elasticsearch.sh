@@ -17,7 +17,7 @@ then
     warp_message_info2 "You can check the available versions of elasticsearch here $(warp_message_info '[ https://hub.docker.com/r/summasolutions/elasticsearch/tags/ ]')"
     
     while : ; do
-        elasticsearch_version=$( warp_question_ask_default "choose a version of elasticsearch: $(warp_message_info [5.6.8]) " "5.6.8" )
+        elasticsearch_version=$( warp_question_ask_default "Choose a version of elasticsearch: $(warp_message_info [5.6.8]) " "5.6.8" )
     
         case $elasticsearch_version in
         '6.4.2')
@@ -37,7 +37,7 @@ then
         ;;
         esac        
     done
-    warp_message_info2 "Version of elasticsearch selected: $elasticsearch_version, in the internal ports 9200, 9300 $(warp_message_bold 'elasticsearch:9200, elasticsearch:9300')"
+    warp_message_info2 "Selected version of elasticsearch: $elasticsearch_version, in the internal ports 9200, 9300 $(warp_message_bold 'elasticsearch:9200, elasticsearch:9300')"
     
     cat $PROJECTPATH/.warp/setup/elasticsearch/tpl/elasticsearch.yml >> $DOCKERCOMPOSEFILESAMPLE
 
