@@ -2,6 +2,12 @@ warp_message "* Configuring environment variable files $(warp_message_ok [ok])"
  [ ! -f $ENVIRONMENTVARIABLESFILE ] && cp $ENVIRONMENTVARIABLESFILESAMPLE $ENVIRONMENTVARIABLESFILE
  [ ! -f $DOCKERCOMPOSEFILE ] && cp $DOCKERCOMPOSEFILESAMPLE $DOCKERCOMPOSEFILE
 
+# creating ext-xdebug.ini
+if  [ ! -f $PROJECTPATH/.warp/docker/config/php/ext-xdebug.ini ]
+then
+    cp $PROJECTPATH/.warp/docker/config/php/ext-xdebug.ini.sample $PROJECTPATH/.warp/docker/config/php/ext-xdebug.ini
+fi
+
 if [ ! -z $WARP_DETECT_MODE_TL ] ; then
 
     #  CHECK IF GITIGNOREFILE CONTAINS FILES WARP TO IGNORE
