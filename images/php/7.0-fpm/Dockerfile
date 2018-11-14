@@ -6,9 +6,14 @@ ENV PHP_EXTRA_CONFIGURE_ARGS --enable-fpm --with-fpm-user=www-data --with-fpm-gr
 
 RUN apt-get update
 
+#Install crontab
+RUN apt-get install -y cron
+
+RUN update-rc.d cron defaults
+
 RUN \
   apt-get install -y \
-  libcurl4-gnutls-dev \
+#  libcurl4-gnutls-dev \
   libxml2-dev \
   libssl-dev
 
@@ -47,7 +52,7 @@ RUN \
   libssh2-1-dev \
   libjpeg-dev \
   gnupg \
-  git \
+#  git \
   curl \
   vim \
   wget \
