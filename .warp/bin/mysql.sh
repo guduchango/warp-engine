@@ -38,7 +38,7 @@ function mysql_connect()
 
     if [ "$1" = "-h" ] || [ "$1" = "--help" ]
     then
-        mysql_dump_help 
+        mysql_connect_help 
         exit 1
     fi;
 
