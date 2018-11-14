@@ -4,6 +4,12 @@
 
     . "$PROJECTPATH/.warp/bin/start_help.sh"
 
+# Initialize Cron Job
+function run_cron() {
+
+    docker-compose -f $DOCKERCOMPOSEFILE exec --user=root php bash -c "cron"
+}
+
 #######################################
 # Start the server and all of its
 # components
@@ -45,6 +51,7 @@ function start() {
     then
       # COPY ID_RSA ./ssh
       copy_ssh_id
+      run_cron
     else
       warp_message_warn "Please Run ./warp composer --credential to copy the credentials"
     fi
