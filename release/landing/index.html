@@ -34,6 +34,7 @@ body {
   padding-top: 20px;
   padding-bottom: 20px;
   font-family: 'Open Sans', sans-serif;
+  overflow-x: scroll;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -132,6 +133,35 @@ table.table thead tr th.download-icon {
   margin-top: 28px;
 }
 
+.panel {
+  border:0px;
+}
+
+.panel {
+    margin-bottom: 20px;
+    background-color: #fff;
+    border: 0px;
+    border-radius: 0px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.panel-default>.panel-heading {
+    background-image: none;
+    filter: none;
+    background-repeat: none;
+    background-color: white;
+}
+
+.panel-default>.panel-heading+.panel-collapse>.panel-body {
+    border-top-color: transparent;
+}
+.panel-group .panel-heading+.panel-collapse>.list-group, .panel-group .panel-heading+.panel-collapse>.panel-body {
+    border-top: 0px;
+}
+
+.glyphicon-link {color:gray;}
+
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   /* Remove the padding we set earlier */
@@ -177,7 +207,7 @@ table.table thead tr th.download-icon {
             <div class="panel-heading">
               <h4 class="panel-title">
                 <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                  Requeriments and dependencies
+                    <span class="glyphicon glyphicon-link" aria-hidden="true"></span> Requeriments and dependencies
                 </a>
               </h4>
             </div>
@@ -213,7 +243,7 @@ table.table thead tr th.download-icon {
               <div class="panel-heading">
                 <h4 class="panel-title">
                   <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">
-                    How to install Docker Sync
+                      <span class="glyphicon glyphicon-link" aria-hidden="true"></span> How to install Docker Sync
                   </a>
                 </h4>
               </div>
@@ -228,7 +258,7 @@ table.table thead tr th.download-icon {
             <div class="panel-heading">
               <h4 class="panel-title">
                 <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-                  How to config xdebug
+                    <span class="glyphicon glyphicon-link" aria-hidden="true"></span> How to config xdebug
                 </a>
               </h4>
             </div>
@@ -334,7 +364,7 @@ sudo curl -o /Library/LaunchDaemons/net.summasolutions.docker_10254_alias.plist 
             <div class="panel-heading">
               <h4 class="panel-title">
                 <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-                  How to use Composer
+                    <span class="glyphicon glyphicon-link" aria-hidden="true"></span> How to use Composer
                 </a>
               </h4>
             </div>
@@ -352,7 +382,7 @@ composer install</pre>
             <div class="panel-heading">
               <h4 class="panel-title">
                 <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
-                  Installing and configuring Grunt
+                    <span class="glyphicon glyphicon-link" aria-hidden="true"></span> Installing and configuring Grunt
                 </a>
               </h4>
             </div>
