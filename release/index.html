@@ -107,7 +107,7 @@ table.table thead tr th.download-icon {
 /* Customize container */
 @media (min-width: 768px) {
   .container {
-    max-width: 730px;
+    max-width: 960px;
   }
 }
 .container-narrow > hr {
@@ -210,6 +210,21 @@ table.table thead tr th.download-icon {
             </div>
           </div>
           <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">
+                    How to install Docker Sync
+                  </a>
+                </h4>
+              </div>
+              <div id="collapse5" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <pre>sudo gem install docker-sync</pre>
+                  <p><a href="http://docker-sync.io/" target="_blank">official documentation</a></p>
+                </div>
+              </div>
+            </div>
+          <div class="panel panel-default">
             <div class="panel-heading">
               <h4 class="panel-title">
                 <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
@@ -311,7 +326,7 @@ table.table thead tr th.download-icon {
                 <p>For Linux: xdebug.remote_host=172.17.0.1</p>
                 <p>For Mac OS X: xdebug.remote_host=10.254.254.254</p>
                 <pre>sudo ifconfig lo0 alias 10.254.254.254
-sudo curl -o /Library/LaunchDaemons/com.ralphschindler.docker_10254_alias.plist https://gist.githubusercontent.com/ralphschindler/535dc5916ccbd06f53c1b0ee5a868c93/raw/com.ralphschindler.docker_10254_alias.plist</pre>
+sudo curl -o /Library/LaunchDaemons/net.summasolutions.docker_10254_alias.plist http://ct.summasolutions.net/warp-engine/osx/net.summasolutions.docker_10254_alias.plist</pre>
               </div>
             </div>
           </div>
@@ -349,21 +364,6 @@ warp npm install</pre>
               </div>
             </div>
           </div>
-          <div class="panel panel-default">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">
-                    How to install Docker Sync
-                  </a>
-                </h4>
-              </div>
-              <div id="collapse5" class="panel-collapse collapse">
-                <div class="panel-body">
-                  <pre>sudo gem install docker-sync</pre>
-                  <p><a href="http://docker-sync.io/" target="_blank">official documentation</a></p>
-                </div>
-              </div>
-            </div>
         </div>
         <!--
         <h2>Older versions</h2>
