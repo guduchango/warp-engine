@@ -183,11 +183,29 @@ table.table thead tr th.download-icon {
             </div>
             <div id="collapseOne" class="panel-collapse collapse">
               <div class="panel-body">
-                <p>Docker Comunity Edition version 18.06+</p>
-                <p><a href="https://docs.docker.com/compose/install/" target="_blank">Docker compose</a> version 1.21+</p>
-                <p>For OS X</p>
-                <p><a href="">Docker Sync</a></p>
-                <p><a href="https://docs.docker.com/docker-for-mac/" target="_blank">Docker for mac</a> Comunity Edition 18.06+</p>
+                <p><b>For Linux</b></p>
+                <p>Docker Comunity Edition 18.06+</p>
+                <p>Link to the main distributions</p>
+                <ul>
+                  <li><a href="https://docs.docker.com/install/linux/docker-ce/ubuntu/" target="_blank">Install in Ubuntu</a></li>
+                  <li><a href="https://docs.docker.com/install/linux/docker-ce/centos/" target="_blank">Install in Centos</a></li>
+                  <li><a href="https://docs.docker.com/install/linux/docker-ce/debian/" target="_blank">Install in Debian</a></li>
+                  <li><a href="https://docs.docker.com/install/linux/docker-ce/fedora/" target="_blank">Install in Fedora</a></li>
+                  <li><a href="https://docs.docker.com/install/linux/docker-ce/binaries/" target="_blank">Install with Binaries</a></li>
+                </ul>
+                <p>Docker compose 1.21+</p>
+                <ul>
+                  <li><a href="https://docs.docker.com/compose/install/" target="_blank">Install docker-compose</a></li>
+                </ul>
+                <p><b>For OS X</b></p>
+                <p>Docker Sync 0.5.8+</p>
+                <ul>
+                  <li><a href="http://docker-sync.io/" target="_blank">Install Docker Sync</a></li>
+                </ul>
+                <p>Docker for mac Comunity Edition 18.06+</p>
+                <ul>
+                  <li><a href="https://docs.docker.com/docker-for-mac/" target="_blank">Install Docker for mac</a></li>
+                </ul>
               </div>
             </div>
           </div>
@@ -201,52 +219,99 @@ table.table thead tr th.download-icon {
             </div>
             <div id="collapseTwo" class="panel-collapse collapse">
               <div class="panel-body">
-                <p>File -> Settings->Languages & Frameworks -> PHP -> Debug</p>
+                <p>1) config xdebug for debuggear by Browser</p>
                 <p>Install <a href="https://confluence.jetbrains.com/display/PhpStorm/Browser+Debugging+Extensions" target="_blank">browser toolbar</a></p>
                 <p>Enable listening for PHP Debug Conections</p>
+                <p>2) webserver configuration file (server_name)</p>
+                <div class="container-fluid">
+                  <div class="row" id="profile-grid">
+                    <div class="col-sm-4 col-xs-12 profile">
+                      <div class="panel panel-default">
+                        <div class="panel-thumbnail">
+                          <a href="#" title="Server Name PhpStorm" class="thumb">
+                            <img src="img/nginx-config.jpg" class="img-responsive img-rounded" data-toggle="modal" data-target=".modal-profile-lg">
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <p>3) Config Web Server in PHP Storm</p>
                 <p>File -> Settings->Languages & Frameworks -> PHP -> Servers:</p>
                 <div class="container-fluid">
                   <div class="row" id="profile-grid">
                     <div class="col-sm-4 col-xs-12 profile">
-                          <div class="panel panel-default">
-                            <div class="panel-thumbnail">
-                              <a href="#" title="Server Name PhpStorm" class="thumb">
-                                <img src="img/xdebug-server.jpg" class="img-responsive img-rounded" data-toggle="modal" data-target=".modal-profile-lg">
-                              </a>
-                            </div>
-                            <!--
-                            <div class="panel-body">
-                              <p class="profile-name">File -> Settings->Languages & Frameworks -> PHP -> Servers:</p>
-                            </div>
-                            -->
-                          </div>
+                      <div class="panel panel-default">
+                        <div class="panel-thumbnail">
+                          <a href="#" title="Server Name PhpStorm" class="thumb">
+                            <img src="img/xdebug-server.jpg" class="img-responsive img-rounded" data-toggle="modal" data-target=".modal-profile-lg">
+                          </a>
+                        </div>
+                      </div>
                       </div>
                     </div>
                 </div>
                 <p>Configure <strong>absolute path on the Servers</strong></p>
                 <div>
-                    <table class="table">
-                        <thead>
-                          <tr>
-                            <th>Your computer (host)</th>
-                            <th>absolute path on the Servers (inside the container)</th>
+                  <table class="table">
+                      <thead>
+                        <tr>
+                          <th>Your computer (host)</th>
+                          <th>absolute path on the Servers (inside the container)</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>/path/to/current/project/</td>
+                          <td>/var/www/html/</td>
+                        </tr>
+                        <tr>
+                            <td>/path/to/current/project/pub/</td>
+                            <td>/var/www/html/pub/</td>
                           </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>/path/to/current/project/</td>
-                            <td>/var/www/html/</td>
-                          </tr>
-                          <tr>
-                              <td>/path/to/current/project/pub/</td>
-                              <td>/var/www/html/pub/</td>
-                            </tr>
-                          </tbody>
-                      </table>
+                        </tbody>
+                    </table>
                 </div>
-                <p>Para poder usar XDEBUG por consola en necesario configurar PHP_IDE_CONFIG con el mismo nombre que usamos en <strong>ServerName</strong></p>
+                <p>4) Set PHP Web Aplication</p>
+                <p>Run -> Edit Configurations</p>
+                <div class="container-fluid">
+                    <div class="row" id="profile-grid">
+                      <div class="col-sm-4 col-xs-12 profile">
+                        <div class="panel panel-default">
+                          <div class="panel-thumbnail">
+                            <a href="#" title="Server Name PhpStorm" class="thumb">
+                              <img src="img/debug-configuration.jpg" class="img-responsive img-rounded" data-toggle="modal" data-target=".modal-profile-lg">
+                            </a>
+                          </div>
+                        </div>
+                        </div>
+                      </div>
+                  </div>
+                <p>5) xdebug by console</p>
+                <p>to use XDEBUG by console set PHP_IDE_CONFIG with same <strong>ServerName</strong></p>
                 <p>Example:</p>
                 <p>PHP_IDE_CONFIG=serverName=magento2.com</p>
+                <div class="container-fluid">
+                    <div class="row" id="profile-grid">
+                      <div class="col-sm-4 col-xs-12 profile">
+                        <div class="panel panel-default">
+                          <div class="panel-thumbnail">
+                            <a href="#" title="Server Name PhpStorm" class="thumb">
+                              <img src="img/ServerName.jpg" class="img-responsive img-rounded" data-toggle="modal" data-target=".modal-profile-lg">
+                            </a>
+                          </div>
+                        </div>
+                        </div>
+                      </div>
+                </div>
+                <p>6) file ext-xdebug.ini</p>
+                <p>Plase run by console: warp php info</p>
+                <p>open file: <strong>.warp/docker/config/php/ext-xdebug.ini</strong></p>
+                <p>Finally, make sure to configure your xdebug correctly. However you get your xdebug.remote_host into the container, ensure it has similar settings:</p>
+                <p>For Linux: xdebug.remote_host=172.17.0.1</p>
+                <p>For Mac OS X: xdebug.remote_host=10.254.254.254</p>
+                <pre>sudo ifconfig lo0 alias 10.254.254.254
+sudo curl -o /Library/LaunchDaemons/com.ralphschindler.docker_10254_alias.plist https://gist.githubusercontent.com/ralphschindler/535dc5916ccbd06f53c1b0ee5a868c93/raw/com.ralphschindler.docker_10254_alias.plist</pre>
               </div>
             </div>
           </div>
@@ -260,9 +325,11 @@ table.table thead tr th.download-icon {
             </div>
             <div id="collapseThree" class="panel-collapse collapse">
               <div class="panel-body">
-                  <p>you can execute composer inside the php container by ssh console runing the command <strong>warp php ssh</strong></p>
-                  <p>You can execute composer without entering the container, run: <strong>warp composer</strong></p>
-                  <p>for more info please run: <strong>warp composer --help</strong></p>
+                  <p>you can run composer</p>
+                  <pre>warp composer install</pre>
+                  <p>you can use composer inside the container accessing by ssh<p>
+                  <pre>warp php ssh
+composer install</pre>
               </div>
             </div>
           </div>
@@ -277,8 +344,8 @@ table.table thead tr th.download-icon {
             <div id="collapseFour" class="panel-collapse collapse">
               <div class="panel-body">
                 <p>Step-by-step guide</p>
-                <p>warp npm install -g grunt-cli</p>
-                <p>warp npm install</p>
+                <pre>warp npm install -g grunt-cli
+warp npm install</pre>
               </div>
             </div>
           </div>
@@ -292,7 +359,7 @@ table.table thead tr th.download-icon {
               </div>
               <div id="collapse5" class="panel-collapse collapse">
                 <div class="panel-body">
-                  <p>sudo gem install docker-sync</p>
+                  <pre>sudo gem install docker-sync</pre>
                   <p><a href="http://docker-sync.io/" target="_blank">official documentation</a></p>
                 </div>
               </div>
