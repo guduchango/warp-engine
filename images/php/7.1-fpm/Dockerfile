@@ -6,9 +6,14 @@ ENV PHP_EXTRA_CONFIGURE_ARGS --enable-fpm --with-fpm-user=www-data --with-fpm-gr
 
 RUN apt-get update
 
+#Install crontab
+RUN apt-get install -y cron
+
+RUN update-rc.d cron defaults
+
 RUN \
   apt-get install -y \
-  libcurl4-gnutls-dev \
+#  libcurl4-gnutls-dev \ DEPRECATED
   libxml2-dev \
   libssl-dev
 
@@ -34,7 +39,6 @@ RUN \
   libicu-dev \
   libmcrypt-dev \
   libxslt1-dev \
-
   re2c \
   libpng++-dev \
   libvpx-dev \
@@ -47,7 +51,7 @@ RUN \
   libssh2-1-dev \
   libjpeg-dev \
   gnupg \
-  git \
+#  git \ DEPRECATED DEPENDENCIES
   curl \
   vim \
   wget \
@@ -109,6 +113,7 @@ RUN curl -sS https://getcomposer.org/installer | \
 
 RUN pecl install -o -f xdebug
 
+RUN chmod a+x /usr/local/lib/php/extensions/no-debug-non-zts-20160303/xdebug.so 
 
 # ENV PHP_MEMORY_LIMIT 2G
 # ENV PHP_PORT 9000
