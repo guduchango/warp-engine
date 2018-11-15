@@ -18,7 +18,7 @@ function php_info()
         warp_message "Xdebug file:                $(warp_message_info $PROJECTPATH/.warp/docker/config/php/ext-xdebug.ini)"
         warp_message "Cron file:                  $(warp_message_info $PROJECTPATH/.warp/docker/config/crontab/php.cron)"
         warp_message ""
-        warp_message_warn " - In order to configure Xdebug, please check FAQs here: $(warp_message_bold 'http://ct.summasolutions.net/warp-engine/')"
+        warp_message_warn " - In order to configure Xdebug, please check FAQs here: $(warp_message_bold 'http://ct.summasolutions.net/warp-engine/?#anchorFAQs')"
         
         warp_message ""
     fi
