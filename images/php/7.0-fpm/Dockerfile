@@ -13,7 +13,10 @@ RUN update-rc.d cron defaults
 
 RUN \
   apt-get install -y \
-#  libcurl4-gnutls-dev \
+  htop \
+  mc \
+  nano \
+  libcurl4-gnutls-dev \
   libxml2-dev \
   libssl-dev
 
@@ -39,7 +42,6 @@ RUN \
   libicu-dev \
   libmcrypt-dev \
   libxslt1-dev \
-
   re2c \
   libpng++-dev \
   libvpx-dev \
@@ -52,7 +54,7 @@ RUN \
   libssh2-1-dev \
   libjpeg-dev \
   gnupg \
-#  git \
+  git \
   curl \
   vim \
   wget \
