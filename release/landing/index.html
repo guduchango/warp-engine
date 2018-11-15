@@ -208,7 +208,26 @@ table.table thead tr th.download-icon {
         <h5 style="text-align: left;">Run the following command in your root project folder:</h5>
         <pre>curl -L -o warp http://ct.summasolutions.net/warp-engine/warp && chmod 755 warp && ./warp update</pre>
         </div>
-        <h2>FAQ's</h2>
+        <h2>Getting started</h2>
+        <div>
+          <p>After download the <code>warp</code> binary file, you should initialize your dockerized infraestrucutre running the following command: </p>
+          <p><pre>$ ./warp init</pre></p>
+          <p>For further information please run: <code>./warp --help</code></p>
+        </div>
+        <h2>Useful commands</h2>
+        <div>
+          <p>
+            <ul>
+              <li><code>warp --help</code> Shows the warp tool help</li>
+              <li><code>warp [command] --help</code> Shows the specific command help. For instance: warp php --help</li>
+              <li><code>warp info</code> Shows the configured values and useful information for each services</li>
+              <li><code>warp init</code> Initialize the warp framework the first time before to start the project</li>
+              <li><code>warp start</code> Starts the containers</li>
+              <li><code>warp stop</code> Stops the containers</li>
+            </ul>
+          </p>
+        </div>
+        <h2 id="anchorFAQs">FAQ's</h2>
         <div class="panel-group" id="accordion">
           <div class="panel panel-default">
             <div class="panel-heading">
@@ -439,6 +458,21 @@ docker0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
 composer install</pre>
               </div>
             </div>
+          </div>
+          <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" data-parent="#accordion" href="#collapseCronJob">
+                      <span class="glyphicon glyphicon-link" aria-hidden="true"></span> Setting up the Cron Jobs
+                  </a>
+                </h4>
+              </div>
+              <div id="collapseCronJob" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <p>In order to configure your cron jobs edit the following file: <code>PROJECT_ROOT/.warp/docker/config/crontab/php.cron</code></p>
+                  <div class="alert alert-warning" role="alert"><strong>Warning:</strong> a blank line is required at the end of this file!</div>
+                </div>
+              </div>
           </div>
           <div class="panel panel-default">
             <div class="panel-heading">
