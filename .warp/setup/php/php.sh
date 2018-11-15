@@ -56,4 +56,5 @@ then
     # chmod -R 775 $PROJECTPATH/.warp/docker/volumes/php-fpm 2> /dev/null
  
     cp -R $PROJECTPATH/.warp/setup/php/config/php $PROJECTPATH/.warp/docker/config/php
+    cp -R $PROJECTPATH/.warp/setup/php/config/crontab $PROJECTPATH/.warp/docker/config/crontab
 fi; 
