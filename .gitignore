@@ -4,7 +4,7 @@
 /.env.sample
 /docker-compose.yml
 .DS_Store
-/dist/warp
+/dist/warp*
 *.tar.xz
 .warp/lib/commit.sh
 .warp/lib/version.sh
