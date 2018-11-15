@@ -1,80 +1,113 @@
 #!/bin/bash
 
-
-# Check availability of docker
-hash docker 2>/dev/null || { echo >&2 "$SCRIPTNAME requires \"docker\""; exit 1; }
-
-# Check availability of docker-compose
-hash docker-compose 2>/dev/null || { echo >&2 "$SCRIPTNAME requires \"docker-compose\""; exit 1; }
-
+# PROJECTPATH contains the full
+# directory path of the project itself
+PROJECTPATH=$(pwd)
 
 # SCRIPTNAME contains the name
 # of the current script (e.g. "server")
 SCRIPTNAME="bin/$(basename $0)"
 
-# PROJECTPATH contains the full
-# directory path of the project itself
-PROJECTPATH=$(pwd)
+# Check availability of docker
+hash docker 2>/dev/null || { echo >&2 "warp framework requires \"docker\""; exit 1; }
 
+# Check availability of docker-compose
+hash docker-compose 2>/dev/null || { echo >&2 "warp framework requires \"docker-compose\""; exit 1; }
 
-# INCLUDE WARP FRAMEWORK
-. "$PROJECTPATH/.warp/includes.sh"
+case "$(uname -s)" in
+    Darwin)
+    # autodetect docker in Mac
+    # Check availability of docker-sync
+    hash docker-sync 2>/dev/null || { echo >&2 "warp framework requires \"docker-sync\""; exit 1; }
+    ;;
+esac    
 
-
-
-init() {
-
-    echo ""
-    warp_banner
-    echo ""
-
-    if [ -f $PROJECTPATH/docker-compose.yml ] || [ -f $PROJECTPATH/.env ]; then
-        
-        INFRA_FILES_ERROR="FALSE"
-        if [ -f $PROJECTPATH/docker-compose.yml ]; then
-            echo "* Comprobando archivo docker-compose.yml $(warp_message_ok [ok])"
-        else
-            INFRA_FILES_ERROR="TRUE"
-            echo "* Comprobando archivo docker-compose.yml $(warp_message_error [error])"
-        fi; 
-        
-        if [ -f $PROJECTPATH/.env ]; then
-            echo "* Comprobando archivo .env $(warp_message_ok [ok])"
-        else
-            INFRA_FILES_ERROR="TRUE"
-            echo "* Comprobando archivo .env $(warp_message_error [error])"
-        fi;
-
-        if [ $INFRA_FILES_ERROR = "TRUE" ]; then
-            warp_message_warn "-- Ambos archivos (docker-compose.yml y .env) deben existir para poder inicializar los contenedores. $(warp_message_error [error])"
-            warp_message_warn "-- Si queres inicializar un proyecto desde cero, elimina los archivos docker-compose.yml y .env. Luego vovle a ejecutar el comando init "
-            exit
-        fi;
-        
-    else
-        warp_message_info "* Comenzando la instalacion inicial\n"
-        . "$PROJECTPATH/.warp/setup/webserver/webserver.sh"
-    fi;
-
-    if [ -d $PROJECTPATH/.warp ]; then
-        echo "* Directorio .warp $(warp_message_ok [ok])"
-
-        echo "* Aplicando permisos a subdirectorios .warp/docker/volumes $(warp_message_ok [ok])"
-    fi;
+include_warp_framework() {
     
+    # INCLUDE VARIABLES
+    . "$PROJECTPATH/.warp/variables.sh"
+    # INCLUDE WARP FRAMEWORK
+    . "$PROJECTPATH/.warp/includes.sh"
+}
 
+if [ -d $PROJECTPATH/.warp ]; then
+    include_warp_framework
+fi;
+
+
+
+setup_main() {
+
+    if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
+        setup_help_usage
+        exit 1
+    else
+        if [ ! -d $PROJECTPATH/.warp ]; then
+            warp_setup install
+            exit 0;
+        fi;
+
+        init_main init
+    fi
+}
+
+setup_help_usage()
+{
+    if [ -d $PROJECTPATH/.warp ]; then
+        init_help_usage
+        exit 1
+    else
+
+        echo "  if you run for the first time, the installation of the framework begins"
+        echo "  After the initial installation, a guided menu with options to create services"
+        echo "  The following services can be configured:"
+        echo "  1) Web Server with Nginx"
+        echo "  2) PHP Service"
+        echo "  3) Database with MySQL"
+        echo "  4) Service of elasticsearch"
+        echo "  5) Redis service for cache, session, fpc"
+        echo "  "
+        echo "  If the program detects a previous configuration, it shows a shorter menu of options, to configure:"
+        echo "  1) Work with one or more projects in parallel"
+        echo "  2) Configure MySQL ports"
+        echo "  "
+        echo "  Please run ./warp init"
+
+        exit 1
+    fi
 }
 
 help() {
     
-    warp_banner
+    if [ -d $PROJECTPATH/.warp ]; then
+        warp_banner
 
-    for filename in $PROJECTPATH/.warp/bin/*_help.sh; do
-        . "$filename"
-    done
+        . $PROJECTPATH/.warp/bin/help.sh
 
+        help_main
+
+        for filename in $PROJECTPATH/.warp/bin/*_help.sh; do
+            . "$filename"
+            $(basename $filename .sh) # execute default function
+        done
+
+        help_usage
+    else
+        echo "WARP-ENGINE has not been installed yet."
+        echo "Please run ./warp init or ./warp init --help"
+    fi;
 }
 
+warp_update()
+{
+    if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
+        . "$PROJECTPATH/.warp/bin/update_help.sh"
+        update_help_usage
+        exit 1;
+    fi
+
+    warp_setup update
+}
 
 #######################################
 # Print the usage information for the
@@ -95,29 +128,71 @@ usage() {
 
 function warp_info()
 {
+
+    if ! warp_check_env_file ; then
+        warp_message_error "file not found $(basename $ENVIRONMENTVARIABLESFILE)"
+        exit
+    fi; 
+
     mysql_main info   
+    webserver_main info   
+    php_main info   
+    elasticsearch_main info   
+    redis_main info   
 }
 
-function func_test()
+function warp_setup()
 {
-    warp_message_ok "Este es un mensaje de OK!"
-    warp_message_error "Este es un mensaje de ERROR!"
-    warp_message_info "Este es un mensaje de INFO!"
-    warp_message_warn "Este es un mensaje de WARN!"
+    # Create destination folder
+    DESTINATION="."
+    #mkdir -p ${DESTINATION}
 
-    # warp_net_get_used_ports
+    OPTION=$1
 
-    if ! warp_net_port_in_use 80 ; then
-        echo "Puerto Libre"
-    else
-        echo "Puerto Ocupado"
-    fi;
+    # Find __ARCHIVE__ maker, read archive content and decompress it
+    ARCHIVE=$(awk '/^__ARCHIVE__/ {print NR + 1; exit 0; }' "${0}")
 
+    tail -n+${ARCHIVE} "${0}" | tar xpJ -C ${DESTINATION}
+
+    if [ $OPTION = install ]
+    then
+        if [ -d $PROJECTPATH/.warp ]; then    
+            echo "Installing Warp, wait a few moments"
+            sleep 1
+            echo "Successful installation!, starting configurations.."
+            sleep 1
+            # Init Instalation
+            include_warp_framework
+            init_main init
+        fi
+    elif [ $OPTION = update ]
+    then
+        while : ; do
+            respuesta=$( warp_question_ask_default "Are you sure to update Warp Framework? $(warp_message_info [Y/n]) " "Y" )
+            if [ "$respuesta" = "Y" ] || [ "$respuesta" = "y" ] || [ "$respuesta" = "N" ] || [ "$respuesta" = "n" ] ; then
+                break
+            else
+                warp_message_warn "Incorrect answer, you must select between two options: $(warp_message_info [Y/n]) "
+            fi
+        done
+
+        if [ "$respuesta" = "Y" ] || [ "$respuesta" = "y" ]
+        then
+            echo "Updating Warp, wait a few moments"
+            sleep 1
+            echo "Successful update!"
+            sleep 1
+            # Init Instalation
+            include_warp_framework
+            warp_banner
+        fi
+    fi
 }
 
 case "$1" in
     init)
-    init
+    shift 1
+    setup_main  $*
     ;;
 
     mysql)
@@ -125,13 +200,68 @@ case "$1" in
     mysql_main $*
     ;;
 
+    php)
+    shift 1
+    php_main $*
+    ;;
+
+    start)
+    start_main $*
+    ;;
+
+    restart)
+    restart_main $*
+    ;;
+
+    stop)
+    stop_main $*
+    ;;
+
+    ps)
+    ps_main $*
+    ;;
+
     info)
     warp_info
     ;;
 
+    composer)
+    composer_main $*
+    ;;
 
-    test)
-    func_test
+    magento)
+    magento_main $*
+    ;;
+
+    npm)
+    npm_main $*
+    ;;
+
+    grunt)
+    grunt_main $*
+    ;;
+
+    logs)
+    logs_main $*
+    ;;
+
+    elasticsearch)
+    shift 1
+    elasticsearch_main $*
+    ;;
+
+    redis)
+    shift 1
+    redis_main $*
+    ;;
+
+    reset)
+    reset_main $*
+    ;;
+
+    update)
+    shift 1
+    warp_update $*
     ;;
 
     *)
@@ -140,3 +270,5 @@ case "$1" in
 esac
 
 exit 0
+
+__ARCHIVE__
