@@ -269,7 +269,7 @@ table.table thead tr th.download-icon {
             <div id="collapseTwo" class="panel-collapse collapse">
               <div class="panel-body">
                 <h4>Configuring xdebug by Browser </h4>
-                <p>First of all, install <a href="https://confluence.jetbrains.com/display/PhpStorm/Browser+Debugging+Extensions" target="_blank">Browser Toolbar</a> and <strong>enable</strong> listening for PHP Debug Conections</p>
+                <p>1) The first step is to install the <a href="https://confluence.jetbrains.com/display/PhpStorm/Browser+Debugging+Extensions" target="_blank">Browser Toolbar</a> and <strong>enable</strong> listening for PHP Debug Conections</p>
                 <div class="container-fluid">
                     <div class="row" id="profile-grid">
                       <div class="col-sm-4 col-xs-12 profile">
@@ -283,7 +283,8 @@ table.table thead tr th.download-icon {
                       </div>
                     </div>
                   </div>
-                <p>2) webserver configuration file (server_name)</p>
+                <p>2) After that, the server name must be configured in Nginx.</p>
+                <p>The file can be located running the command <code>warp info</code> in your root project folder </p>
                 <div class="container-fluid">
                   <div class="row" id="profile-grid">
                     <div class="col-sm-4 col-xs-12 profile">
@@ -297,61 +298,79 @@ table.table thead tr th.download-icon {
                     </div>
                   </div>
                 </div>
-                <p>3) Config Web Server in PHP Storm</p>
-                <p>File -> Settings->Languages & Frameworks -> PHP -> Servers:</p>
+                <p>3) Now is time to configure the Web Server in PHPStorm IDE</p>
+                <p>Please, go to: File -> Settings->Languages & Frameworks -> PHP -> Servers</p>
+                <p>Add a new Server clicking on the plus (+) button and set the following fields: </p>
+                <p>
+                  <ul>
+                    <li><strong>Name:</strong> Must be the same name configured in Nginx <code>server_name</code> field</li>
+                    <li><strong>Host:</strong> Must be the same value configured in Nginx <code>server_name</code> field</li>
+                    <li><strong>Port:</strong> Should be 80 if you are using HTTP or 443 if you ar using HTTPS</li>
+                    <li><strong>Debbuger:</strong> Choose Xdebug</li>
+                  </ul>
+                </p>
+                <p>After configure those values, check the option <i>Use path mappings</i> and configure the right paths. See the table below</p>
+                <div>
+                    <table class="table">
+                        <thead>
+                          <tr>
+                            <th>File/Directory (Your computer - host)</th>
+                            <th>absolute path on the Servers (inside the container)</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>/path/to/current/project/</td>
+                            <td>/var/www/html/</td>
+                          </tr>
+                          <tr>
+                              <td>/path/to/current/project/pub/</td>
+                              <td>/var/www/html/pub/</td>
+                            </tr>
+                          </tbody>
+                      </table>
+                  </div>
                 <div class="container-fluid">
                   <div class="row" id="profile-grid">
                     <div class="col-sm-4 col-xs-12 profile">
                       <div class="panel panel-default">
                         <div class="panel-thumbnail">
                           <a href="#" title="Server Name PhpStorm" class="thumb">
-                            <img src="img/xdebug-server.jpg" class="img-responsive img-rounded" data-toggle="modal" data-target=".modal-profile-lg">
+                            <img src="img/xdebug-server.png" class="img-responsive img-rounded" data-toggle="modal" data-target=".modal-profile-lg">
                           </a>
                         </div>
                       </div>
                       </div>
                     </div>
                 </div>
-                <p>Configure <strong>absolute path on the Servers</strong></p>
-                <div>
-                  <table class="table">
-                      <thead>
-                        <tr>
-                          <th>Your computer (host)</th>
-                          <th>absolute path on the Servers (inside the container)</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>/path/to/current/project/</td>
-                          <td>/var/www/html/</td>
-                        </tr>
-                        <tr>
-                            <td>/path/to/current/project/pub/</td>
-                            <td>/var/www/html/pub/</td>
-                          </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <p>4) Set PHP Web Aplication</p>
-                <p>Run -> Edit Configurations</p>
+                
+                
+                <p>4) Once that the Web Server has been configured, the PHP Web Aplication must be created, so go to Menu: Run -> Edit Configurations</p>
+                <p>Create a new PHP Web Application clicking on the plus (+) button and select the PHP Web Application option, then set the following fields: </p>
+                <p>
+                  <ul>
+                    <li><strong>Name:</strong> Must be the same name configured in Nginx <code>server_name</code> field</li>
+                    <li><strong>Server:</strong> Select the server created on previous step</li>
+                  </ul>
+                </p>
                 <div class="container-fluid">
                     <div class="row" id="profile-grid">
                       <div class="col-sm-4 col-xs-12 profile">
                         <div class="panel panel-default">
                           <div class="panel-thumbnail">
                             <a href="#" title="Server Name PhpStorm" class="thumb">
-                              <img src="img/debug-configuration.jpg" class="img-responsive img-rounded" data-toggle="modal" data-target=".modal-profile-lg">
+                              <img src="img/php_web_application.png" class="img-responsive img-rounded" data-toggle="modal" data-target=".modal-profile-lg">
                             </a>
                           </div>
                         </div>
                         </div>
                       </div>
                   </div>
-                <p>5) xdebug by console</p>
-                <p>to use XDEBUG by console set PHP_IDE_CONFIG with same <strong>ServerName</strong></p>
-                <p>Example:</p>
-                <p>PHP_IDE_CONFIG=serverName=magento2.com</p>
+                <h4>Configuring xdebug by Console (cli)</h4>
+                <p>Using Xdebug by console requires to set PHP_IDE_CONFIG environment var with same <strong>Nginx server_name</strong> value.</p>
+                <p>Open the <code>.env</code> file located in your root project folder and set the value like this sample:</p>
+                <p><pre>PHP_IDE_CONFIG=serverName=magento2.com</pre></p>
+                <p>Where <i>magento2.com</i> is the server_name set previously in Nginx configuration</p>
                 <div class="container-fluid">
                     <div class="row" id="profile-grid">
                       <div class="col-sm-4 col-xs-12 profile">
@@ -365,14 +384,37 @@ table.table thead tr th.download-icon {
                         </div>
                       </div>
                 </div>
-                <p>6) file ext-xdebug.ini</p>
-                <p>Plase run by console: warp php info</p>
-                <p>open file: <strong>.warp/docker/config/php/ext-xdebug.ini</strong></p>
-                <p>Finally, make sure to configure your xdebug correctly. However you get your xdebug.remote_host into the container, ensure it has similar settings:</p>
-                <p>For Linux: xdebug.remote_host=172.17.0.1</p>
-                <p>For Mac OS X: xdebug.remote_host=10.254.254.254</p>
-                <pre>sudo ifconfig lo0 alias 10.254.254.254
-sudo curl -o /Library/LaunchDaemons/net.summasolutions.docker_10254_alias.plist http://ct.summasolutions.net/warp-engine/osx/net.summasolutions.docker_10254_alias.plist</pre>
+                <h4>Configuring the Xdebug php extension (ext-xdebug.ini)</h4>
+                <p>Plase located in your root project folder, execute the command: <code>warp php info</code>, you will see the location of ext-xdebug.ini file.</p>
+                <p>Open the file, for example located in <strong>.warp/docker/config/php/ext-xdebug.ini</strong></p>
+                <p>Finally, make sure to configure your xdebug correctly, the most important options are:</p>
+                <p>
+                  <ul>
+                    <li>xdebug.remote_enable=1</li>
+                    <li>xdebug.remote_port=9000</li>
+                    <li>xdebug.remote_connect_back=0</li>
+                    <li>xdebug.idekey='PHPSTORM'</li>
+                    <li>xdebug.remote_host=172.17.0.1</li>
+                  </ul>
+                </p>
+                <p>The field <code>xdebug.remote_host</code> depends of your Operating System and your local configurations:</p>
+                <p><strong>Linux:</strong> The IP should be grabbed from Docker network interface, ussually called <code>docker0</code></p>
+                <p>You can get it running the command <strong>ifconfig</strong> for instance:</p>
+                <p><pre>
+docker0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+    <span style="color:red;">inet 172.17.0.1</span>  netmask 255.255.0.0  broadcast 172.17.255.255
+    inet6 fe80::42:49ff:fec6:dfe7  prefixlen 64  scopeid 0x20<link>
+    ether 02:42:49:c6:df:e7  txqueuelen 0  (Ethernet)
+    RX packets 72049  bytes 4443463 (4.4 MB)
+    RX errors 0  dropped 0  overruns 0  frame 0
+    TX packets 82000  bytes 435500419 (435.5 MB)
+    TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+                </pre></p>
+                <p><strong>Mac OS X:</strong> The IP should be <code>xdebug.remote_host=10.254.254.254</code> added as an alias following the next steps:</p>
+                <p>1- Create the alias</p>
+                <pre>sudo ifconfig lo0 alias 10.254.254.254</pre>
+                <p>2- Add the network configuration to OS X launch daemons, to create the alias automatically on system boot process. </p>
+                <pre>sudo curl -o /Library/LaunchDaemons/net.summasolutions.docker_10254_alias.plist http://ct.summasolutions.net/warp-engine/osx/net.summasolutions.docker_10254_alias.plist</pre>
               </div>
             </div>
           </div>
