@@ -13,7 +13,10 @@ RUN update-rc.d cron defaults
 
 RUN \
   apt-get install -y \
-#  libcurl4-gnutls-dev \ DEPRECATED
+  htop \
+  mc \
+  nano \
+  libcurl4-gnutls-dev \
   libxml2-dev \
   libssl-dev
 
@@ -51,7 +54,7 @@ RUN \
   libssh2-1-dev \
   libjpeg-dev \
   gnupg \
-#  git \ DEPRECATED DEPENDENCIES
+  git \
   curl \
   vim \
   wget \

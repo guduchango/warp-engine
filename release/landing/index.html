@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -160,6 +159,10 @@ table.table thead tr th.download-icon {
     border-top: 0px;
 }
 
+.panel-body {
+  padding-left: 50px;
+}
+
 .glyphicon-link {color:gray;}
 
 /* Responsive: Portrait tablets and up */
@@ -243,7 +246,7 @@ table.table thead tr th.download-icon {
               <div class="panel-heading">
                 <h4 class="panel-title">
                   <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">
-                      <span class="glyphicon glyphicon-link" aria-hidden="true"></span> How to install Docker Sync
+                      <span class="glyphicon glyphicon-link" aria-hidden="true"></span> How to install Docker Sync for Mac
                   </a>
                 </h4>
               </div>
@@ -258,15 +261,28 @@ table.table thead tr th.download-icon {
             <div class="panel-heading">
               <h4 class="panel-title">
                 <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-                    <span class="glyphicon glyphicon-link" aria-hidden="true"></span> How to config Xdebug
+                    <span class="glyphicon glyphicon-link" aria-hidden="true"></span> How to configure Xdebug
                 </a>
               </h4>
             </div>
+
             <div id="collapseTwo" class="panel-collapse collapse">
               <div class="panel-body">
-                <p>1) config xdebug for debuggear by Browser</p>
-                <p>Install <a href="https://confluence.jetbrains.com/display/PhpStorm/Browser+Debugging+Extensions" target="_blank">browser toolbar</a></p>
-                <p>Enable listening for PHP Debug Conections</p>
+                <h4>Configuring xdebug by Browser </h4>
+                <p>First of all, install <a href="https://confluence.jetbrains.com/display/PhpStorm/Browser+Debugging+Extensions" target="_blank">Browser Toolbar</a> and <strong>enable</strong> listening for PHP Debug Conections</p>
+                <div class="container-fluid">
+                    <div class="row" id="profile-grid">
+                      <div class="col-sm-4 col-xs-12 profile">
+                        <div class="panel panel-default">
+                          <div class="panel-thumbnail">
+                            <a href="#" title="Debug Toolbar" class="thumb">
+                              <img src="img/debugtoolbar.png" class="img-responsive img-rounded" data-toggle="modal" data-target=".modal-profile-lg">
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 <p>2) webserver configuration file (server_name)</p>
                 <div class="container-fluid">
                   <div class="row" id="profile-grid">
