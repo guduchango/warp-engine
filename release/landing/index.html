@@ -469,7 +469,16 @@ composer install</pre>
               </div>
               <div id="collapseCronJob" class="panel-collapse collapse">
                 <div class="panel-body">
-                  <p>In order to configure your cron jobs edit the following file: <code>PROJECT_ROOT/.warp/docker/config/crontab/php.cron</code></p>
+                  <p><strong>Editing The Crontab File</strong></p>
+                  <p>To check whether you have a crontab file run the following command:</p>
+                  <pre>warp crontab -l</pre>
+                  <p>To create or edit a crontab file run the following command:</p>
+                  <pre>warp crontab -e</pre>
+                  <p>The file that opens has a lot of information but the key part is the example just before the end of the comments section (comments are denoted by lines beginning with #).</p>
+                  <pre># m h dom mon dow command</pre>
+                  <p>Example:</p>
+                  <pre>* * * * * www-data echo "Cron run test" >> /var/www/html/cron.log</pre>
+
                   <div class="alert alert-warning" role="alert"><strong>Warning:</strong> a blank line is required at the end of this file!</div>
                 </div>
               </div>

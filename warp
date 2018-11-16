@@ -233,6 +233,10 @@ case "$1" in
     magento_main $*
     ;;
 
+    crontab)
+    crontab_main $*
+    ;;
+
     npm)
     npm_main $*
     ;;
