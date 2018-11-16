@@ -7,7 +7,7 @@
 # Initialize Cron Job
 function run_cron() {
 
-    docker-compose -f $DOCKERCOMPOSEFILE exec --user=root php bash -c "cron"
+    docker-compose -f $DOCKERCOMPOSEFILE exec -d --user=root php bash -c "chown root:root /etc/cron.d/* && chmod 644 /etc/cron.d/* && cron"
 }
 
 #######################################
@@ -51,7 +51,8 @@ function start() {
     then
       # COPY ID_RSA ./ssh
       copy_ssh_id
-      run_cron
+      # Initialize Cron Job
+      crontab_run
     else
       warp_message_warn "Please Run ./warp composer --credential to copy the credentials"
     fi
