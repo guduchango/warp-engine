@@ -4,12 +4,6 @@
 
     . "$PROJECTPATH/.warp/bin/start_help.sh"
 
-# Initialize Cron Job
-function run_cron() {
-
-    docker-compose -f $DOCKERCOMPOSEFILE exec -d --user=root php bash -c "chown root:root /etc/cron.d/* && chmod 644 /etc/cron.d/* && cron"
-}
-
 #######################################
 # Start the server and all of its
 # components
@@ -33,6 +27,9 @@ function start() {
       start_help_usage
       exit 1;
   else
+
+    # Check 
+    warp_check_files
 
     case "$(uname -s)" in
       Darwin)

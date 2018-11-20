@@ -41,6 +41,51 @@ warp_check_yaml_file()
     fi;
 }
 
+##
+# Check if files exist
+#
+# * docker-compose-warp.yml
+# * docker-sync.yml
+# * .env
+#
+# Globals:
+#   PROJECTPATH
+# Arguments:
+#   None
+##
+function warp_check_files()
+{
+    INFRA_FILES_ERROR="FALSE"
+    INFRA_FILES_ERROR_MAC="FALSE"
+
+    if [ ! -f $DOCKERCOMPOSEFILE ]; then
+        INFRA_FILES_ERROR="TRUE"
+        echo "* Checking file $(basename $DOCKERCOMPOSEFILE) $(warp_message_error [error])"
+    fi; 
+    
+    if [ ! -f $ENVIRONMENTVARIABLESFILE ]; then
+        INFRA_FILES_ERROR="TRUE"
+        echo "* Checking file $(basename $ENVIRONMENTVARIABLESFILE) $(warp_message_error [error])"
+    fi;
+
+    case "$(uname -s)" in
+        Darwin)
+        if [ ! -f $DOCKERSYNCMAC ]; then
+            INFRA_FILES_ERROR_MAC="TRUE"
+            echo "* Checking file $(basename $DOCKERSYNCMAC) $(warp_message_error [error])"
+        fi;
+        ;;
+    esac    
+
+    if [ $INFRA_FILES_ERROR = "TRUE" ]; then
+        warp_message ""
+        warp_message_warn "-- These files: ($(basename $DOCKERCOMPOSEFILE) and $(basename $ENVIRONMENTVARIABLESFILE)) are necessary to initialize the containers.. $(warp_message_error [error])"
+        [ $INFRA_FILES_ERROR_MAC = "TRUE" ] && warp_message_warn "-- This files: $(basename $DOCKERSYNCMAC) is necessary in macOS.. $(warp_message_error [error])"
+        warp_message_warn "-- To initialize the project please Run: $(warp_message_bold './warp init')"
+        exit
+    fi
+}
+
 # WARNING MESSAGE IF TO USE MAC 
 # MacOS not soport multi-projects
 warp_check_os_mac() {
