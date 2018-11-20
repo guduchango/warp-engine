@@ -1,3 +1,7 @@
+2018.11.20
+=============
+* checking files before starting containers.
+
 2018.11.16
 =============
 * fix crontab process
