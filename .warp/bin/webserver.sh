@@ -27,7 +27,7 @@ function webserver_info()
             ETC_HOSTS_IP=$HTTP_HOST_IP
         fi;
         warp_message "Logs:                       $(warp_message_info $PROJECTPATH/.warp/docker/volumes/nginx/logs)" 
-        warp_message "Configuration file:         $(warp_message_info $NGINX_CONFIG_FILE)" 
+        warp_message "Nginx configuration file:   $(warp_message_info $NGINX_CONFIG_FILE)" 
         warp_message ""
         warp_message_warn " - Configure your hosts file (/etc/hosts) with: $(warp_message_bold $ETC_HOSTS_IP'  '$VIRTUAL_HOST)"
         warp_message ""

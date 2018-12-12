@@ -1,3 +1,10 @@
+2018.12.12
+=============
+* adding video demo on landing page.
+* fix permissions in html folder.
+* Add control for the ed command.
+* Improve FAQs about xdebug.
+
 2018.11.20
 =============
 * checking files before starting containers.

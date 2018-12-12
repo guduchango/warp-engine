@@ -7,7 +7,7 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>WARP Engine Download Page</title>
 
-    <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="shortcut icon" href="https://s3.amazonaws.com/ct.summasolutions.net/favicon.ico" type="image/x-icon" />
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -34,6 +34,15 @@ body {
   padding-bottom: 20px;
   font-family: 'Open Sans', sans-serif;
   overflow-x: scroll;
+}
+
+.center {
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    display: block
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -214,6 +223,10 @@ table.table thead tr th.download-icon {
           <p><pre>$ ./warp init</pre></p>
           <p>For further information please run: <code>./warp --help</code></p>
         </div>
+        <video class="center" loop autoplay muted>
+          <source src="img/movie.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
         <h2>Useful commands</h2>
         <div>
           <p>
@@ -306,8 +319,9 @@ table.table thead tr th.download-icon {
                       </div>
                     </div>
                   </div>
-                <p>2) After that, the server name must be configured in Nginx.</p>
-                <p>The file can be located running the command <code>warp info</code> in your root project folder </p>
+                <p>2) After that, the server name must be configured in Nginx.</p> 
+                <p>To achieve this, please modify the nginx config file (file ended in .conf) setting the server_name attribute.</p>
+                <p>The file can be located running the command <code>warp info</code> in your root project folder with the "Nginx configuration file" flag</p>
                 <div class="container-fluid">
                   <div class="row" id="profile-grid">
                     <div class="col-sm-4 col-xs-12 profile">
