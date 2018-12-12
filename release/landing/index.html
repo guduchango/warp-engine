@@ -36,6 +36,14 @@ body {
   overflow-x: scroll;
 }
 
+.center {
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 50px;
+    display: block
+}
+
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
 .marketing,
@@ -118,6 +126,7 @@ table.table thead tr th.download-icon {
 .jumbotron {
   text-align: center;
   border-bottom: 0px;
+  margin-bottom: 0px;
 }
 /*.jumbotron .btn {
   padding: 14px 24px;
@@ -208,6 +217,10 @@ table.table thead tr th.download-icon {
         <h5 style="text-align: left;">Run the following command in your root project folder:</h5>
         <pre>curl -L -o warp http://ct.summasolutions.net/warp-engine/warp && chmod 755 warp && ./warp update</pre>
         </div>
+        <video class="center" loop autoplay muted>
+          <source src="img/movie.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
         <h2>Getting started</h2>
         <div>
           <p>After download the <code>warp</code> binary file, you should initialize your dockerized infraestrucutre running the following command: </p>
@@ -306,8 +319,9 @@ table.table thead tr th.download-icon {
                       </div>
                     </div>
                   </div>
-                <p>2) After that, the server name must be configured in Nginx.</p>
-                <p>The file can be located running the command <code>warp info</code> in your root project folder </p>
+                <p>2) After that, the server name must be configured in Nginx.</p> 
+                <p>To achieve this, please modify the nginx config file (file ended in .conf) setting the server_name attribute.</p>
+                <p>The file can be located running the command <code>warp info</code> in your root project folder with the "Nginx configuration file" flag</p>
                 <div class="container-fluid">
                   <div class="row" id="profile-grid">
                     <div class="col-sm-4 col-xs-12 profile">
