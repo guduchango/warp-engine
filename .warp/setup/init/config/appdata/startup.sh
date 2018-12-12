@@ -7,6 +7,7 @@ PATH_ROOT_SITE="/var/www/html"
 while true;
 do
 	# Change group to 33 (www-data inside the container)
+	chmod ug+rwx $PATH_ROOT_SITE
 	chgrp 33 $PATH_ROOT_SITE
 	chgrp 33 $PATH_ROOT_SITE/bin/magento
 
