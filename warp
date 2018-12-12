@@ -14,6 +14,9 @@ hash docker 2>/dev/null || { echo >&2 "warp framework requires \"docker\""; exit
 # Check availability of docker-compose
 hash docker-compose 2>/dev/null || { echo >&2 "warp framework requires \"docker-compose\""; exit 1; }
 
+# Check availability of ed
+hash ed 2>/dev/null || { echo >&2 "warp framework requires \"ed command\". On debian install it running \"sudo apt-get install ed\""; exit 1; }
+
 case "$(uname -s)" in
     Darwin)
     # autodetect docker in Mac
