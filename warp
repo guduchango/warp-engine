@@ -224,6 +224,10 @@ case "$1" in
     ps_main $*
     ;;
 
+    ips)
+    ips_main $*
+    ;;
+
     info)
     warp_info
     ;;
