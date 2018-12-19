@@ -1,3 +1,8 @@
+2018.12.20
+=============
+* adding flag --ip in info command.
+* bind bashrc in containers
+
 2018.12.12
 =============
 * adding video demo on landing page.
