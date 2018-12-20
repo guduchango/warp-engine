@@ -132,16 +132,36 @@ usage() {
 function warp_info()
 {
 
+    # IMPORT HELP
+
+    . "$PROJECTPATH/.warp/bin/info_help.sh"
+
+    if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then  
+        info_help_usage
+        exit 1;
+    fi;    
+
     if ! warp_check_env_file ; then
         warp_message_error "file not found $(basename $ENVIRONMENTVARIABLESFILE)"
         exit
     fi; 
 
-    mysql_main info   
-    webserver_main info   
-    php_main info   
-    elasticsearch_main info   
-    redis_main info   
+    if [ "$1" = "--ip" ] ; then
+        if [ $(warp_check_is_running) = false ]; then
+            warp_message_error "The containers are not running"
+            warp_message_error "please, first run warp start"
+
+            exit 1;
+        fi
+
+        docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}   {{.Name}}'   $(docker-compose -f  $DOCKERCOMPOSEFILE ps -q) | sed 's/ \// /'
+    else
+        mysql_main info   
+        webserver_main info   
+        php_main info   
+        elasticsearch_main info   
+        redis_main info   
+    fi;
 }
 
 function warp_setup()
@@ -225,7 +245,8 @@ case "$1" in
     ;;
 
     info)
-    warp_info
+    shift 1
+    warp_info $*
     ;;
 
     composer)
