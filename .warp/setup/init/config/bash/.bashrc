@@ -13,7 +13,7 @@ alias ls='ls $LS_OPTIONS'
 alias ll='ls -lh $LS_OPTIONS'
 alias l='ls -lhA $LS_OPTIONS'
 
-export GREP_OPTIONS='--color=auto'
+#export GREP_OPTIONS='--color=auto'
 
 #
 # Some more alias to avoid making mistakes:
@@ -26,3 +26,8 @@ export PS1="\[\033[36m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[33;1m\]\w\[\033[m\]\$
 
 export NVM_DIR="/root/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+# Clear Magento cache
+alias mage2clear="rm -rf generated/code/ var/cache/ var/page_cache/ var/session/ var/view_preprocessed/ var/composer_home/ pub/static && bin/magento cache:clean"
+alias mage2flush="rm -rf generated/code/ var/cache/ var/page_cache/ var/session/ var/view_preprocessed/ var/composer_home/ pub/static && bin/magento cache:flush"
+alias mage2generated="rm -rf generated/code/ var/cache/"
