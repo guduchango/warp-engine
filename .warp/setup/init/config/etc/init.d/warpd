@@ -1,0 +1,106 @@
+#!/bin/sh
+set -e
+
+### BEGIN INIT INFO
+# Provides:           warpd
+# Required-Start:     $syslog $remote_fs
+# Required-Stop:      $syslog $remote_fs
+# Should-Start:       cgroupfs-mount cgroup-lite
+# Should-Stop:        cgroupfs-mount cgroup-lite
+# Default-Start:      2 3 4 5
+# Default-Stop:       0 1 6
+# Short-Description:  Loads lightweight, portable, self-sufficient containers for Magento 2 proyect.
+# Description:
+#  Loads lightweight, portable, self-sufficient containers for Magento 2 proyect.
+### END INIT INFO
+
+### Install 
+# 1) sudo cp WARP_PROJECT/.warp/docker/config/etc/init.d/warpd /etc/init.d/
+# 2) sudo ln -s /etc/init.d/warpd /etc/rc0.d/K02warpd 
+# 3) sudo ln -s /etc/init.d/warpd /etc/rc1.d/K02warpd   
+# 4) sudo ln -s /etc/init.d/warpd /etc/rc2.d/S02warpd  
+# 5) sudo ln -s /etc/init.d/warpd /etc/rc3.d/S02warpd   
+# 6) sudo ln -s /etc/init.d/warpd /etc/rc4.d/S02warpd
+# 7) sudo ln -s /etc/init.d/warpd /etc/rc5.d/S02warpd
+# 8) sudo ln -s /etc/init.d/warpd /etc/rc6.d/K02warpd
+
+PATH=$PATH:$HOME/.local/bin:$HOME/bin:/usr/local/bin
+
+export PATH
+
+
+BASE=warp_framework
+
+# Vars can be overwritten via /etc/default/m2docker file
+
+WARP_PROJECT=/data/www/your-project
+WARP_DESC="M2-Docker"
+
+DOCKERCOMPOSEFILE="$WARP_PROJECT/docker-compose-warp.yml"
+
+cd $WARP_PROJECT
+
+fail_unless_root() {
+	if [ "$(id -u)" != '0' ]; then
+		log_failure_msg "$WARP_DESC must be run as root"
+		exit 1
+	fi
+}
+
+stop() {
+    # stop all docker containers
+    docker-compose -f $DOCKERCOMPOSEFILE down
+}
+
+start() {
+
+  # start docker containers
+  docker-compose -f $DOCKERCOMPOSEFILE up -d
+
+}
+
+restart() {
+  stop
+  start
+}
+
+status() {
+  # docker status
+  docker-compose -f $DOCKERCOMPOSEFILE ps -q | xargs docker inspect --format='{{ .Name }} {{ .State.Status }}' | sed 's:^/::g' | xargs printf "%-45s%-30s\n"
+}
+
+case "$1" in
+	start)
+
+		fail_unless_root
+
+        start
+
+		;;
+
+	stop)
+
+		fail_unless_root
+		stop
+		;;
+
+	restart)
+
+		fail_unless_root
+		restart
+		;;
+
+	force-reload)
+		fail_unless_root
+		$0 restart
+		;;
+
+	status)
+		status
+		;;
+
+	*)
+		echo "Usage: service docker {start|stop|restart|status}"
+		exit 1
+		;;
+esac
