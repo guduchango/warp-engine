@@ -1,7 +1,8 @@
-2019.01.02
+2019.01.04
 =============
 * adding alias for clear magento cache
 * adding file for runlevel
+* added additional parameter in xdebug
 
 2018.12.20
 =============
