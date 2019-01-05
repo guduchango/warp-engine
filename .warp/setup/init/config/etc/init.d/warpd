@@ -29,14 +29,14 @@ PATH=$PATH:$HOME/.local/bin:$HOME/bin:/usr/local/bin
 export PATH
 
 
-BASE=warp_framework
+BASE="warp_framework"
 
 # Vars can be overwritten via /etc/default/m2docker file
 
 WARP_PROJECT=/data/www/your-project
-WARP_DESC="M2-Docker"
+WARP_DESC="Warp Framework"
 
-DOCKERCOMPOSEFILE="$WARP_PROJECT/docker-compose-warp.yml"
+WARP_FILE="$WARP_PROJECT/warp"
 
 cd $WARP_PROJECT
 
@@ -49,13 +49,13 @@ fail_unless_root() {
 
 stop() {
     # stop all docker containers
-    docker-compose -f $DOCKERCOMPOSEFILE down
+    $WARP_FILE stop
 }
 
 start() {
 
   # start docker containers
-  docker-compose -f $DOCKERCOMPOSEFILE up -d
+  $WARP_FILE start
 
 }
 
@@ -66,7 +66,8 @@ restart() {
 
 status() {
   # docker status
-  docker-compose -f $DOCKERCOMPOSEFILE ps -q | xargs docker inspect --format='{{ .Name }} {{ .State.Status }}' | sed 's:^/::g' | xargs printf "%-45s%-30s\n"
+  # docker-compose -f $WARP_PROJECT/docker-compose-warp.yml ps -q | xargs docker inspect --format='{{ .Name }} {{ .State.Status }}' | sed 's:^/::g' | xargs printf "%-45s%-30s\n"
+  $WARP_FILE ps
 }
 
 case "$1" in
