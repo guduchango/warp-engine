@@ -1,3 +1,9 @@
+2019.01.07
+=============
+* adding alias for clear magento cache
+* adding file for runlevel
+* added additional parameter in xdebug
+
 2018.12.20
 =============
 * adding flag --ip in info command.
