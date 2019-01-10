@@ -1,3 +1,7 @@
+2019.01.10
+=============
+* fix command install
+
 2019.01.07
 =============
 * adding alias for clear magento cache
