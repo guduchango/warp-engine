@@ -96,13 +96,23 @@ help() {
 
         help_usage
     else
-        echo "WARP-ENGINE has not been installed yet."
-        echo "Please run ./warp init or ./warp init --help"
+        warp_message_not_install_yet
     fi;
+}
+
+warp_message_not_install_yet()
+{
+    echo "WARP-ENGINE has not been installed yet."
+    echo "Please run ./warp init or ./warp init --help"
 }
 
 warp_update()
 {
+    if [ ! -d $PROJECTPATH/.warp ]; then
+        warp_message_not_install_yet
+        exit 0;
+    fi;
+
     if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
         . "$PROJECTPATH/.warp/bin/update_help.sh"
         update_help_usage
@@ -177,7 +187,7 @@ function warp_setup()
 
     tail -n+${ARCHIVE} "${0}" | tar xpJ -C ${DESTINATION}
 
-    if [ $OPTION = install ]
+    if [ "$OPTION" = "install" ]
     then
         if [ -d $PROJECTPATH/.warp ]; then    
             echo "Installing Warp, wait a few moments"
@@ -188,7 +198,7 @@ function warp_setup()
             include_warp_framework
             init_main init
         fi
-    elif [ $OPTION = update ]
+    elif [ "$OPTION" = "update" ]
     then
         while : ; do
             respuesta=$( warp_question_ask_default "Are you sure to update Warp Framework? $(warp_message_info [Y/n]) " "Y" )
