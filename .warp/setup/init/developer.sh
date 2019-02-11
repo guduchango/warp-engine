@@ -89,6 +89,26 @@ warp_message ""
         fi;
     done
 
+    if [ ! -z "$RABBIT_VERSION" ]
+    then
+    
+        warp_message ""
+        warp_message_info "Configuring the Rabbit Service"
+        warp_message ""
+
+        while : ; do
+            rabbit_binded_port=$( warp_question_ask_default "Mapping container port 15672 to your machine port (host): $(warp_message_info [8080]) " "8080" )
+
+            if ! warp_net_port_in_use $rabbit_binded_port ; then
+                warp_message_info2 "the selected port is: $rabbit_binded_port, the port mapping is: $(warp_message_bold '127.0.0.1:'$rabbit_binded_port' ---> container_host:15672')"
+                break
+            else
+                warp_message_warn "The port $rabbit_binded_port is busy, choose another one\n"
+            fi;
+        done
+    fi
+
+
     HTTP_HOST_OLD="HTTP_HOST_IP=$HTTP_HOST_IP"
     HTTP_BINDED_OLD="HTTP_BINDED_PORT=$HTTP_BINDED_PORT"
     HTTPS_BINDED_OLD="HTTPS_BINDED_PORT=$HTTPS_BINDED_PORT"
@@ -154,5 +174,16 @@ warp_message ""
 
     cat $ENVIRONMENTVARIABLESFILE | sed -e "s/$BINDED_PORT_OLD/$BINDED_PORT_NEW/" > "$ENVIRONMENTVARIABLESFILE.warp6"
     mv "$ENVIRONMENTVARIABLESFILE.warp6" $ENVIRONMENTVARIABLESFILE
+
+
+    if [ ! -z "$RABBIT_VERSION" ]
+    then
+        # CHANGE PORT RABBIT
+        BINDED_PORT_OLD="RABBIT_BINDED_PORT=$RABBIT_BINDED_PORT"
+        BINDED_PORT_NEW="RABBIT_BINDED_PORT=$rabbit_binded_port"
+
+        cat $ENVIRONMENTVARIABLESFILE | sed -e "s/$BINDED_PORT_OLD/$BINDED_PORT_NEW/" > "$ENVIRONMENTVARIABLESFILE.warp7"
+        mv "$ENVIRONMENTVARIABLESFILE.warp7" $ENVIRONMENTVARIABLESFILE
+    fi
 
     . "$WARPFOLDER/setup/init/info.sh"

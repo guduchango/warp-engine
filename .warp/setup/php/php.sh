@@ -57,4 +57,16 @@ then
  
     cp -R $PROJECTPATH/.warp/setup/php/config/php $PROJECTPATH/.warp/docker/config/php
     cp -R $PROJECTPATH/.warp/setup/php/config/crontab $PROJECTPATH/.warp/docker/config/crontab
+
+    echo "" >> $PROJECTPATH/.warp/docker/config/php/ext-xdebug.ini.sample 
+    echo "" >> $PROJECTPATH/.warp/docker/config/php/ext-xdebug.ini.sample 
+    echo "## CONFIG XDEBUG FOR $php_version ##" >> $PROJECTPATH/.warp/docker/config/php/ext-xdebug.ini.sample 
+    
+    if [ "$php_version" == "7.0-fpm" ] ; then
+            echo "zend_extension = /usr/local/lib/php/extensions/no-debug-non-zts-20151012/xdebug.so" >> $PROJECTPATH/.warp/docker/config/php/ext-xdebug.ini.sample 
+    else
+            echo "zend_extension = /usr/local/lib/php/extensions/no-debug-non-zts-20160303/xdebug.so" >> $PROJECTPATH/.warp/docker/config/php/ext-xdebug.ini.sample 
+    fi;
+    
+    echo "## PHP ###" >> $PROJECTPATH/.warp/docker/config/php/ext-xdebug.ini.sample
 fi; 

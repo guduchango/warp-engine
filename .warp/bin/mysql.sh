@@ -7,6 +7,11 @@
 function mysql_info()
 {
 
+    if ! warp_check_env_file ; then
+        warp_message_error "file not found $(basename $ENVIRONMENTVARIABLESFILE)"
+        exit
+    fi; 
+
     DATABASE_NAME=$(warp_env_read_var DATABASE_NAME)
     DATABASE_USER=$(warp_env_read_var DATABASE_USER)
     DATABASE_PASSWORD=$(warp_env_read_var DATABASE_PASSWORD)
