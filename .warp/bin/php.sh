@@ -7,6 +7,11 @@
 function php_info()
 {
 
+    if ! warp_check_env_file ; then
+        warp_message_error "file not found $(basename $ENVIRONMENTVARIABLESFILE)"
+        exit
+    fi; 
+
     PHP_VERSION=$(warp_env_read_var PHP_VERSION)
 
     if [ ! -z "$PHP_VERSION" ]

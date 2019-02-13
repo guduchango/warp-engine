@@ -1,3 +1,7 @@
+2019.02.13
+=============
+* added RabitMQ service
+
 2019.01.10
 =============
 * fix command install

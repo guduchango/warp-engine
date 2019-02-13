@@ -69,6 +69,7 @@ setup_help_usage()
         echo "  3) Database with MySQL"
         echo "  4) Service of elasticsearch"
         echo "  5) Redis service for cache, session, fpc"
+        echo "  6) Rabbit service"
         echo "  "
         echo "  If the program detects a previous configuration, it shows a shorter menu of options, to configure:"
         echo "  1) Work with one or more projects in parallel"
@@ -171,6 +172,7 @@ function warp_info()
         php_main info   
         elasticsearch_main info   
         redis_main info   
+        rabbit_main info   
     fi;
 }
 
@@ -291,6 +293,11 @@ case "$1" in
     redis)
     shift 1
     redis_main $*
+    ;;
+
+    rabbit)
+    shift 1
+    rabbit_main $*
     ;;
 
     reset)
