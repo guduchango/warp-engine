@@ -1,3 +1,7 @@
+2019.02.20
+=============
+* set permissions with elasticsearch
+
 2019.02.13
 =============
 * added RabitMQ service
