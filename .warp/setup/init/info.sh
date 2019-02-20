@@ -56,6 +56,9 @@ warp_message "* Applying permissions to subdirectories .warp/docker/volumes $(wa
     sudo chmod -R 775 $PROJECTPATH/.warp/docker/volumes/php-fpm
     sudo chgrp -R 33 $PROJECTPATH/.warp/docker/volumes/php-fpm
 
+    mkdir -p   $PROJECTPATH/.warp/docker/volumes/elasticsearch
+    sudo chmod -R 777 $PROJECTPATH/.warp/docker/volumes/elasticsearch
+
 if [ ! -f $WARP_BINARY_FILE ] ; then
     warp_message "* Creating binary warp file $(warp_message_ok [ok])"
     sudo sh $PROJECTPATH/.warp/lib/binary.sh $WARP_BINARY_FILE
