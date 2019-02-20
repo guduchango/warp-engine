@@ -25,6 +25,7 @@ function mysql_info()
         warp_message ""
         warp_message_info "* MySQL"
         warp_message "Database Name:              $(warp_message_info $DATABASE_NAME)"
+        warp_message "Host: (container)           $(warp_message_info mysql)"
         warp_message "Username:                   $(warp_message_info $DATABASE_USER)"
         warp_message "Password:                   $(warp_message_info $DATABASE_PASSWORD)"
         warp_message "Root password:              $(warp_message_info $DATABASE_ROOT_PASSWORD)"
@@ -34,6 +35,8 @@ function mysql_info()
         warp_message "Other config files:         $(warp_message_info $MYSQL_CONFIG_FILE)"
         warp_message "Dumps folder (host):        $(warp_message_info $PROJECTPATH/.warp/docker/dumps)" 
         warp_message "Dumps folder (container):   $(warp_message_info /dumps)"
+        warp_message ""
+        warp_message_warn " - prevent to use 127.0.0.1 or localhost as database host.  Instead of 127.0.0.1 use: $(warp_message_bold 'mysql')"
         warp_message ""
     fi
 }

@@ -1,6 +1,11 @@
+2019.02.20
+=============
+* set permissions with elasticsearch
+
 2019.02.13
 =============
 * added RabitMQ service
+* added PHP 7.1.26-fpm
 
 2019.01.10
 =============

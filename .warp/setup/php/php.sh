@@ -29,8 +29,11 @@ then
         '7.1.17-fpm')
             break
         ;;
+        '7.1.26-fpm')
+            break
+        ;;
         *)
-            warp_message_info2 "Selected: $php_version, the available versions are 7.0-fpm, 7.1-fpm, 7.1.17-fpm"
+            warp_message_info2 "Selected: $php_version, the available versions are 7.0-fpm, 7.1-fpm, 7.1.17-fpm, 7.1.26-fpm"
         ;;
         esac        
     done
