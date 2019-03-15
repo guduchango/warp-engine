@@ -24,9 +24,9 @@ function stop() {
     if [ $(warp_check_is_running) = true ]; then
 
       if [ "$1" = "-d" ] || [ "$1" = "--delete" ] ; then
-        $DOCKERACTION=down
+        DOCKERACTION=down
       else
-        $DOCKERACTION=stop
+        DOCKERACTION=stop
       fi;
 
       case "$(uname -s)" in
