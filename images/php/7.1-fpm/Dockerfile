@@ -108,6 +108,11 @@ RUN mkdir -p /var/log/php-fpm && \
     touch /var/log/php-fpm/fpm-php.www.log && \
     chown -R www-data:www-data /var/log/php-fpm
 
+RUN wget https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz && \
+  tar -zxf ioncube_loaders_lin_x86-64.tar.gz && \
+  mv ioncube/ioncube_loader_lin_7.1.so /usr/local/lib/php/extensions/no-debug-non-zts-20160303/iocube.so && \
+  echo "zend_extension = /usr/local/lib/php/extensions/no-debug-non-zts-20160303/iocube.so" > /usr/local/etc/php/conf.d/10-php-ext-ioncube.ini
+
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr --with-jpeg-dir=/usr --with-png-dir=/usr \
     && docker-php-ext-install gd
 
