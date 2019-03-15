@@ -24,17 +24,18 @@ then
             warp_message_warn "wrong answer, you must select between two options: $(warp_message_info [Y/n]) "
         fi
     done
+
+    warp_message_info2 "You can check the available versions of MySQL here: $(warp_message_info '[ https://hub.docker.com/r/library/mysql/ ]')"
+    
+    mysql_version=$( warp_question_ask_default "Choose the MySQL version: $(warp_message_info [5.7]) " "5.7" )
+    warp_message_info2 "Selected MySQL Version: $mysql_version"
+
     
     if [ "$mysql_use_project_specific" = "Y" ] || [ "$mysql_use_project_specific" = "y" ]
     then
-        mysql_version="${PROJECT_DBS_DOCKER_REGISTRY}/${client_code}-${project_code}-dbs"
+        mysql_docker_image="${PROJECT_DBS_DOCKER_REGISTRY}/${client_code}-${project_code}-dbs"
     else
-        warp_message_info2 "You can check the available versions of MySQL here: $(warp_message_info '[ https://hub.docker.com/r/library/mysql/ ]')"
-    
-        mysql_version_number=$( warp_question_ask_default "Choose the MySQL version: $(warp_message_info [5.7]) " "5.7" )
-        warp_message_info2 "Selected MySQL Version: $mysql_version_number"
-
-        mysql_version="mysql:${mysql_version_number}"
+        mysql_docker_image="mysql:${mysql_version}"
     fi
 
     while : ; do
@@ -92,6 +93,7 @@ then
 
     echo "# MySQL Configuration" >> $ENVIRONMENTVARIABLESFILESAMPLE
     echo "MYSQL_VERSION=$mysql_version" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "MYSQL_DOCKER_IMAGE=$mysql_docker_image" >> $ENVIRONMENTVARIABLESFILESAMPLE
     echo "MYSQL_CONFIG_FILE=$mysql_config_file" >> $ENVIRONMENTVARIABLESFILESAMPLE
     echo "DATABASE_BINDED_PORT=$mysql_binded_port" >> $ENVIRONMENTVARIABLESFILESAMPLE
     echo "DATABASE_ROOT_PASSWORD=$mysql_root_password" >> $ENVIRONMENTVARIABLESFILESAMPLE
