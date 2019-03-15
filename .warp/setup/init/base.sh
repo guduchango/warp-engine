@@ -1,4 +1,3 @@
-
 #!/bin/bash +x
 
 while : ; do
