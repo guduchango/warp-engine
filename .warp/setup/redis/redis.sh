@@ -98,7 +98,7 @@ then
     if [ $MSJ_REDIS_VERSION_HUB = 1 ] ; then
         warp_message_info2 "You can check the Redis versions available here: $(warp_message_info '[ https://hub.docker.com/_/redis/ ]')"
         MSJ_REDIS_VERSION_HUB=0 # False
-        echo "#Config Redis" >> $ENVIRONMENTVARIABLESFILESAMPLE
+        #echo "#Config Redis" >> $ENVIRONMENTVARIABLESFILESAMPLE
     fi
 
     resp_version_fpc=$( warp_question_ask_default "What version of Redis FPC do you want to use? $(warp_message_info [3.2.10-alpine]) " "3.2.10-alpine" )
@@ -109,8 +109,8 @@ then
 
     cat $PROJECTPATH/.warp/setup/redis/tpl/redis_fpc.yml >> $DOCKERCOMPOSEFILESAMPLE
 
-    echo "REDIS_FPC_VERSION=$resp_version_fpc" >> $ENVIRONMENTVARIABLESFILESAMPLE
-    echo "REDIS_FPC_CONF=$cache_config_file_fpc" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "REDIS_FPC_VERSION=\"resp_version_fpc\"" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "REDIS_FPC_CONF=\"$cache_config_file_fpc\"" >> $ENVIRONMENTVARIABLESFILESAMPLE
     echo "" >> $ENVIRONMENTVARIABLESFILESAMPLE
 
     # Control will enter here if $PATH_CONFIG_REDIS doesn't exist.

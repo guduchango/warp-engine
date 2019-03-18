@@ -23,7 +23,7 @@ while : ; do
     fi;
 done
 
-echo "# Project configurations" >> $ENVIRONMENTVARIABLESFILESAMPLE
-echo "CLIENT_CODE=${client_code}" >> $ENVIRONMENTVARIABLESFILESAMPLE
-echo "PROJECT_CODE=${project_code}" >> $ENVIRONMENTVARIABLESFILESAMPLE
+#echo "# Project configurations" >> $ENVIRONMENTVARIABLESFILESAMPLE
+echo "CLIENT_CODE=\"${client_code}\"" >> $ENVIRONMENTVARIABLESFILESAMPLE
+echo "PROJECT_CODE=\"${project_code}\"" >> $ENVIRONMENTVARIABLESFILESAMPLE
 echo "" >> $ENVIRONMENTVARIABLESFILESAMPLE

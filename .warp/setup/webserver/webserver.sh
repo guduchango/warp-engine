@@ -79,22 +79,22 @@ then
     nginx_config_file=$( warp_question_ask_default "Set the name of Nginx configuration file? $(warp_message_info '['$nginx_virtual_host'.conf]') " "$nginx_virtual_host.conf" )
     
     echo "" >> $ENVIRONMENTVARIABLESFILESAMPLE
-    echo "# NGINX Configuration" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    #echo "# NGINX Configuration" >> $ENVIRONMENTVARIABLESFILESAMPLE
 
     cat $PROJECTPATH/.warp/setup/webserver/tpl/webserver.yml >> $DOCKERCOMPOSEFILESAMPLE
 
     if [ $useproxy = 0 ]; then
-        echo "HTTP_BINDED_PORT=80" >> $ENVIRONMENTVARIABLESFILESAMPLE
-        echo "HTTPS_BINDED_PORT=443" >> $ENVIRONMENTVARIABLESFILESAMPLE
-        echo "HTTP_HOST_IP=$http_container_ip" >> $ENVIRONMENTVARIABLESFILESAMPLE
+        echo "HTTP_BINDED_PORT=\"80\"" >> $ENVIRONMENTVARIABLESFILESAMPLE
+        echo "HTTPS_BINDED_PORT=\"443\"" >> $ENVIRONMENTVARIABLESFILESAMPLE
+        echo "HTTP_HOST_IP=\"$http_container_ip\"" >> $ENVIRONMENTVARIABLESFILESAMPLE
     else
-        echo "HTTP_BINDED_PORT=$http_port" >> $ENVIRONMENTVARIABLESFILESAMPLE
-        echo "HTTPS_BINDED_PORT=$https_port" >> $ENVIRONMENTVARIABLESFILESAMPLE
-        echo "HTTP_HOST_IP=0.0.0.0" >> $ENVIRONMENTVARIABLESFILESAMPLE
+        echo "HTTP_BINDED_PORT=\"$http_port\"" >> $ENVIRONMENTVARIABLESFILESAMPLE
+        echo "HTTPS_BINDED_PORT=\"$https_port\"" >> $ENVIRONMENTVARIABLESFILESAMPLE
+        echo "HTTP_HOST_IP=\"0.0.0.0\"" >> $ENVIRONMENTVARIABLESFILESAMPLE
     fi;
 
-    echo "VIRTUAL_HOST=$nginx_virtual_host" >> $ENVIRONMENTVARIABLESFILESAMPLE
-    echo "NGINX_CONFIG_FILE=./.warp/docker/config/nginx/sites-enabled/$nginx_config_file" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "VIRTUAL_HOST=\"$nginx_virtual_host\"" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "NGINX_CONFIG_FILE=\"./.warp/docker/config/nginx/sites-enabled/$nginx_config_file\"" >> $ENVIRONMENTVARIABLESFILESAMPLE
     echo "" >> $ENVIRONMENTVARIABLESFILESAMPLE
 
     mkdir -p $PROJECTPATH/.warp/docker/volumes/nginx/logs

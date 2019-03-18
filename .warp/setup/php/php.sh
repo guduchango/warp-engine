@@ -20,6 +20,9 @@ then
         php_version=$( warp_question_ask_default "Set the PHP version of your project: $(warp_message_info [7.0-fpm]) " "7.0-fpm" )
     
         case $php_version in
+        '5.6-fpm')
+            break
+        ;;
         '7.0-fpm')
             break
         ;;
@@ -42,13 +45,13 @@ then
     cat $PROJECTPATH/.warp/setup/php/tpl/php.yml >> $DOCKERCOMPOSEFILESAMPLE
 
     echo ""  >> $ENVIRONMENTVARIABLESFILESAMPLE
-    echo "# Config PHP" >> $ENVIRONMENTVARIABLESFILESAMPLE
-    echo "PHP_VERSION=$php_version" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    #echo "# Config PHP" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "PHP_VERSION=\"$php_version\"" >> $ENVIRONMENTVARIABLESFILESAMPLE
 
     echo ""  >> $ENVIRONMENTVARIABLESFILESAMPLE
     echo "# Config xdebug by Console"  >> $ENVIRONMENTVARIABLESFILESAMPLE
-    echo "XDEBUG_CONFIG=remote_host=172.17.0.1" >> $ENVIRONMENTVARIABLESFILESAMPLE
-    echo "PHP_IDE_CONFIG=serverName=docker" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "XDEBUG_CONFIG=\"remote_host=172.17.0.1\"" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "PHP_IDE_CONFIG=\"serverName=docker\"" >> $ENVIRONMENTVARIABLESFILESAMPLE
     echo ""  >> $ENVIRONMENTVARIABLESFILESAMPLE
 
     mkdir -p $PROJECTPATH/.warp/docker/volumes/php-fpm/logs 2> /dev/null

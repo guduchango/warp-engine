@@ -109,21 +109,21 @@ warp_message ""
     fi
 
 
-    HTTP_HOST_OLD="HTTP_HOST_IP=$HTTP_HOST_IP"
-    HTTP_BINDED_OLD="HTTP_BINDED_PORT=$HTTP_BINDED_PORT"
-    HTTPS_BINDED_OLD="HTTPS_BINDED_PORT=$HTTPS_BINDED_PORT"
+    HTTP_HOST_OLD="HTTP_HOST_IP=\"$HTTP_HOST_IP\""
+    HTTP_BINDED_OLD="HTTP_BINDED_PORT=\"$HTTP_BINDED_PORT\""
+    HTTPS_BINDED_OLD="HTTPS_BINDED_PORT=\"$HTTPS_BINDED_PORT\""
 
     N1="$(echo $NETWORK_SUBNET | cut -f1 -d / )" 
     N2="$(echo $NETWORK_SUBNET | cut -f2 -d / )" 
-    NETWORK_SUBNET_OLD="NETWORK_SUBNET=$N1\/$N2"
-    NETWORK_GATEWAY_OLD="NETWORK_GATEWAY=$NETWORK_GATEWAY"
+    NETWORK_SUBNET_OLD="NETWORK_SUBNET=\"$N1\/$N2\""
+    NETWORK_GATEWAY_OLD="NETWORK_GATEWAY=\"$NETWORK_GATEWAY\""
 
     if [ $useproxy = 0 ]; then
         # Cambia IP a multi-proyecto
 
-        HTTP_HOST_NEW="HTTP_HOST_IP=$http_container_ip"
-        HTTP_BINDED_NEW="HTTP_BINDED_PORT=80"
-        HTTPS_BINDED_NEW="HTTPS_BINDED_PORT=443"
+        HTTP_HOST_NEW="HTTP_HOST_IP=\"$http_container_ip\""
+        HTTP_BINDED_NEW="HTTP_BINDED_PORT=\"80\""
+        HTTPS_BINDED_NEW="HTTPS_BINDED_PORT=\"443\""
 
         # Modify Gateway and Subnet
 
@@ -131,8 +131,8 @@ warp_message ""
         B="$(echo $http_container_ip | cut -f2 -d . )"
         C="$(echo $http_container_ip | cut -f3 -d . )"
         
-        NETWORK_SUBNET_NEW="NETWORK_SUBNET=$A.$B.$C.0\/24"
-        NETWORK_GATEWAY_NEW="NETWORK_GATEWAY=$A.$B.$C.1"
+        NETWORK_SUBNET_NEW="NETWORK_SUBNET=\"$A.$B.$C.0\/24\""
+        NETWORK_GATEWAY_NEW="NETWORK_GATEWAY=\"$A.$B.$C.1\""
 
         # Cambio yml a multi-proyecto
         warp_network_multi
@@ -140,12 +140,12 @@ warp_message ""
     else
         # Cambia IP a mono-proyecto
 
-        HTTP_HOST_NEW="HTTP_HOST_IP=0.0.0.0"
-        HTTP_BINDED_NEW="HTTP_BINDED_PORT=$http_port"
-        HTTPS_BINDED_NEW="HTTPS_BINDED_PORT=$https_port"
+        HTTP_HOST_NEW="HTTP_HOST_IP=\"0.0.0.0\""
+        HTTP_BINDED_NEW="HTTP_BINDED_PORT=\"$http_port\""
+        HTTPS_BINDED_NEW="HTTPS_BINDED_PORT=\"$https_port\""
 
-        NETWORK_SUBNET_NEW="NETWORK_SUBNET=0.0.0.0\/24"
-        NETWORK_GATEWAY_NEW="NETWORK_GATEWAY=0.0.0.0"
+        NETWORK_SUBNET_NEW="NETWORK_SUBNET=\"0.0.0.0\/24\""
+        NETWORK_GATEWAY_NEW="NETWORK_GATEWAY=\"0.0.0.0\""
 
         # Cambio yml a multi-proyecto
         warp_network_mono
@@ -169,8 +169,8 @@ warp_message ""
     mv "$ENVIRONMENTVARIABLESFILE.warp5" $ENVIRONMENTVARIABLESFILE
 
     # CHANGE PORT MYSQL
-    BINDED_PORT_OLD="DATABASE_BINDED_PORT=$DATABASE_BINDED_PORT"
-    BINDED_PORT_NEW="DATABASE_BINDED_PORT=$mysql_binded_port"
+    BINDED_PORT_OLD="DATABASE_BINDED_PORT=\"$DATABASE_BINDED_PORT\""
+    BINDED_PORT_NEW="DATABASE_BINDED_PORT=\"$mysql_binded_port\""
 
     cat $ENVIRONMENTVARIABLESFILE | sed -e "s/$BINDED_PORT_OLD/$BINDED_PORT_NEW/" > "$ENVIRONMENTVARIABLESFILE.warp6"
     mv "$ENVIRONMENTVARIABLESFILE.warp6" $ENVIRONMENTVARIABLESFILE
@@ -179,8 +179,8 @@ warp_message ""
     if [ ! -z "$RABBIT_VERSION" ]
     then
         # CHANGE PORT RABBIT
-        BINDED_PORT_OLD="RABBIT_BINDED_PORT=$RABBIT_BINDED_PORT"
-        BINDED_PORT_NEW="RABBIT_BINDED_PORT=$rabbit_binded_port"
+        BINDED_PORT_OLD="RABBIT_BINDED_PORT=\"$RABBIT_BINDED_PORT\""
+        BINDED_PORT_NEW="RABBIT_BINDED_PORT=\"$rabbit_binded_port\""
 
         cat $ENVIRONMENTVARIABLESFILE | sed -e "s/$BINDED_PORT_OLD/$BINDED_PORT_NEW/" > "$ENVIRONMENTVARIABLESFILE.warp7"
         mv "$ENVIRONMENTVARIABLESFILE.warp7" $ENVIRONMENTVARIABLESFILE
