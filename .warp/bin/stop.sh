@@ -23,17 +23,23 @@ function stop() {
   else
     if [ $(warp_check_is_running) = true ]; then
 
+      if [ "$1" = "-d" ] || [ "$1" = "--delete" ] ; then
+        DOCKERACTION=down
+      else
+        DOCKERACTION=stop
+      fi;
+
       case "$(uname -s)" in
         Darwin)
           docker stop $(basename $(pwd))-volume-sync
           docker-sync stop
 
           # stop docker containers in macOS
-          docker-compose -f $DOCKERCOMPOSEFILE down
+          docker-compose -f $DOCKERCOMPOSEFILE $DOCKERACTION
         ;;
         Linux)
           # stop docker containers in linux
-          docker-compose -f $DOCKERCOMPOSEFILE down
+          docker-compose -f $DOCKERCOMPOSEFILE $DOCKERACTION
         ;;
       esac
     fi
