@@ -1,10 +1,10 @@
 #!/bin/bash +x
 
 while : ; do
-    client_code=$( warp_question_ask "Client Code, it should be in lowercase and only letters, for example 'Summa Solutions' should be 'summa': " )
+    namespace_name=$( warp_question_ask "Namespace name, it should be in lowercase and only letters, for example 'Starfleet' should be 'starfleet': " )
 
-    if [[ $client_code =~ ^[a-z]{2,}$ ]] ; then
-        warp_message_info2 "The client code is: $(warp_message_bold $client_code)"
+    if [[ $namespace_name =~ ^[a-z]{2,}$ ]] ; then
+        warp_message_info2 "The namespace name: $(warp_message_bold $namespace_name)"
         break
     else
         warp_message_warn "incorrect value, please enter only letters and lowercase\n"
@@ -13,17 +13,29 @@ done
 
 
 while : ; do
-    project_code=$( warp_question_ask "Project Code, it should be in lowercase and only letters, for example 'WARP Engine' should be 'warp': " )
+    project_name=$( warp_question_ask "Project Name, it should be in lowercase and only letters, for example 'WARP Engine' should be 'warp': " )
 
-    if [[ $project_code =~ ^[a-z]{2,}$ ]] ; then
-        warp_message_info2 "The project code is: $(warp_message_bold $project_code)"
+    if [[ $project_name =~ ^[a-z]{2,}$ ]] ; then
+        warp_message_info2 "The project name is: $(warp_message_bold $project_name)"
         break
     else
         warp_message_warn "incorrect value, please enter only letters and lowercase\n"
     fi;
 done
 
+while : ; do
+    docker_private_registry=$( warp_question_ask "Docker Private Registy (optional): " )
+
+    if [ ! -z "$docker_private_registry" ] ; then
+        warp_message_info2 "The docker private registry is: $(warp_message_bold $docker_private_registry)"
+        break
+    else
+        warp_message_info2 "No docker private regitry entered\n"
+    fi;
+done
+
 #echo "# Project configurations" >> $ENVIRONMENTVARIABLESFILESAMPLE
-echo "CLIENT_CODE=\"${client_code}\"" >> $ENVIRONMENTVARIABLESFILESAMPLE
-echo "PROJECT_CODE=\"${project_code}\"" >> $ENVIRONMENTVARIABLESFILESAMPLE
+echo "NAMESPACE=${namespace_name}" >> $ENVIRONMENTVARIABLESFILESAMPLE
+echo "PROJECT=${project_name}" >> $ENVIRONMENTVARIABLESFILESAMPLE
+echo "DOCKER_PRIVATE_REGISTRY=${docker_private_registry}" >> $ENVIRONMENTVARIABLESFILESAMPLE
 echo "" >> $ENVIRONMENTVARIABLESFILESAMPLE

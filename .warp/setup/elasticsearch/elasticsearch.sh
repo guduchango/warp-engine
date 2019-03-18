@@ -43,7 +43,7 @@ then
 
     echo ""  >> $ENVIRONMENTVARIABLESFILESAMPLE
     #echo "# Elasticsearch" >> $ENVIRONMENTVARIABLESFILESAMPLE
-    echo "ES_VERSION=\"$elasticsearch_version\"" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "ES_VERSION=$elasticsearch_version" >> $ENVIRONMENTVARIABLESFILESAMPLE
     echo ""  >> $ENVIRONMENTVARIABLESFILESAMPLE
 
 fi; 

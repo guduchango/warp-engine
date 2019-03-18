@@ -23,7 +23,7 @@ function stop() {
   else
     if [ $(warp_check_is_running) = true ]; then
 
-      if [ "$1" = "-d" ] || [ "$1" = "--delete" ] ; then
+      if [ "$1" = "--hard" ] ; then
         DOCKERACTION=down
       else
         DOCKERACTION=stop

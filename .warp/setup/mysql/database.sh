@@ -33,7 +33,7 @@ then
     
     if [ "$mysql_use_project_specific" = "Y" ] || [ "$mysql_use_project_specific" = "y" ]
     then
-        mysql_docker_image="${PROJECT_DBS_DOCKER_REGISTRY}/${client_code}-${project_code}-dbs"
+        mysql_docker_image="${namespace_name}-${project_name}-dbs"
     else
         mysql_docker_image="mysql:${mysql_version}"
     fi
@@ -88,28 +88,32 @@ then
     mysql_config_file=$( warp_question_ask_default "Add the MySQL configuration file: $(warp_message_info [./.warp/docker/config/mysql/conf.d]) " "./.warp/docker/config/mysql/conf.d" )
     warp_message_info2 "Selected configuration file: $mysql_config_file"
 
-    cat $PROJECTPATH/.warp/setup/mysql/tpl/database.yml >> $DOCKERCOMPOSEFILESAMPLE
+    if [ "$mysql_use_project_specific" = "Y" ] || [ "$mysql_use_project_specific" = "y" ]; then
+        cat $PROJECTPATH/.warp/setup/mysql/tpl/database_custom.yml >> $DOCKERCOMPOSEFILESAMPLE
+    else
+        cat $PROJECTPATH/.warp/setup/mysql/tpl/database.yml >> $DOCKERCOMPOSEFILESAMPLE
+    fi
+    
     cat $PROJECTPATH/.warp/setup/mysql/tpl/database_enviroment_root.yml >> $DOCKERCOMPOSEFILESAMPLE
 
     #echo "# MySQL Configuration" >> $ENVIRONMENTVARIABLESFILESAMPLE
-    echo "MYSQL_VERSION=\"$mysql_version\"" >> $ENVIRONMENTVARIABLESFILESAMPLE
-    echo "MYSQL_DOCKER_IMAGE=\"$mysql_docker_image\"" >> $ENVIRONMENTVARIABLESFILESAMPLE
-    echo "MYSQL_CONFIG_FILE=\"$mysql_config_file\"" >> $ENVIRONMENTVARIABLESFILESAMPLE
-    echo "DATABASE_BINDED_PORT=\"$mysql_binded_port\"" >> $ENVIRONMENTVARIABLESFILESAMPLE
-    echo "DATABASE_ROOT_PASSWORD=\"$mysql_root_password\"" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "MYSQL_VERSION=$mysql_version" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "MYSQL_DOCKER_IMAGE=$mysql_docker_image" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "MYSQL_CONFIG_FILE=$mysql_config_file" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "DATABASE_BINDED_PORT=$mysql_binded_port" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "DATABASE_ROOT_PASSWORD=$mysql_root_password" >> $ENVIRONMENTVARIABLESFILESAMPLE
 
     cat $PROJECTPATH/.warp/setup/mysql/tpl/database_enviroment_default.yml >> $DOCKERCOMPOSEFILESAMPLE
-    echo "DATABASE_NAME=\"$mysql_name_database\"" >> $ENVIRONMENTVARIABLESFILESAMPLE
-    echo "DATABASE_USER=\"$mysql_user_database\"" >> $ENVIRONMENTVARIABLESFILESAMPLE
-    echo "DATABASE_PASSWORD=\"$mysql_password_database\"" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "DATABASE_NAME=$mysql_name_database" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "DATABASE_USER=$mysql_user_database" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "DATABASE_PASSWORD=$mysql_password_database" >> $ENVIRONMENTVARIABLESFILESAMPLE
 
-    cat $PROJECTPATH/.warp/setup/mysql/tpl/database_volumes.yml >> $DOCKERCOMPOSEFILESAMPLE
-
-    if [ "$mysql_use_project_specific" = "N" ] || [ "$mysql_use_project_specific" = "n" ]; then
-        echo '      - "./.warp/docker/volumes/mysql:/var/lib/mysql"' >> $DOCKERCOMPOSEFILESAMPLE
+    if [ "$mysql_use_project_specific" = "Y" ] || [ "$mysql_use_project_specific" = "y" ]; then
+        cat $PROJECTPATH/.warp/setup/mysql/tpl/database_volumes_networks.yml >> $DOCKERCOMPOSEFILESAMPLE
+    else
+        cat $PROJECTPATH/.warp/setup/mysql/tpl/database_volumes_networks_custom.yml >> $DOCKERCOMPOSEFILESAMPLE
     fi
-
-    cat $PROJECTPATH/.warp/setup/mysql/tpl/database_networks.yml >> $DOCKERCOMPOSEFILESAMPLE
+    
 
     cp -R $PROJECTPATH/.warp/setup/mysql/config/ $PROJECTPATH/.warp/docker/config/mysql/
 fi; 

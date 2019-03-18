@@ -109,8 +109,8 @@ then
 
     cat $PROJECTPATH/.warp/setup/redis/tpl/redis_fpc.yml >> $DOCKERCOMPOSEFILESAMPLE
 
-    echo "REDIS_FPC_VERSION=\"resp_version_fpc\"" >> $ENVIRONMENTVARIABLESFILESAMPLE
-    echo "REDIS_FPC_CONF=\"$cache_config_file_fpc\"" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "REDIS_FPC_VERSION=$resp_version_fpc" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "REDIS_FPC_CONF=$cache_config_file_fpc" >> $ENVIRONMENTVARIABLESFILESAMPLE
     echo "" >> $ENVIRONMENTVARIABLESFILESAMPLE
 
     # Control will enter here if $PATH_CONFIG_REDIS doesn't exist.
