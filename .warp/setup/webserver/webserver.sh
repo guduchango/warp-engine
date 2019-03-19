@@ -79,7 +79,7 @@ then
     nginx_config_file=$( warp_question_ask_default "Set the name of Nginx configuration file? $(warp_message_info '['$nginx_virtual_host'.conf]') " "$nginx_virtual_host.conf" )
     
     echo "" >> $ENVIRONMENTVARIABLESFILESAMPLE
-    echo "# NGINX Configuration" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    #echo "# NGINX Configuration" >> $ENVIRONMENTVARIABLESFILESAMPLE
 
     cat $PROJECTPATH/.warp/setup/webserver/tpl/webserver.yml >> $DOCKERCOMPOSEFILESAMPLE
 

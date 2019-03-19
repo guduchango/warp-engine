@@ -49,6 +49,7 @@ function init_command() {
         # INIT WIZARD MODE TL
         warp_message_info "* Starting initial installation\n"
         . "$WARPFOLDER/setup/init/service.sh"
+        . "$WARPFOLDER/setup/init/base.sh"
         . "$WARPFOLDER/setup/webserver/webserver.sh"
         . "$WARPFOLDER/setup/php/php.sh"
         . "$WARPFOLDER/setup/init/volumes.sh"

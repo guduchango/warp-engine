@@ -20,16 +20,24 @@ function magento_command()
         exit 1;
     fi
 
+    FRAMEWORK=$(warp_env_read_var FRAMEWORK)
+    if [ "$FRAMEWORK" = "m1" ]
+    then
+        MAGENTOBIN='./n98-magerun'
+    else
+        MAGENTOBIN='bin/magento'
+    fi
+
     if [ "$1" = "--root" ]
     then
         shift 1
-        docker-compose -f $DOCKERCOMPOSEFILE exec -uroot php bash -c "bin/magento $*"
+        docker-compose -f $DOCKERCOMPOSEFILE exec -uroot php bash -c "$MAGENTOBIN $*"
     elif [ "$1" = "-T" ] ; then
         shift 1
-        docker-compose -f $DOCKERCOMPOSEFILE exec -T php bash -c "bin/magento $*"
+        docker-compose -f $DOCKERCOMPOSEFILE exec -T php bash -c "$MAGENTOBIN $*"
     else
 
-        docker-compose -f $DOCKERCOMPOSEFILE exec php bash -c "bin/magento $*"
+        docker-compose -f $DOCKERCOMPOSEFILE exec php bash -c "$MAGENTOBIN $*"
     fi
 }
 
