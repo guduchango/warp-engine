@@ -50,6 +50,7 @@ while : ; do
         break
     else
         warp_message_info2 "No docker private regitry entered\n"
+        break
     fi;
 done
 
