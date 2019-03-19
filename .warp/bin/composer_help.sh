@@ -22,6 +22,7 @@ function composer_help_usage()
     warp_message_info "Example:"
     warp_message " warp composer install"
     warp_message " warp composer --credential"
+    warp_message " warp composer --credential /path/to/id_custom"
 
 }
 
