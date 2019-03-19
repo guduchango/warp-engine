@@ -24,6 +24,25 @@ while : ; do
 done
 
 while : ; do
+    framework=$( warp_question_ask_default "Framework, possible values are 'm1', 'm2' and 'oro': " "m2" )
+
+    case $framework in
+        'm1')
+            break
+        ;;
+        'm2')
+            break
+        ;;
+        'oro')
+            break
+        ;;
+        *)
+            warp_message_info2 "Selected: $framework, the available options are m1, m2 and oro"
+        ;;
+    esac
+done
+
+while : ; do
     docker_private_registry=$( warp_question_ask "Docker Private Registy (optional): " )
 
     if [ ! -z "$docker_private_registry" ] ; then
@@ -37,5 +56,6 @@ done
 #echo "# Project configurations" >> $ENVIRONMENTVARIABLESFILESAMPLE
 echo "NAMESPACE=${namespace_name}" >> $ENVIRONMENTVARIABLESFILESAMPLE
 echo "PROJECT=${project_name}" >> $ENVIRONMENTVARIABLESFILESAMPLE
+echo "FRAMEWORK=${framework}" >> $ENVIRONMENTVARIABLESFILESAMPLE
 echo "DOCKER_PRIVATE_REGISTRY=${docker_private_registry}" >> $ENVIRONMENTVARIABLESFILESAMPLE
 echo "" >> $ENVIRONMENTVARIABLESFILESAMPLE
