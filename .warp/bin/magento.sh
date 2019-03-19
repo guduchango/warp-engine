@@ -23,7 +23,7 @@ function magento_command()
     FRAMEWORK=$(warp_env_read_var FRAMEWORK)
     if [ "$FRAMEWORK" = "m1" ]
     then
-        MAGENTOBIN='n98-magerun'
+        MAGENTOBIN='./n98-magerun'
     else
         MAGENTOBIN='bin/magento'
     fi
