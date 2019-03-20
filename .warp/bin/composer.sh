@@ -5,9 +5,10 @@
     . "$PROJECTPATH/.warp/bin/composer_help.sh"
 
 function copy_ssh_id() {
-  if [ "$2" ] && [ -f "$2" ] ; then
-      if [ -f "$2" ] ; then
+  if [ "$2" ] ; then
+      if [ ! -f "$2" ] ; then
         warp_message_error "something was wrong reading the file: $2"
+        exit 0;
       else
         PATH_KEY_PAIR=$2
       fi;
@@ -39,7 +40,7 @@ function composer() {
   
   if [ "$1" = "--credential" ] ; then
       warp_message "copying credentials"
-      copy_ssh_id
+      copy_ssh_id $*
       warp_message "Done!"
   else
 
