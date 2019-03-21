@@ -5,9 +5,20 @@
     . "$PROJECTPATH/.warp/bin/composer_help.sh"
 
 function copy_ssh_id() {
-  if [ -f $HOME/.ssh/id_rsa ] ; then
+  if [ "$2" ] ; then
+      if [ ! -f "$2" ] ; then
+        warp_message_error "something was wrong reading the file: $2"
+        exit 0;
+      else
+        PATH_KEY_PAIR=$2
+      fi;
+  else
+      PATH_KEY_PAIR=$HOME/.ssh/id_rsa
+  fi;
+
+  if [ -f $PATH_KEY_PAIR ] ; then
     docker-compose -f $DOCKERCOMPOSEFILE exec php bash -c "mkdir -p /var/www/.ssh/"
-    docker cp $HOME/.ssh/id_rsa "$(docker-compose -f $DOCKERCOMPOSEFILE ps -q php)":/var/www/.ssh/id_rsa
+    docker cp $PATH_KEY_PAIR "$(docker-compose -f $DOCKERCOMPOSEFILE ps -q php)":/var/www/.ssh/id_rsa
     docker-compose -f $DOCKERCOMPOSEFILE exec --user=root php bash -c "chown -R www-data:www-data /var/www/.ssh/id_rsa"
   fi;
 }
@@ -29,15 +40,15 @@ function composer() {
   
   if [ "$1" = "--credential" ] ; then
       warp_message "copying credentials"
-      copy_ssh_id
+      copy_ssh_id $*
       warp_message "Done!"
   else
 
     if [ "$1" = "-T" ]; then
       shift 1
-      docker-compose -f $DOCKERCOMPOSEFILE exec -T php bash -c "composer $@"
+      docker-compose -f $DOCKERCOMPOSEFILE exec -T php bash -c "composer $*"
     else
-      docker-compose -f $DOCKERCOMPOSEFILE exec php bash -c "composer $@"
+      docker-compose -f $DOCKERCOMPOSEFILE exec php bash -c "composer $*"
     fi;
   fi;
 }
