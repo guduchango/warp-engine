@@ -119,6 +119,8 @@ RUN curl -sS https://getcomposer.org/installer | \
 RUN pecl install -o -f xdebug
 
 
+
+
 # ENV PHP_MEMORY_LIMIT 2G
 # ENV PHP_PORT 9000
 # ENV PHP_PM dynamic
