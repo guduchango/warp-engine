@@ -1,3 +1,10 @@
+2019.03.27
+=============
+* Adding private docker registry configuration
+* Enabling supervisord in PHP 7.1.26-fpm
+* Letting set the project base framework
+* Set Nginx configuration based on set framework
+
 2019.02.20
 =============
 * set permissions with elasticsearch
