@@ -7,6 +7,8 @@
       - ./.warp/docker/config/php/ext-xdebug.ini:/usr/local/etc/php/conf.d/ext-xdebug.ini
       - ./.warp/docker/volumes/php-fpm/logs:/var/log/php-fpm
       - ./.warp/docker/config/crontab/cronfile:/etc/cron.d/cronfile
+      - ./.warp/docker/config/supervisor/conf.d:/etc/supervisor/conf.d
+      - ./.warp/docker/volumes/supervisor/logs:/var/log/supervisor
     volumes_from:
       - appdata
     env_file: .env

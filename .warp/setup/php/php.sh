@@ -41,7 +41,7 @@ then
         esac        
     done
     warp_message_info2 "PHP version selected: $php_version"
-    
+
     cat $PROJECTPATH/.warp/setup/php/tpl/php.yml >> $DOCKERCOMPOSEFILESAMPLE
 
     echo ""  >> $ENVIRONMENTVARIABLESFILESAMPLE
@@ -60,9 +60,14 @@ then
     [ ! -f $PROJECTPATH/.warp/docker/volumes/php-fpm/logs/fpm-error.log ] && touch $PROJECTPATH/.warp/docker/volumes/php-fpm/logs/fpm-error.log 2> /dev/null
     [ ! -f $PROJECTPATH/.warp/docker/volumes/php-fpm/logs/fpm-php.www.log ] && touch $PROJECTPATH/.warp/docker/volumes/php-fpm/logs/fpm-php.www.log 2> /dev/null
     # chmod -R 775 $PROJECTPATH/.warp/docker/volumes/php-fpm 2> /dev/null
- 
+        
+    mkdir -p $PROJECTPATH/.warp/docker/volumes/supervisor/logs 2> /dev/null
+    [ ! -f $PROJECTPATH/.warp/docker/volumes/supervisor/logs/supervisord.log ] && touch $PROJECTPATH/.warp/docker/volumes/supervisor/logs/supervisord.log 2> /dev/null
+    chmod 777 $PROJECTPATH/.warp/docker/volumes/supervisor/logs/supervisord.log 2> /dev/null
+
     cp -R $PROJECTPATH/.warp/setup/php/config/php $PROJECTPATH/.warp/docker/config/php
     cp -R $PROJECTPATH/.warp/setup/php/config/crontab $PROJECTPATH/.warp/docker/config/crontab
+    cp -R $PROJECTPATH/.warp/setup/php/config/supervisor $PROJECTPATH/.warp/docker/config/supervisor
 
     echo "" >> $PROJECTPATH/.warp/docker/config/php/ext-xdebug.ini.sample 
     echo "" >> $PROJECTPATH/.warp/docker/config/php/ext-xdebug.ini.sample 
