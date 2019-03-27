@@ -20,6 +20,9 @@ then
         php_version=$( warp_question_ask_default "Set the PHP version of your project: $(warp_message_info [7.0-fpm]) " "7.0-fpm" )
     
         case $php_version in
+        '5.6-fpm')
+            break
+        ;;
         '7.0-fpm')
             break
         ;;
@@ -33,16 +36,16 @@ then
             break
         ;;
         *)
-            warp_message_info2 "Selected: $php_version, the available versions are 7.0-fpm, 7.1-fpm, 7.1.17-fpm, 7.1.26-fpm"
+            warp_message_info2 "Selected: $php_version, the available versions are 5.6-fpm, 7.0-fpm, 7.1-fpm, 7.1.17-fpm, 7.1.26-fpm"
         ;;
         esac        
     done
     warp_message_info2 "PHP version selected: $php_version"
-    
+
     cat $PROJECTPATH/.warp/setup/php/tpl/php.yml >> $DOCKERCOMPOSEFILESAMPLE
 
     echo ""  >> $ENVIRONMENTVARIABLESFILESAMPLE
-    echo "# Config PHP" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    #echo "# Config PHP" >> $ENVIRONMENTVARIABLESFILESAMPLE
     echo "PHP_VERSION=$php_version" >> $ENVIRONMENTVARIABLESFILESAMPLE
 
     echo ""  >> $ENVIRONMENTVARIABLESFILESAMPLE
@@ -57,19 +60,30 @@ then
     [ ! -f $PROJECTPATH/.warp/docker/volumes/php-fpm/logs/fpm-error.log ] && touch $PROJECTPATH/.warp/docker/volumes/php-fpm/logs/fpm-error.log 2> /dev/null
     [ ! -f $PROJECTPATH/.warp/docker/volumes/php-fpm/logs/fpm-php.www.log ] && touch $PROJECTPATH/.warp/docker/volumes/php-fpm/logs/fpm-php.www.log 2> /dev/null
     # chmod -R 775 $PROJECTPATH/.warp/docker/volumes/php-fpm 2> /dev/null
- 
+        
+    mkdir -p $PROJECTPATH/.warp/docker/volumes/supervisor/logs 2> /dev/null
+    [ ! -f $PROJECTPATH/.warp/docker/volumes/supervisor/logs/supervisord.log ] && touch $PROJECTPATH/.warp/docker/volumes/supervisor/logs/supervisord.log 2> /dev/null
+    chmod 777 $PROJECTPATH/.warp/docker/volumes/supervisor/logs/supervisord.log 2> /dev/null
+
     cp -R $PROJECTPATH/.warp/setup/php/config/php $PROJECTPATH/.warp/docker/config/php
     cp -R $PROJECTPATH/.warp/setup/php/config/crontab $PROJECTPATH/.warp/docker/config/crontab
+    cp -R $PROJECTPATH/.warp/setup/php/config/supervisor $PROJECTPATH/.warp/docker/config/supervisor
 
     echo "" >> $PROJECTPATH/.warp/docker/config/php/ext-xdebug.ini.sample 
     echo "" >> $PROJECTPATH/.warp/docker/config/php/ext-xdebug.ini.sample 
     echo "## CONFIG XDEBUG FOR $php_version ##" >> $PROJECTPATH/.warp/docker/config/php/ext-xdebug.ini.sample 
     
-    if [ "$php_version" == "7.0-fpm" ] ; then
+     case $php_version in
+        '5.6-fpm')
+            echo "zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-20131226/xdebug.so" >> $PROJECTPATH/.warp/docker/config/php/ext-xdebug.ini.sample 
+        ;;
+        '7.0-fpm')
             echo "zend_extension = /usr/local/lib/php/extensions/no-debug-non-zts-20151012/xdebug.so" >> $PROJECTPATH/.warp/docker/config/php/ext-xdebug.ini.sample 
-    else
+        ;;
+        *)
             echo "zend_extension = /usr/local/lib/php/extensions/no-debug-non-zts-20160303/xdebug.so" >> $PROJECTPATH/.warp/docker/config/php/ext-xdebug.ini.sample 
-    fi;
-    
+        ;;
+    esac
+
     echo "## PHP ###" >> $PROJECTPATH/.warp/docker/config/php/ext-xdebug.ini.sample
 fi; 

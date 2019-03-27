@@ -112,7 +112,7 @@ warp_check_is_running() {
     if [ -f $DOCKERCOMPOSEFILE ]
     then
         #dockerStatusOutput=$(docker-compose -f $DOCKERCOMPOSEFILE ps -q | xargs docker inspect --format='{{ .State.Status }}' | sed 's:^/::g' | grep -i running)
-        dockerStatusOutput=$(docker-compose -f $DOCKERCOMPOSEFILE ps -q)
+        dockerStatusOutput=$(docker-compose -f $DOCKERCOMPOSEFILE ps --filter status=running --services)
         outputSize=${#dockerStatusOutput}
         if [ "$outputSize" -gt 0 ]; then
             echo true

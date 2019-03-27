@@ -33,7 +33,6 @@ RUN \
   libicu-dev \
   libmcrypt-dev \
   libxslt1-dev \
-
   re2c \
   libpng++-dev \
   libvpx-dev \
@@ -94,11 +93,12 @@ RUN mkdir /var/log/php-fpm && \
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr --with-jpeg-dir=/usr --with-png-dir=/usr \
     && docker-php-ext-install gd
 
-#RUN curl -sS https://getcomposer.org/installer | \
-#  php -- --install-dir=/usr/local/bin --filename=composer
+RUN curl -sS https://getcomposer.org/installer | \
+ php -- --install-dir=/usr/local/bin --filename=composer
 
-#RUN pecl install -o -f xdebug
+RUN pecl install -o -f xdebug-2.5.5
 
+RUN chmod a+x /usr/local/lib/php/extensions/no-debug-non-zts-20131226/xdebug.so
 
 # ENV PHP_MEMORY_LIMIT 2G
 # ENV PHP_PORT 9000

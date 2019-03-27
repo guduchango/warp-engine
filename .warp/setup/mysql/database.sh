@@ -15,10 +15,30 @@ done
 
 if [ "$respuesta_mysql" = "Y" ] || [ "$respuesta_mysql" = "y" ]
 then
+
     warp_message_info2 "You can check the available versions of MySQL here: $(warp_message_info '[ https://hub.docker.com/r/library/mysql/ ]')"
-  
-    mysql_version=$( warp_question_ask_default "Choose the MySQL version: $(warp_message_info [5.7]) " "5.7" )
+    mysql_version=$( warp_question_ask_default "Choose the MySQL engine version: $(warp_message_info [5.7]) " "5.7" )
     warp_message_info2 "Selected MySQL Version: $mysql_version"
+
+    mysql_docker_image="mysql:${mysql_version}"
+
+    if [ "$private_registry_mode" = "Y" ] || [ "$private_registry_mode" = "y" ] ; then
+        while : ; do
+            mysql_use_project_specific=$( warp_question_ask_default "Do you want to use a custom specific DB image from your private registry? $(warp_message_info [y/N]) " "N" )
+
+            if [ "$mysql_use_project_specific" = "Y" ] || [ "$mysql_use_project_specific" = "y" ] || [ "$mysql_use_project_specific" = "N" ] || [ "$mysql_use_project_specific" = "n" ] ; then
+                break
+            else
+                warp_message_warn "wrong answer, you must select between two options: $(warp_message_info [Y/n]) "
+            fi
+        done;
+
+        if [ "$mysql_use_project_specific" = "Y" ] || [ "$mysql_use_project_specific" = "y" ]
+        then
+            # Overwrite default mysql image.
+            mysql_docker_image="${namespace_name}-${project_name}-dbs"    
+        fi    
+    fi
 
     while : ; do
         mysql_name_database=$( warp_question_ask_default "Set the database name: $(warp_message_info [warp_db]) " "warp_db" )
@@ -70,11 +90,17 @@ then
     mysql_config_file=$( warp_question_ask_default "Add the MySQL configuration file: $(warp_message_info [./.warp/docker/config/mysql/conf.d]) " "./.warp/docker/config/mysql/conf.d" )
     warp_message_info2 "Selected configuration file: $mysql_config_file"
 
-    cat $PROJECTPATH/.warp/setup/mysql/tpl/database.yml >> $DOCKERCOMPOSEFILESAMPLE
+    if [ "$mysql_use_project_specific" = "Y" ] || [ "$mysql_use_project_specific" = "y" ]; then
+        cat $PROJECTPATH/.warp/setup/mysql/tpl/database_custom.yml >> $DOCKERCOMPOSEFILESAMPLE
+    else
+        cat $PROJECTPATH/.warp/setup/mysql/tpl/database.yml >> $DOCKERCOMPOSEFILESAMPLE
+    fi
+    
     cat $PROJECTPATH/.warp/setup/mysql/tpl/database_enviroment_root.yml >> $DOCKERCOMPOSEFILESAMPLE
 
-    echo "# MySQL Configuration" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    #echo "# MySQL Configuration" >> $ENVIRONMENTVARIABLESFILESAMPLE
     echo "MYSQL_VERSION=$mysql_version" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "MYSQL_DOCKER_IMAGE=$mysql_docker_image" >> $ENVIRONMENTVARIABLESFILESAMPLE
     echo "MYSQL_CONFIG_FILE=$mysql_config_file" >> $ENVIRONMENTVARIABLESFILESAMPLE
     echo "DATABASE_BINDED_PORT=$mysql_binded_port" >> $ENVIRONMENTVARIABLESFILESAMPLE
     echo "DATABASE_ROOT_PASSWORD=$mysql_root_password" >> $ENVIRONMENTVARIABLESFILESAMPLE
@@ -84,7 +110,12 @@ then
     echo "DATABASE_USER=$mysql_user_database" >> $ENVIRONMENTVARIABLESFILESAMPLE
     echo "DATABASE_PASSWORD=$mysql_password_database" >> $ENVIRONMENTVARIABLESFILESAMPLE
 
-    cat $PROJECTPATH/.warp/setup/mysql/tpl/database_volumes_networks.yml >> $DOCKERCOMPOSEFILESAMPLE
+    if [ "$mysql_use_project_specific" = "Y" ] || [ "$mysql_use_project_specific" = "y" ]; then
+        cat $PROJECTPATH/.warp/setup/mysql/tpl/database_volumes_networks_custom.yml >> $DOCKERCOMPOSEFILESAMPLE
+    else
+        cat $PROJECTPATH/.warp/setup/mysql/tpl/database_volumes_networks.yml >> $DOCKERCOMPOSEFILESAMPLE
+    fi
+    
 
     cp -R $PROJECTPATH/.warp/setup/mysql/config/ $PROJECTPATH/.warp/docker/config/mysql/
 fi; 

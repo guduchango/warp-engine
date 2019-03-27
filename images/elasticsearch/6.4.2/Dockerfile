@@ -16,3 +16,18 @@ CMD ["elasticsearch"]
 # If you want to set this permanently, you need to edit /etc/sysctl.conf and set vm.max_map_count to 262144.
 # When the host reboots, you can verify that the setting is still correct by running sysctl vm.max_map_count
 #
+
+# Issue 2
+# max file descriptors [4096] for elasticsearch process is too low, increase to at least [65536]
+# https://discuss.elastic.co/t/cannot-solve-problem-max-file-descriptors-4096-for-elasticsearch/82459/4
+#
+# Add into docker-compose this values for elastic search service:
+#    ulimits:
+#      memlock:
+#        soft: -1
+#        hard: -1
+#      nofile:
+#        soft: 65536
+#        hard: 65536
+#
+
