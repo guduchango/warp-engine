@@ -52,7 +52,7 @@ function start() {
       crontab_run
 
       # Starting Supervisor service
-      docker-compose -f $DOCKERCOMPOSEFILE exec -d --user=root php bash -c "service supervisor start"
+      docker-compose -f $DOCKERCOMPOSEFILE exec -d --user=root php bash -c "service supervisor start 2> /dev/null"
 
     else
       warp_message_warn "Please Run ./warp composer --credential to copy the credentials"

@@ -15,27 +15,29 @@ done
 
 if [ "$respuesta_mysql" = "Y" ] || [ "$respuesta_mysql" = "y" ]
 then
-    while : ; do
-        mysql_use_project_specific=$( warp_question_ask_default "Do you want to use a custom specific DB image? $(warp_message_info [y/N]) " "N" )
-
-        if [ "$mysql_use_project_specific" = "Y" ] || [ "$mysql_use_project_specific" = "y" ] || [ "$mysql_use_project_specific" = "N" ] || [ "$mysql_use_project_specific" = "n" ] ; then
-            break
-        else
-            warp_message_warn "wrong answer, you must select between two options: $(warp_message_info [Y/n]) "
-        fi
-    done
 
     warp_message_info2 "You can check the available versions of MySQL here: $(warp_message_info '[ https://hub.docker.com/r/library/mysql/ ]')"
-    
-    mysql_version=$( warp_question_ask_default "Choose the MySQL version: $(warp_message_info [5.7]) " "5.7" )
+    mysql_version=$( warp_question_ask_default "Choose the MySQL engine version: $(warp_message_info [5.7]) " "5.7" )
     warp_message_info2 "Selected MySQL Version: $mysql_version"
 
-    
-    if [ "$mysql_use_project_specific" = "Y" ] || [ "$mysql_use_project_specific" = "y" ]
-    then
-        mysql_docker_image="${namespace_name}-${project_name}-dbs"
-    else
-        mysql_docker_image="mysql:${mysql_version}"
+    mysql_docker_image="mysql:${mysql_version}"
+
+    if [ "$private_registry_mode" = "Y" ] || [ "$private_registry_mode" = "y" ] ; then
+        while : ; do
+            mysql_use_project_specific=$( warp_question_ask_default "Do you want to use a custom specific DB image from your private registry? $(warp_message_info [y/N]) " "N" )
+
+            if [ "$mysql_use_project_specific" = "Y" ] || [ "$mysql_use_project_specific" = "y" ] || [ "$mysql_use_project_specific" = "N" ] || [ "$mysql_use_project_specific" = "n" ] ; then
+                break
+            else
+                warp_message_warn "wrong answer, you must select between two options: $(warp_message_info [Y/n]) "
+            fi
+        done;
+
+        if [ "$mysql_use_project_specific" = "Y" ] || [ "$mysql_use_project_specific" = "y" ]
+        then
+            # Overwrite default mysql image.
+            mysql_docker_image="${namespace_name}-${project_name}-dbs"    
+        fi    
     fi
 
     while : ; do

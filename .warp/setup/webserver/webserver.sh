@@ -101,6 +101,27 @@ then
     chmod -R 777 $PROJECTPATH/.warp/docker/volumes/nginx
 
     cp -R $PROJECTPATH/.warp/setup/webserver/config/nginx $PROJECTPATH/.warp/docker/config/nginx
-    cp $PROJECTPATH/.warp/docker/config/nginx/sites-enabled/default.conf $PROJECTPATH/.warp/docker/config/nginx/sites-enabled/$nginx_config_file
+    
+    # Copying nginx base framework configuration
+    #cp $PROJECTPATH/.warp/docker/config/nginx/sites-enabled/default.conf $PROJECTPATH/.warp/docker/config/nginx/sites-enabled/$nginx_config_file
+    case $framework in
+        'm1')
+            cat $PROJECTPATH/.warp/docker/config/nginx/sites-enabled/m1.conf | sed -e "s/{{SERVER_NAME}}/${nginx_virtual_host}/" > $PROJECTPATH/.warp/docker/config/nginx/sites-enabled/$nginx_config_file
+        ;;
+        'm2')
+            cat $PROJECTPATH/.warp/docker/config/nginx/sites-enabled/m2.conf | sed -e "s/{{SERVER_NAME}}/${nginx_virtual_host}/" > $PROJECTPATH/.warp/docker/config/nginx/sites-enabled/$nginx_config_file
+        ;;
+        'oro')
+            cat $PROJECTPATH/.warp/docker/config/nginx/sites-enabled/oro.conf | sed -e "s/{{SERVER_NAME}}/${nginx_virtual_host}/" > $PROJECTPATH/.warp/docker/config/nginx/sites-enabled/$nginx_config_file
+        ;;
+        'php')
+            cat $PROJECTPATH/.warp/docker/config/nginx/sites-enabled/php.conf | sed -e "s/{{SERVER_NAME}}/${nginx_virtual_host}/" > $PROJECTPATH/.warp/docker/config/nginx/sites-enabled/$nginx_config_file
+        ;;
+        *)
+            cat $PROJECTPATH/.warp/docker/config/nginx/sites-enabled/php.conf | sed -e "s/{{SERVER_NAME}}/${nginx_virtual_host}/" > $PROJECTPATH/.warp/docker/config/nginx/sites-enabled/$nginx_config_file
+        ;;
+    esac
+
+
 fi; 
 
