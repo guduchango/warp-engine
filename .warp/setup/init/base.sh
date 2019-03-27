@@ -61,7 +61,7 @@ while : ; do
             break
         ;;
         *)
-            warp_message_info2 "Selected: $framework, the available options are m1, m2, oro, other"
+            warp_message_info2 "Selected: $framework, the available options are m1, m2, oro, php"
         ;;
     esac
 done
