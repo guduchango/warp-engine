@@ -29,6 +29,9 @@ then
         '7.1-fpm')
             break
         ;;
+        '7.2-fpm')
+            break
+        ;;
         '7.1.17-fpm')
             break
         ;;
@@ -36,7 +39,7 @@ then
             break
         ;;
         *)
-            warp_message_info2 "Selected: $php_version, the available versions are 5.6-fpm, 7.0-fpm, 7.1-fpm, 7.1.17-fpm, 7.1.26-fpm"
+            warp_message_info2 "Selected: $php_version, the available versions are 5.6-fpm, 7.0-fpm, 7.1-fpm, 7.2-fpm, 7.1.17-fpm, 7.1.26-fpm"
         ;;
         esac        
     done
@@ -79,6 +82,9 @@ then
         ;;
         '7.0-fpm')
             echo "zend_extension = /usr/local/lib/php/extensions/no-debug-non-zts-20151012/xdebug.so" >> $PROJECTPATH/.warp/docker/config/php/ext-xdebug.ini.sample 
+        ;;
+        '7.2-fpm')
+            echo "zend_extension = /usr/local/lib/php/extensions/no-debug-non-zts-20170718/xdebug.so" >> $PROJECTPATH/.warp/docker/config/php/ext-xdebug.ini.sample 
         ;;
         *)
             echo "zend_extension = /usr/local/lib/php/extensions/no-debug-non-zts-20160303/xdebug.so" >> $PROJECTPATH/.warp/docker/config/php/ext-xdebug.ini.sample 
