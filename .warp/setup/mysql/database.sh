@@ -98,7 +98,7 @@ then
     
     cat $PROJECTPATH/.warp/setup/mysql/tpl/database_enviroment_root.yml >> $DOCKERCOMPOSEFILESAMPLE
 
-    #echo "# MySQL Configuration" >> $ENVIRONMENTVARIABLESFILESAMPLE
+    echo "# MySQL Configuration" >> $ENVIRONMENTVARIABLESFILESAMPLE
     echo "MYSQL_VERSION=$mysql_version" >> $ENVIRONMENTVARIABLESFILESAMPLE
     echo "MYSQL_DOCKER_IMAGE=$mysql_docker_image" >> $ENVIRONMENTVARIABLESFILESAMPLE
     echo "MYSQL_CONFIG_FILE=$mysql_config_file" >> $ENVIRONMENTVARIABLESFILESAMPLE
