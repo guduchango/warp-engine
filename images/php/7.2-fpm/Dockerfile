@@ -9,6 +9,8 @@ RUN apt-get update
 #Install crontab
 RUN apt-get install -y cron
 
+RUN apt-get install -y supervisor
+
 RUN update-rc.d cron defaults
 
 RUN \
