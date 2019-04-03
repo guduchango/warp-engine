@@ -68,7 +68,7 @@ done
 
 
 
-#echo "# Project configurations" >> $ENVIRONMENTVARIABLESFILESAMPLE
+echo "# Project configurations" >> $ENVIRONMENTVARIABLESFILESAMPLE
 echo "NAMESPACE=${namespace_name}" >> $ENVIRONMENTVARIABLESFILESAMPLE
 echo "PROJECT=${project_name}" >> $ENVIRONMENTVARIABLESFILESAMPLE
 echo "DOCKER_PRIVATE_REGISTRY=${docker_private_registry}" >> $ENVIRONMENTVARIABLESFILESAMPLE
