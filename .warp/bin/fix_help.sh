@@ -10,6 +10,10 @@ function fix_help_usage()
     warp_message ""
     warp_message_info "Options:"
     warp_message_info   " -h, --help         $(warp_message 'display this help message')"
+    warp_message_info   " --php              $(warp_message 'fix permissions with php')"
+    warp_message_info   " --mysql            $(warp_message 'fix permissions with mysql')"
+    warp_message_info   " --grunt            $(warp_message 'fix permissions grunt')"
+    warp_message_info   " --elasticsearch    $(warp_message 'fix permissions with elasticsearch')"
     warp_message_info   " --addUser          $(warp_message 'add user docker and www-data to current user')"
     warp_message ""
 
