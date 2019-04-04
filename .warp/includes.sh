@@ -29,3 +29,4 @@
 . "$WARPFOLDER/bin/npm.sh"
 . "$WARPFOLDER/bin/grunt.sh"
 . "$WARPFOLDER/bin/crontab.sh"
+. "$WARPFOLDER/bin/fix.sh"
