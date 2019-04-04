@@ -125,6 +125,10 @@ function fix_permissions()
             fix_php
             exit 1
       ;;
+      "--grunt")
+            fix_grunt
+            exit 1
+      ;;
       "--elasticsearch")
             fix_elasticsearch
             exit 1
