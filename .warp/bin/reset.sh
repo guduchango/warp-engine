@@ -15,7 +15,7 @@ function reset_project()
 
     if [ $(warp_check_is_running) = true ]; then
         warp_message_warn "the containers is running";
-        warp_message_warn "Please run first warp stop";
+        warp_message_warn "Please run first warp stop --hard";
         exit 1;
     fi
 

@@ -20,7 +20,7 @@ function grunt_command()
         exit 1;
     fi
 
-    docker-compose -f $DOCKERCOMPOSEFILE exec -uroot php bash -c "grunt $*"
+    docker-compose -f $DOCKERCOMPOSEFILE exec php bash -c "grunt $*"
 }
 
 function grunt_main()

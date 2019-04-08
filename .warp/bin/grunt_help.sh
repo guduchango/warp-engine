@@ -19,6 +19,7 @@ function grunt_help_usage()
 
     warp_message_info "Example:"
     warp_message " warp grunt exec"
+    warp_message " warp grunt less"
     warp_message ""    
 }
 
