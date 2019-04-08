@@ -1,8 +1,9 @@
 2019.04.08
 =============
 * Add command to fix permissions
+* Add PHP 7.2-fpm
 * Fix permission problem with Grunt command
-* Improve alias compatible with magento 2.3
+* Improve alias mage2flush compatible with magento 2.3
 
 2019.03.27
 =============
