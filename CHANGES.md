@@ -1,3 +1,9 @@
+2019.04.08
+=============
+* Add command to fix permissions
+* Fix permission problem with Grunt command
+* Improve alias compatible with magento 2.3
+
 2019.03.27
 =============
 * Adding private docker registry configuration
