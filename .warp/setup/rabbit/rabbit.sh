@@ -4,7 +4,7 @@ warp_message ""
 warp_message_info "Configuring Rabbit Service"
 
 while : ; do
-    respuesta_rabbit=$( warp_question_ask_default "Do you want to add a service for Rabbit? $(warp_message_info [Y/n]) " "Y" )
+    respuesta_rabbit=$( warp_question_ask_default "Do you want to add a service for Rabbit? $(warp_message_info [y/N]) " "N" )
 
     if [ "$respuesta_rabbit" = "Y" ] || [ "$respuesta_rabbit" = "y" ] || [ "$respuesta_rabbit" = "N" ] || [ "$respuesta_rabbit" = "n" ] ; then
         break
@@ -45,6 +45,7 @@ then
 
     cat $PROJECTPATH/.warp/setup/rabbit/tpl/rabbit.yml >> $DOCKERCOMPOSEFILESAMPLE
 
+    echo "#Config Rabbit" >> $ENVIRONMENTVARIABLESFILESAMPLE
     echo "RABBIT_VERSION=$resp_version_rabbit" >> $ENVIRONMENTVARIABLESFILESAMPLE
     echo "RABBIT_BINDED_PORT=$rabbit_binded_port"  >> $ENVIRONMENTVARIABLESFILESAMPLE
     echo "RABBITMQ_DEFAULT_USER=$rabbit_default_user" >> $ENVIRONMENTVARIABLESFILESAMPLE
