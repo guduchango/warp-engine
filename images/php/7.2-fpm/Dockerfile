@@ -120,6 +120,10 @@ RUN wget https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-
   mv ioncube/ioncube_loader_lin_7.2.so /usr/local/lib/php/extensions/no-debug-non-zts-20170718/iocube.so && \
   echo "zend_extension = /usr/local/lib/php/extensions/no-debug-non-zts-20170718/iocube.so" > /usr/local/etc/php/conf.d/10-php-ext-ioncube.ini
 
+RUN wget https://github.com/mailhog/mhsendmail/releases/download/v0.2.0/mhsendmail_linux_amd64 && \
+    chmod +x mhsendmail_linux_amd64 && \
+    mv mhsendmail_linux_amd64 /usr/local/bin/mhsendmail
+
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr --with-jpeg-dir=/usr --with-png-dir=/usr \
     && docker-php-ext-install gd
 
