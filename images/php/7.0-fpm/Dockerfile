@@ -114,7 +114,9 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr --with-jpeg-dir=/usr --
 RUN curl -sS https://getcomposer.org/installer | \
   php -- --install-dir=/usr/local/bin --filename=composer
 
-RUN pecl install -o -f xdebug
+RUN pecl install -o -f xdebug-2.6.1
+
+# Install mailhog
 
 
 # ENV PHP_MEMORY_LIMIT 2G

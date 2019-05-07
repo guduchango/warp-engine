@@ -119,7 +119,7 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr --with-jpeg-dir=/usr --
 RUN curl -sS https://getcomposer.org/installer | \
   php -- --install-dir=/usr/local/bin --filename=composer
 
-RUN pecl install -o -f xdebug
+RUN pecl install -o -f xdebug-2.6.1
 
 RUN chmod a+x /usr/local/lib/php/extensions/no-debug-non-zts-20160303/xdebug.so 
 
