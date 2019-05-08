@@ -73,21 +73,24 @@ warp_message ""
         done
     fi; 
 
-    warp_message ""
-    warp_message_info "Configuring the MySQL Service"
-    warp_message ""
+    if [ ! -z "$DATABASE_BINDED_PORT" ]
+    then
+        warp_message ""
+        warp_message_info "Configuring the MySQL Service"
+        warp_message ""
 
-    while : ; do
-        mysql_binded_port=$( warp_question_ask_default "Mapping container port 3306 to your machine port (host): $(warp_message_info [3306]) " "3306" )
+        while : ; do
+            mysql_binded_port=$( warp_question_ask_default "Mapping container port 3306 to your machine port (host): $(warp_message_info [3306]) " "3306" )
 
-        #CHECK si port es numero antes de llamar a warp_net_port_in_use
-        if ! warp_net_port_in_use $mysql_binded_port ; then
-            warp_message_info2 "the selected port is: $mysql_binded_port, the port mapping is: $(warp_message_bold '127.0.0.1:'$mysql_binded_port' ---> container_host:3306')"
-            break
-        else
-            warp_message_warn "The port $mysql_binded_port is busy, choose another one\n"
-        fi;
-    done
+            #CHECK si port es numero antes de llamar a warp_net_port_in_use
+            if ! warp_net_port_in_use $mysql_binded_port ; then
+                warp_message_info2 "the selected port is: $mysql_binded_port, the port mapping is: $(warp_message_bold '127.0.0.1:'$mysql_binded_port' ---> container_host:3306')"
+                break
+            else
+                warp_message_warn "The port $mysql_binded_port is busy, choose another one\n"
+            fi;
+        done
+    fi
 
     if [ ! -z "$RABBIT_VERSION" ]
     then
@@ -108,6 +111,24 @@ warp_message ""
         done
     fi
 
+    if [ ! -z "$MAILHOG_BINDED_PORT" ]
+    then
+    
+        warp_message ""
+        warp_message_info "Configuring Mailhog SMTP server"
+        warp_message ""
+
+        while : ; do
+            mailhog_binded_port=$( warp_question_ask_default "Plase select the port of your machine (host) to Web interface to view the messages: $(warp_message_info [8025]) " "8025" )
+
+            if ! warp_net_port_in_use $mailhog_binded_port ; then
+                warp_message_info2 "the selected port is: $mailhog_binded_port, Web interface to view the messages: $(warp_message_bold 'http://127.0.0.1:'$mailhog_binded_port)"
+                break
+            else
+                warp_message_warn "The port $mailhog_binded_port is busy, choose another one\n"
+            fi;
+        done
+    fi
 
     HTTP_HOST_OLD="HTTP_HOST_IP=$HTTP_HOST_IP"
     HTTP_BINDED_OLD="HTTP_BINDED_PORT=$HTTP_BINDED_PORT"
@@ -168,12 +189,16 @@ warp_message ""
     cat $ENVIRONMENTVARIABLESFILE | sed -e "s/$NETWORK_GATEWAY_OLD/$NETWORK_GATEWAY_NEW/" > "$ENVIRONMENTVARIABLESFILE.warp5"
     mv "$ENVIRONMENTVARIABLESFILE.warp5" $ENVIRONMENTVARIABLESFILE
 
-    # CHANGE PORT MYSQL
-    BINDED_PORT_OLD="DATABASE_BINDED_PORT=$DATABASE_BINDED_PORT"
-    BINDED_PORT_NEW="DATABASE_BINDED_PORT=$mysql_binded_port"
 
-    cat $ENVIRONMENTVARIABLESFILE | sed -e "s/$BINDED_PORT_OLD/$BINDED_PORT_NEW/" > "$ENVIRONMENTVARIABLESFILE.warp6"
-    mv "$ENVIRONMENTVARIABLESFILE.warp6" $ENVIRONMENTVARIABLESFILE
+    if [ ! -z "$DATABASE_BINDED_PORT" ]
+    then
+        # CHANGE PORT MYSQL
+        BINDED_PORT_OLD="DATABASE_BINDED_PORT=$DATABASE_BINDED_PORT"
+        BINDED_PORT_NEW="DATABASE_BINDED_PORT=$mysql_binded_port"
+
+        cat $ENVIRONMENTVARIABLESFILE | sed -e "s/$BINDED_PORT_OLD/$BINDED_PORT_NEW/" > "$ENVIRONMENTVARIABLESFILE.warp6"
+        mv "$ENVIRONMENTVARIABLESFILE.warp6" $ENVIRONMENTVARIABLESFILE
+    fi
 
 
     if [ ! -z "$RABBIT_VERSION" ]
@@ -184,6 +209,16 @@ warp_message ""
 
         cat $ENVIRONMENTVARIABLESFILE | sed -e "s/$BINDED_PORT_OLD/$BINDED_PORT_NEW/" > "$ENVIRONMENTVARIABLESFILE.warp7"
         mv "$ENVIRONMENTVARIABLESFILE.warp7" $ENVIRONMENTVARIABLESFILE
+    fi
+
+    if [ ! -z "$MAILHOG_BINDED_PORT" ]
+    then
+        # CHANGE PORT MAILHOG
+        BINDED_PORT_OLD="MAILHOG_BINDED_PORT=$MAILHOG_BINDED_PORT"
+        BINDED_PORT_NEW="MAILHOG_BINDED_PORT=$mailhog_binded_port"
+
+        cat $ENVIRONMENTVARIABLESFILE | sed -e "s/$BINDED_PORT_OLD/$BINDED_PORT_NEW/" > "$ENVIRONMENTVARIABLESFILE.warp8"
+        mv "$ENVIRONMENTVARIABLESFILE.warp8" $ENVIRONMENTVARIABLESFILE
     fi
 
     . "$WARPFOLDER/setup/init/info.sh"
