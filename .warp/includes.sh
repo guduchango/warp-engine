@@ -30,3 +30,4 @@
 . "$WARPFOLDER/bin/grunt.sh"
 . "$WARPFOLDER/bin/crontab.sh"
 . "$WARPFOLDER/bin/fix.sh"
+. "$WARPFOLDER/bin/mailhog.sh"

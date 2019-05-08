@@ -1,0 +1,11 @@
+
+  mailhog:
+    image: mailhog/mailhog
+    env_file: .env
+    hostname: "mailhog"
+    restart: always
+    ports:
+      - 1025
+      - "${MAILHOG_BINDED_PORT}:8025"
+    networks:
+      - back
