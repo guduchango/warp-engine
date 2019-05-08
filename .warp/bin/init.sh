@@ -57,6 +57,7 @@ function init_command() {
         . "$WARPFOLDER/setup/elasticsearch/elasticsearch.sh"
         . "$WARPFOLDER/setup/redis/redis.sh"
         . "$WARPFOLDER/setup/rabbit/rabbit.sh"
+        . "$WARPFOLDER/setup/mailhog/mailhog.sh"
         . "$WARPFOLDER/setup/networks/networks.sh"
         . "$WARPFOLDER/setup/mac/mac.sh"
         . "$WARPFOLDER/setup/init/info.sh"

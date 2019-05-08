@@ -17,13 +17,12 @@ if [ "$respuesta_rabbit" = "Y" ] || [ "$respuesta_rabbit" = "y" ]
 then
 
     warp_message_info2 "You can check the Rabbit versions available here: $(warp_message_info '[ https://hub.docker.com/_/rabbitmq/ ]')"
-    echo "#Config Rabbit" >> $ENVIRONMENTVARIABLESFILESAMPLE
   
     resp_version_rabbit=$( warp_question_ask_default "What version of Rabbit do you want to use? $(warp_message_info [3-management]) " "3-management" )
     warp_message_info2 "Selected Rabbit version: $resp_version_rabbit, in the internal port 5672 $(warp_message_bold 'rabbitmq:5672')"
 
     while : ; do
-        rabbit_binded_port=$( warp_question_ask_default "Mapping container port 15672 to your machine port (host): $(warp_message_info [8080]) " "8080" )
+        rabbit_binded_port=$( warp_question_ask_default "Mapping container port 15672 to your machine port (host): $(warp_message_info [8081]) " "8081" )
 
         if ! warp_net_port_in_use $rabbit_binded_port ; then
             warp_message_info2 "the selected port is: $rabbit_binded_port, the port mapping is: $(warp_message_bold '127.0.0.1:'$rabbit_binded_port' ---> container_host:15672')"
