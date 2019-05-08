@@ -22,6 +22,7 @@ See [LICENSE](LICENSE) for the full license text.
 Run the following command in your root project folder:
 
 ```
+
 	curl -L -o warp http://ct.summasolutions.net/warp-engine/warp && chmod 755 warp
 
 ```
@@ -31,6 +32,7 @@ Run the following command in your root project folder:
 After download the warp binary file, you should initialize your dockerized infraestrucutre running the following command:
 
 ```
+
 	./warp init
 	
 ```
@@ -39,5 +41,5 @@ After download the warp binary file, you should initialize your dockerized infra
 ## Changelog
 
 See what has changed:
-[Changelog](https://bitbucket.org/summasolutions/warp-engine/src/master/CHANGES.md)
+[Changelog](CHANGES.md)
 
