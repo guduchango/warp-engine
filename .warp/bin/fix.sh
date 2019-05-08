@@ -32,7 +32,7 @@ function fix_php()
 
     # add permission php logs
 
-    [ -d $PROJECTPATH/.warp/docker/volumes/php-fpm/ ] && sudo chmod -R 775 $PROJECTPATH/.warp/docker/volumes/php-fpm
+    [ -d $PROJECTPATH/.warp/docker/volumes/php-fpm/ ] && sudo chmod -R a+rwx $PROJECTPATH/.warp/docker/volumes/php-fpm
     [ -d $PROJECTPATH/.warp/docker/volumes/php-fpm/ ] && sudo chgrp -R 33 $PROJECTPATH/.warp/docker/volumes/php-fpm
 
     exit 1;
@@ -89,7 +89,7 @@ function fix_default()
 
     # add permission elasticsearch inside the container    
     [ -d $PROJECTPATH/.warp/docker/volumes/elasticsearch/ ] && sudo chmod -R a+rwx $PROJECTPATH/.warp/docker/volumes/elasticsearch/
-    [ -d $PROJECTPATH/.warp/docker/volumes/php-fpm/ ] && sudo chmod -R 775 $PROJECTPATH/.warp/docker/volumes/php-fpm
+    [ -d $PROJECTPATH/.warp/docker/volumes/php-fpm/ ] && sudo chmod -R a+rwx $PROJECTPATH/.warp/docker/volumes/php-fpm
 
     warp_message "* Applying permissions to binaries $(warp_message_ok [ok])"
     # restart correct permissions to warp and binaries

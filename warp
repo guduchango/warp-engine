@@ -173,6 +173,7 @@ function warp_info()
         elasticsearch_main info   
         redis_main info   
         rabbit_main info   
+        mailhog_main info   
     fi;
 }
 
@@ -302,6 +303,11 @@ case "$1" in
     rabbit)
     shift 1
     rabbit_main $*
+    ;;
+
+    mailhog)
+    shift 1
+    mailhog_main $*
     ;;
 
     reset)

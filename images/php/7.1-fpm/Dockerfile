@@ -113,13 +113,17 @@ RUN wget https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-
   mv ioncube/ioncube_loader_lin_7.1.so /usr/local/lib/php/extensions/no-debug-non-zts-20160303/iocube.so && \
   echo "zend_extension = /usr/local/lib/php/extensions/no-debug-non-zts-20160303/iocube.so" > /usr/local/etc/php/conf.d/10-php-ext-ioncube.ini
 
+RUN wget https://github.com/mailhog/mhsendmail/releases/download/v0.2.0/mhsendmail_linux_amd64 && \
+    chmod +x mhsendmail_linux_amd64 && \
+    mv mhsendmail_linux_amd64 /usr/local/bin/mhsendmail
+
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr --with-jpeg-dir=/usr --with-png-dir=/usr \
     && docker-php-ext-install gd
 
 RUN curl -sS https://getcomposer.org/installer | \
   php -- --install-dir=/usr/local/bin --filename=composer
 
-RUN pecl install -o -f xdebug
+RUN pecl install -o -f xdebug-2.6.1
 
 RUN chmod a+x /usr/local/lib/php/extensions/no-debug-non-zts-20160303/xdebug.so 
 

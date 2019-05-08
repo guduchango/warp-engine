@@ -90,6 +90,10 @@ RUN mkdir /var/log/php-fpm && \
     touch /var/log/php-fpm/fpm-php.www.log && \
     chown -R www-data:www-data /var/log/php-fpm
 
+RUN wget https://github.com/mailhog/mhsendmail/releases/download/v0.2.0/mhsendmail_linux_amd64 && \
+    chmod +x mhsendmail_linux_amd64 && \
+    mv mhsendmail_linux_amd64 /usr/local/bin/mhsendmail
+
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr --with-jpeg-dir=/usr --with-png-dir=/usr \
     && docker-php-ext-install gd
 
